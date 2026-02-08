@@ -58,13 +58,3 @@ for actuator_len in np.arange(0.1,calcular_tamanho(actuator),calcular_tamanho(ac
         plt.plot(x_coords, y_coords, marker='o',color=colors[numcolor])
     numcolor += 1
 plt.show()
-
-
-# # Plot the line
-# plt.plot(x_coords, y_coords)
-
-# # Optional: Add markers to see the exact points
-# plt.plot(x_coords, y_coords, marker='o')
-
-# # Display the plot
-# plt.show()
