@@ -1,0 +1,78 @@
+% ----------------------------------------------------------
+% Introdução 
+% Capítulo sem numeração, mas presente no Sumário
+% ----------------------------------------------------------
+
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+
+- O que é o que vc tá fazendo em termos simples (explicar o que é uma antena, seu uso pra Trackear satélite)
+
+Todas as antenas, mesmo sendo de modelos mais simples, possuem direções nas quais elas irradiam com maior intensidade. Essa característica é conhecida como diretividade. O ganho da antena também está diretamente relacionado com a diretividade \cite{ford2009}. Antenas parabólicas são conhecidas pelo sua alta diretivida e seu alto ganho \cite{hubregt2014}. Segundo \cite{ford2009}, essas características são a principal vantagem dessa geometria, sendo excelentes para prover sinal forte e consistente de satélites de órbita baixa (Low-Earth Orbit, ou LEO). 
+
+Também, segundo \cite{ford2009}, essa diretividade é a maior desvantagem das antenas, pois é necessário manter a antena apontada para o satélite desejado durante todo o momento da comunicação. Para isso, é necessário um sistema automático de apontamento de antena. 
+
+- panorama histórico, quem começou a usar, usos comuns etc
+% Introdução antiga, divaga do tema principal
+Em 1860, James Maxwell previu a existência de ondas eletromagnéticas em radiofrequência. Em 1886, Hertz criou o primeiro sistema de rádio utilizando dois centelhadores \cite{fusco2006}. Marconi, então, iniciou seus experimentos na área de telecomunicação em 1899, inventando o campo da comunicação sem fio a longas distâncias \cite{rochol2018}. Desde então, a comunicação através de antenas está sendo utilizada em várias facetas de nossas vidas, sendo em comunicação sem fio, Wi-Fi e Bluetooth, radioastrologia, radares, e entre outras aplicações. 
+
+%Nova introdução
+No final dos anos 50 e início dos 60, com o advento da corrida espacial, a União Soviética realizou o feito histórico que indicou uma nova era à humanidade. Sputnik 1, o primeiro satélite artificial alcançou órbita e transmitia a todas partes do mundo dois canais de "Radiobaliza" (beacon, em inglês) em \SI{20,005}{\mega\hertz} e \SI{40,002}{\mega\hertz} \cite{ford2009}. Segundo \cite{ford2009}, os radios amadores estavam entre os únicos meios de notícias sobre a nave revolucionária (tradução livre). Atualmente, na camada LEO, existe o lançamento de milhares de satélites da nova constelação da Starlink, além de outras constelações já planejadas para cobrir boa parte da Terra, com um satélite em horizonte local em poucos minutos \cite{app12199505}.
+
+- como é usada, o que é feito (casos mais clássicos)
+
+O apontamento automático de antenas é utilizado para diversas aplicações. A principal funcionalidade desses mecanismos é a de obter uma conexão estável com qualquer equipamento desejado. Para o caso de radioamadorismo, satélites de órbita baixa \cite{ford2009}. Atualmente, esse sistema é utilizado em antenas pelas é a de obter comunicação de fragatas e navios em alto mar, pois o acesso por solo é impossível \cite{ueba2016}.  
+
+
+- como está o panorama de pesquisa atual tipo o que é mais recente de publicação 
+ %Feito na seção "estado da arte"
+
+- daí vc fala seus objetivos e fecha a introdução
+O objetivo desse trabalho está em desenvolver a modelagem dinâmica e cinemática de um sistema pedestal biaxial, criando um protótipo funcional e aplicando os conceitos de controle para a obtenção de parâmetros aceitáveis para a função proposta.
+
+ 
+
+
+\section*{Figuras}\label{sec:figuras}
+\addcontentsline{toc}{section}{figuras}
+
+As normas da~\citeonline[3.1-3.2]{NBR6028:2003} especificam que o caption da figura deve vir abaixo da mesma.
+
+A Figura~\ref{fig:log} ilustra...
+
+\begin{figure}[htpb]
+   \centering
+   \includegraphics[scale=.3]{figs/logo}
+   \caption{Breve explicação sobre a figura. Deve vir abaixo da mesma.}
+   \label{fig:log}
+\end{figure}
+
+\section*{Tabelas}\label{sec:tabelas}
+\addcontentsline{toc}{section}{tabelas}
+
+A Tabela~\ref{tab:tabela} apresenta os resultados...
+
+\begin{table}[htpb]
+   \centering
+   \caption{Breve explicação sobre a tabela. Deve vir acima da mesma.}\label{tab:tabela}
+   \begin{tabular}{|l|c|c|c|c|c|c|r|}
+        \hline
+        \small{XX} & \small{FF} & \small{PP} & \small{YY} & \small{Yr} & \small{xY} & \small{Yx} & \small{ZZ} \\ \hline
+               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
+               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
+               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
+               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
+               615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
+   \end{tabular}
+\end{table}
+
+\section*{Motivação}\label{sec:motivacao}
+\addcontentsline{toc}{section}{Motivação}
+
+\lipsum[35]
+
+\section*{Objetivos}\label{sec:objetivos}
+\addcontentsline{toc}{section}{Objetivos}
+
+\lipsum[36]
+

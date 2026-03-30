@@ -1,0 +1,38 @@
+
+
+\chapter{Objetivos}\label{cap:obj}
+
+O objetivo desse trabalho é desenvolver o protótipo de um sistema de alinhamento automático
+de antena. Esse protótipo contará com um sistema de controle motorizado e uma integração com sistemas externos,
+como aplicativo de rastreamento de satélites.
+
+
+\section{Objetivos Especificos}\label{sec:esp}
+\addcontentsline{toc}{section}{obj}
+\subsection{Modelagem e Prototipagem}\label{sec:mod}
+O protótipo deverá ser calculado para atingir as especificações do projeto. Primeiramente,
+será necessária uma modelagem dos ângulos e os modelos para permitir o cálculo da cinemática
+direta do mecanismo e permitir o apontamento do sistema.
+
+\subsection{Sistema de Controle}\label{sec:ctr}
+Após a modelagem do sistema, será necessário calcular a resposta do sistema a
+estímulos e estabilizar o controle do mecanismo. O sistema de controle utilizado será de
+malha fechada, utilizando motores e encoder para realizar o controle e a observabilidade
+do sistema. **(Provalvelmente a resposta do sistema será linear, então o sistema de controle utilizado será um PID discreto)**
+O sistema de controle deve ser estável e responsivo o suficiente para acompanhar o rastreio
+do veículo selecionado. Além disso, o sistema de observabilidade deverá ser rápida suficiente
+para detectar instabilidades, de mesmo modo, o sistema de controle deverá ser suficientemente rápido
+a ponto de corrigir e responder aos ruídos gerados.
+
+\subsection{Caracteríscticas Mecâncias e Sensibilidade}\label{sec:ssb}
+O mecanismo deverá possuir duas caracteríscticas principais: velocidade e sensibilidade.
+O primeiro fator está relacionado com a resposta do sistema à tarefa. Uma passagem de satélites
+de órbita baixa é marcada por momentos de aceleração e desaceleração. O protótipo deverá
+possuir visada em todas as direções e ter sensibilidade suficiente para ter a precissão de
+apontamento necessária para a comunicação.
+
+\subsection{Interface com Sistemas Externos}
+Existem diversos aplicativos, programas e databases (bancos de dados) com informações sobre órbitas e passagens
+de satélites. Diversos desses programas utilizam comunicação TCP (via internet) para enviar
+parâmetros para sistemas automáticos de antenas. Dessa forma, o protótipo deverá ser capaz de
+receber e enviar parâmetros para esses aplicativos e programas.

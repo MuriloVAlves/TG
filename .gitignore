@@ -1,5 +1,6 @@
 # Folders
-Docs/
+Docs/*
+!Docs/TG_IAR_Dissertação/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
