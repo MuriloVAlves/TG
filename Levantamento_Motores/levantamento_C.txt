@@ -1,0 +1,101 @@
+/* * Core 0: Controle do PWM (Ponte H)
+ * Core 1: Leitura do Encoder e Comunicação Serial
+ */
+ 
+#include <Arduino.h>
+#define PWM_DELAY 10
+
+// Pinos Ponte H
+const int pinPWM1 = 18;
+const int pinPWM2 = 19;
+
+// Pinos Encoder
+const int pinEncoderA = 34;
+const int pinEncoderB = 35;
+
+// Configurações PWM
+const int frequencia = 2000;
+const int canalA = 0;
+const int canalB = 1;
+const int resolucao = 10;  // 10 bits (0-1023)
+
+// Variáveis do Encoder
+volatile long pulsos = 0;
+unsigned long tempoAnterior = 0;
+float rpm = 0;
+const int pulsosPorVolta = 90;
+
+// Handler das Tasks
+TaskHandle_t TaskPWM;
+TaskHandle_t TaskEncoder;
+
+// Interrupção do Encoder
+void IRAM_ATTR registraPulso() {
+  if (digitalRead(pinEncoderA)) {
+    pulsos++;
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  // Configuração PWM
+  ledcAttach(pinPWM1, frequencia, resolucao);
+  ledcAttach(pinPWM2, frequencia, resolucao);
+
+  // Configuração Encoder
+  pinMode(pinEncoderA, INPUT);
+  pinMode(pinEncoderB, INPUT);
+  attachInterrupt(digitalPinToInterrupt(pinEncoderA), registraPulso, RISING);
+
+  // Criação da Task no Core 0 (Controle PWM)
+  xTaskCreatePinnedToCore(
+    taskControlePWM, "TaskPWM", 10000, NULL, 1, &TaskPWM, 0);
+
+  // Criação da Task no Core 1 (Encoder e Serial)
+  xTaskCreatePinnedToCore(
+    taskLeituraEncoder, "TaskEncoder", 10000, NULL, 1, &TaskEncoder, 1);
+}
+
+// --- TASK CORE 0: CONTROLE DE VELOCIDADE ---
+void taskControlePWM(void* pvParameters) {
+  while (true) {
+    // Exemplo: Rampa de aceleração (0 a 1023)
+    for (int i = 0; i <= 1023; i++) {
+      ledcWrite(pinPWM1, 614);
+      ledcWrite(pinPWM2, 0);
+      vTaskDelay(pdMS_TO_TICKS(PWM_DELAY));
+    }
+    // Rampa de desaceleração
+    for (int i = 1023; i >= 0; i--) {
+      ledcWrite(pinPWM1, 818);
+      ledcWrite(pinPWM2, 0);
+      vTaskDelay(pdMS_TO_TICKS(PWM_DELAY));
+    }
+  }
+}
+
+// --- TASK CORE 1: ENCODER E SERIAL ---
+void taskLeituraEncoder(void* pvParameters) {
+  while (true) {
+    long contagemAtual = pulsos;
+    unsigned long tempoAtual = millis();
+    if (tempoAtual - tempoAnterior >= 100) {  // Calcula a cada 100ms
+
+      // Cálculo de RPM: (pulsos no intervalo / pulsos por volta) * (60s / intervalo em s)
+      pulsos = 0;  // Reseta para a próxima medição
+
+      rpm = (float)(contagemAtual * 600.0) / pulsosPorVolta;
+
+      Serial.print("RPM: ");
+      Serial.println(rpm);
+
+      tempoAnterior = tempoAtual;
+    }
+    vTaskDelay(pdMS_TO_TICKS(1));  // Evita o Watchdog
+  }
+}
+
+void loop() {
+  // O loop fica vazio pois estamos usando Tasks do FreeRTOS
+}

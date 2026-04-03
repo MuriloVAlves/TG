@@ -1,6 +1,18 @@
 # Folders
-Docs/*
-!Docs/TG_IAR_Dissertação/*
+Docs/*.pdf
+Docs/TG_IAR_Dissertacao/**/*.aux
+Docs/TG_IAR_Dissertacao/**/*.bbl
+Docs/TG_IAR_Dissertacao/**/*.bcf
+Docs/TG_IAR_Dissertacao/**/*.brf
+Docs/TG_IAR_Dissertacao/**/*.gz
+Docs/TG_IAR_Dissertacao/**/*.pdf
+Docs/TG_IAR_Dissertacao/**/*.blg
+Docs/TG_IAR_Dissertacao/**/*.fdb_latexmk
+Docs/TG_IAR_Dissertacao/**/*.fls
+Docs/TG_IAR_Dissertacao/**/*.lof
+Docs/TG_IAR_Dissertacao/**/*.lot
+Docs/TG_IAR_Dissertacao/**/*.xml
+Docs/TG_IAR_Dissertacao/**/*.toc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

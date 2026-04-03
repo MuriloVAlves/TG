@@ -22,7 +22,7 @@
 	english,					% idioma adicional para hifenização
 	%french,					% idioma adicional para hifenização
 	%spanish,				% idioma adicional para hifenização
-	brazil					% o último idioma é o principal do documento
+	brazilian				% o último idioma é o principal do documento
 	]{abntex2}
 
 % ---------------------
@@ -34,8 +34,9 @@
 \usepackage{lastpage}			% Usado pela Ficha catalográfica
 \usepackage{indentfirst}			% Indenta o primeiro parágrafo de cada seção.
 \usepackage{color}				% Controle das cores
-\usepackage{graphicx,graphicx}	% Inclusão de gráficos
-\usepackage{epsfig,subfig}		% Inclusão de figuras
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{microtype} 			% Melhorias de justificação
 % ---------------------
 		
@@ -54,14 +55,15 @@
 % ---------------------
 % Pacotes de CITAÇÕES
 % ---------------------
-\usepackage[brazilian,hyperpageref]{backref}	% Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}				% Citações padrão ABNT (alfa)
+% \usepackage[brazilian,hyperpageref]{backref}	% Paginas com as citações na bibl
+% \usepackage[alf]{abntex2cite}				% Citações padrão ABNT (alfa)
 %\usepackage[num]{abntex2cite}				% Citações padrão ABNT (numericas)
 % ---------------------
-\usepackage[style=authoryear,backend=biber]{biblatex}
+% \usepackage[style=authoryear,backend=biber]{biblatex}
 \usepackage{siunitx}
-\include{bibliografia}
-
+\usepackage[style=abnt, backend=biber]{biblatex}
+\addbibresource{bibliografia.bib} % Verifique se o nome do seu arquivo .bib é este
+\usepackage{csquotes}
 % Configurações de CITAÇÕES para abntex2
 \include{extras/conf_citacoes}
 
@@ -80,8 +82,9 @@
 % ---------------------
 % Compila o indice
 % ---------------------
-\makeindex
+% \makeindex
 % ---------------------
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  INICIO DO DOCUMENTO  %%
@@ -97,28 +100,28 @@
 \pretextual
 
 % Capa
-\include{pretextual/capa}
+\input{pretextual/capa}
 
 % Folha de rosto (o * indica que haverá a ficha bibliográfica)
 \imprimirfolhaderosto*
 
 % Imprimir Ficha Catalografica
-\include{pretextual/catalografica}
+\input{pretextual/catalografica}
 
 % Inserir Folha de Aprovação
-\include{pretextual/assinaturas}
+\input{pretextual/assinaturas}
 
 % Dedicatória
-\include{pretextual/dedicatoria}
+\input{pretextual/dedicatoria}
 
 % Agradecimentos
-\include{pretextual/agradecimentos}
+\input{pretextual/agradecimentos}
 
 % Epígrafe
-\include{pretextual/epigrafe}
+\input{pretextual/epigrafe}
 
 % Resumo e Abstract
-\include{pretextual/resumos}
+\input{pretextual/resumos}
 
 % Lista de ilustrações
 \pdfbookmark[0]{\listfigurename}{lof}
@@ -159,27 +162,27 @@
 \setcounter{page}{1}
 
 % Inclui cada capitulo da Dissertação
-\include{capitulos/introducao}
-\include{capitulos/estadodaarte}
-\include{capitulos/Objetivos}
-\include{capitulos/ReferencialTeorico}
-\include{capitulos/Metodologia}
-\include{capitulos/resultados}
-\include{capitulos/conclusao}
+\input{capitulos/introducao}
+\input{capitulos/estadodaarte}
+\input{capitulos/Objetivos}
+\input{capitulos/ReferencialTeorico}
+\input{capitulos/Metodologia}
+\input{capitulos/resultados}
+\input{capitulos/conclusao}
 
 % PARTE - Define a divisão do documento em partes (Não é obrigatório)
 %\part{Preparação da pesquisa}
-%\include{capitulos/referencias}
-%\include{capitulos/ferramentas}
+%\input{capitulos/referencias}
+%\input{capitulos/ferramentas}
 
 % PARTE
 %\part{Proposta}
-%\include{capitulos/proposta}
+%\input{capitulos/proposta}
 
 % PARTE
 %\part{Parte Final}
-%\include{capitulos/resultados}
-\include{capitulos/conclusao}
+%\input{capitulos/resultados}
+% \input{capitulos/conclusao}
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS (Referências, Glossário, Apêndices)
@@ -187,16 +190,18 @@
 \postextual
 
 % Referências bibliográficas
-\bibliography{bibliografia}
+% \bibliographystyle{ieeetran}
+% \bibliography{bibliografia}
+\printbibliography
 
 % Glossário (Consulte o manual)
 %\glossary
 
 % Apêndices
-\include{postextual/apendices}
+\input{postextual/apendices}
 
 % Anexos
-\include{postextual/anexos}
+\input{postextual/anexos}
 
 % Índice remissivo (Consultar manual)
 %\phantompart
