@@ -5,11 +5,42 @@ temos o controle de dois parâmetro, sendo estes: azimute e elevação.
 Para efetuar o controle desses parâmetros, serão necessários dois motores que atuarão modificando
 os ângulos mencionados anteriormente. O controle do azimute será feito por 360 graus, enquanto o
 controle de elevação atuará somente em 90 graus. Desta maneira, o ângulo de visada total do mecanismo
-será dado por uma meia-esfera superior.
+será dado por uma meia-esfera superior. Essa geometria é considerada mais que suficiente para a detecção e o rastreio de qualquer satélite necessário pela estação de solo.
 
-Essa geometria é considerada mais que suficiente para a detecção e o rastreio de qualquer satélite necessário pela estação de solo.
+\section{Encoders}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/Fases_Canais_Encoder.png}
+    \caption{Representação do diagrama de fases dos canais do encoder}
+    \caption*{Fonte: \cite{vexLibrary}}
+    \label{fig:canais_encoder}
+\end{figure}
 
-\section*{assuntoooooo}\label{sec:sec1}
-\addcontentsline{toc}{section}{obj}
+Para monitorar os parâmetros de posição e velocidade do sistema, serão utilizados dois codificadores de eixo óptico (encoders) de 3 fios V5 \cite{vexLibrary}.
+Esses modelos de encoders possuem um disco interno com 90 feixes, ou seja, existem 90 pulsos distintos que o encoder consegue discernir até realizar uma rotação completa \cite{vexLibrary}. É possível expandir a resolução do enconder considerando o estado de desligado entre 
+Existem dois canais no encoder defasados $90^{\circ}$ entre eles (vide figura \ref{fig:canais_encoder}). A defasagem faz com que, ao comparar os dois sinais, existam quatro estados distintos para o sistema.
+Os estados intermediários gerados permitem que o encoder tenha uma resolução virtual de 360 pulsos (segundo tabela \ref{tab:num_estados_encoder}). Além disso, ao verificar os estados do encoder, existe uma ordem pela qual o sistema irá passar.
+Então essa característica torna possível encontrar também a direção de rotação do motor, navegando entre os estados $i \rightarrow i+1$ ou $i \rightarrow i-1$.
 
-\lipsum[34-36]
+\begin{table}[ht]
+\centering
+    \begin{tabular}{ccc}
+        \hline
+        Estado & Canal 1 & Canal2 \\
+        \hline
+        1 & 0 & 0 \\
+        2 & 1 & 0 \\
+        3 & 1 & 1 \\
+        4 & 0 & 1 \\
+    \end{tabular}
+    \caption{Lista de estados para os dois canais do encoder}
+    \label{tab:num_estados_encoder}
+\end{table}
+
+Os $360^{\circ}$ por volta resultam em uma resolução de $1^{\circ}$, que é baixa para a aplicação desejada. Uma forma simples de melhorar a resolução é inserir um acoplador
+com relação de transmissão dada por $i=\frac{\omega_ams}{\omega_obs}$, onde $\omega_smp$ é a velocidade angular do sistema amostrado, e $\omega_obs$ é a velocidade angular observada no encoder.
+Desse modo, ao obter uma relação de transmissão $i<1$, a nova resolução do sistema será dada por $\frac{1}{i}$ graus.
+
+\section{Motores}
+Para os motores do projeto, serão utilizados dois motores Pittman com caixa de redução reversível de 12 VDC, modelo GM9413-3 da marca Pittman.
+Esse motor possui uma razão de redução de $65,5:1$. Para motivos de simplificação, será observada somente a rotação do motor após a caixa de redução.

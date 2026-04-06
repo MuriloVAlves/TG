@@ -1,0 +1,505 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{Bien2021}{article}{}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=2e97d45098e5662065bc4fbca324c11c}{%
+           family={Bien},
+           familyi={B\bibinitperiod},
+           given={Duong\bibnamedelima Xuan},
+           giveni={D\bibinitperiod\bibinitdelim X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=660bb864a3e0d209bad93beb235bf5da}{%
+           family={Hoang},
+           familyi={H\bibinitperiod},
+           given={Pham\bibnamedelima Quoc},
+           giveni={P\bibinitperiod\bibinitdelim Q\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=abf98fde8fd482af4814b06136d0ac53}{%
+           family={Hung},
+           familyi={H\bibinitperiod},
+           given={Le\bibnamedelima Xuan},
+           giveni={L\bibinitperiod\bibinitdelim X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b43cb74a6817d217454cccb9ab4d71ec}{%
+           family={Tung},
+           familyi={T\bibinitperiod},
+           given={Do\bibnamedelima Manh},
+           giveni={D\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3adafb3d2a134a414686eaa9e9e378d5}{%
+           family={Thanh},
+           familyi={T\bibinitperiod},
+           given={Nguyen\bibnamedelima Tai-Hoai},
+           giveni={N\bibinitperiod\bibinitdelim T\bibinithyphendelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b5aecfdddf31cc42f078e5dd0aeac0be}{%
+           family={Phong},
+           familyi={P\bibinitperiod},
+           given={Nguyen\bibnamedelima Hong},
+           giveni={N\bibinitperiod\bibinitdelim H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f7d2816030689d96890a3ad39501b47a}{%
+           family={Trung},
+           familyi={T\bibinitperiod},
+           given={Vuong\bibnamedelima Tien},
+           giveni={V\bibinitperiod\bibinitdelim T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=586a308d6d3ffc460d7b7d6693f015dd}{%
+           family={Van\bibnamedelima Tuan},
+           familyi={V\bibinitperiod\bibinitdelim T\bibinitperiod},
+           given={Pham},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Viet Nam National University Ho Chi Minh City}%
+      }
+      \strng{namehash}{c67b266c04832f55c1a2b4c8e70dcf25}
+      \strng{fullhash}{b44b13bdcabfd8e8d6c5671e2235a85b}
+      \strng{fullhashraw}{b44b13bdcabfd8e8d6c5671e2235a85b}
+      \strng{bibnamehash}{c67b266c04832f55c1a2b4c8e70dcf25}
+      \strng{authorbibnamehash}{c67b266c04832f55c1a2b4c8e70dcf25}
+      \strng{authornamehash}{c67b266c04832f55c1a2b4c8e70dcf25}
+      \strng{authorfullhash}{b44b13bdcabfd8e8d6c5671e2235a85b}
+      \strng{authorfullhashraw}{b44b13bdcabfd8e8d6c5671e2235a85b}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The trend of scientific development in the future cannot fail to mention the great influence of the space field, but in the immediate future, the observational satellite systems are related to communication technology. In fact, in some countries with strong development of communication technology and space technology, the mechanical system of geostationary satellite monitoring antennas has certainly been thoroughly resolved. However, because of a specific technology, the sharing and transferring of design and manufacturing technology to developing countries is a great challenge. It is almost difficult to find published works related to mechanical design calculation and manufacture of geostationary satellite monitoring antenna systems. The problem of proactive grasping of technology, step by step autonomy in manufacturing technology of telecommunications equipment related to space technology has always been the goal of developing countries like Vietnam to limit technology dependence, minimizing technology transfer costs, ensuring national security. The first step in these problems is the autonomous construction of terrestrial transceivers such as geostationary satellite monitoring antennas. This paper presents the kinematics modeling analysis of the mechanical system of the geostationary satellite monitoring antenna. Each component of the antenna system is assumed a rigid body. The mathematical model is built based on multi-bodies kinematics and dynamics theory. The DENAVIT-HARTENBERG (D-H) homogeneous matrix method was used to construct the kinematics equations. The forward kinematics problem is analyzed to determine the position, velocity, acceleration, and workspace of the antenna system with given system motion limits. The inverse kinematics problem is mentioned to determine the kinematics behaviors of the antenna system with a given motion path in the workspace. The numerical simulation results kinematics were successfully applied in practice, especially for dynamics and control system analysis of geostationary satellite antenna systems.}
+      \field{journaltitle}{Sci. Tech. Dev. J.- Eng. Tech.}
+      \field{month}{3}
+      \field{number}{1}
+      \field{title}{Kinematics modeling analysis of the geostationary satellite monitoring antenna system}
+      \field{volume}{4}
+      \field{year}{2021}
+      \field{pages}{first}
+      \range{pages}{-1}
+    \endentry
+    \entry{app12199505}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=dc4ecfc13fb5408d2ad19fed0899a9a2}{%
+           family={Espinoza},
+           familyi={E\bibinitperiod},
+           given={Miguel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=05b9d60160a1a5d27e2225761820dfc9}{%
+           family={Olguín-Díaz},
+           familyi={O\bibinithyphendelim D\bibinitperiod},
+           given={Ernesto},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7420a553f4a359e722582fd3803a4cd9}{%
+           family={Parra-Vega},
+           familyi={P\bibinithyphendelim V\bibinitperiod},
+           given={Vicente},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f0d78304a0c803fb43c33ee35c1dca67}{%
+           family={Alvarez-Vargas},
+           familyi={A\bibinithyphendelim V\bibinitperiod},
+           given={Rogelio},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5c176166f416bed9cc79bdd4e0a263e5}
+      \strng{fullhash}{59b119948205ea2ebfe5c93d37870e33}
+      \strng{fullhashraw}{59b119948205ea2ebfe5c93d37870e33}
+      \strng{bibnamehash}{5c176166f416bed9cc79bdd4e0a263e5}
+      \strng{authorbibnamehash}{5c176166f416bed9cc79bdd4e0a263e5}
+      \strng{authornamehash}{5c176166f416bed9cc79bdd4e0a263e5}
+      \strng{authorfullhash}{59b119948205ea2ebfe5c93d37870e33}
+      \strng{authorfullhashraw}{59b119948205ea2ebfe5c93d37870e33}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Passive LEO (Low Earth Orbit) satellites are a telecom premier option. However, LEO satellites impose not only stringent specifications on the resolution, precision and repeatability but also requiring advanced antenna technology for signal downlinking. To efficiently downlink LEO signals at each passage onto a given Earth region, we explored large size passive Earth antenna and an array of smaller size active Earth antennas to minimize the trajectory loss. To guarantee design specifications, the dynamics cannot be neglected given the size and inertia of base and antenna. In this paper, it is proposed the design, path planning and control of a six DoF robotic antenna maneuvering the antenna subject to aerodynamic wind disturbance. The system maneuvers to point at the LEO satellite over the whole envelope with the required precision to guarantee robust point-to-point tracking. Representative simulation results for three geolocations shows practical tracking with off-the-shelf-component actuators, without requiring any knowledge of the dynamics while withstanding state-dependent persistent disturbances.}
+      \field{issn}{2076-3417}
+      \field{journaltitle}{Applied Sciences}
+      \field{number}{19}
+      \field{title}{A Parallel Robotic Antenna Design for Downlinking Leo Satellite Signal Subject to Wind Disturbance}
+      \field{volume}{12}
+      \field{year}{2022}
+      \verb{doi}
+      \verb 10.3390/app12199505
+      \endverb
+      \verb{urlraw}
+      \verb https://www.mdpi.com/2076-3417/12/19/9505
+      \endverb
+      \verb{url}
+      \verb https://www.mdpi.com/2076-3417/12/19/9505
+      \endverb
+    \endentry
+    \entry{Ford2008}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=48c67f695476873970047e4115ac36a5}{%
+           family={Ford},
+           familyi={F\bibinitperiod},
+           given={Steve},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {American Radio Relay League}%
+      }
+      \strng{namehash}{48c67f695476873970047e4115ac36a5}
+      \strng{fullhash}{48c67f695476873970047e4115ac36a5}
+      \strng{fullhashraw}{48c67f695476873970047e4115ac36a5}
+      \strng{bibnamehash}{48c67f695476873970047e4115ac36a5}
+      \strng{authorbibnamehash}{48c67f695476873970047e4115ac36a5}
+      \strng{authornamehash}{48c67f695476873970047e4115ac36a5}
+      \strng{authorfullhash}{48c67f695476873970047e4115ac36a5}
+      \strng{authorfullhashraw}{48c67f695476873970047e4115ac36a5}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{12}
+      \field{title}{The {ARRL} Satellite Handbook}
+      \field{year}{2008}
+    \endentry
+    \entry{fusco2006}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d325eda72edeb5c7cc421f950f2dd286}{%
+           family={FUSCO},
+           familyi={F\bibinitperiod},
+           given={Viincent\bibnamedelima F.},
+           giveni={V\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Porto Alegre}%
+      }
+      \list{publisher}{1}{%
+        {Bookman}%
+      }
+      \strng{namehash}{d325eda72edeb5c7cc421f950f2dd286}
+      \strng{fullhash}{d325eda72edeb5c7cc421f950f2dd286}
+      \strng{fullhashraw}{d325eda72edeb5c7cc421f950f2dd286}
+      \strng{bibnamehash}{d325eda72edeb5c7cc421f950f2dd286}
+      \strng{authorbibnamehash}{d325eda72edeb5c7cc421f950f2dd286}
+      \strng{authornamehash}{d325eda72edeb5c7cc421f950f2dd286}
+      \strng{authorfullhash}{d325eda72edeb5c7cc421f950f2dd286}
+      \strng{authorfullhashraw}{d325eda72edeb5c7cc421f950f2dd286}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Teoria e técnicas de antenas: princípios e prática}
+      \field{year}{2006}
+    \endentry
+    \entry{gholamiomali2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=caac99ec2b36723a1b6c5be1fd62c559}{%
+           family={GholamiOmali},
+           familyi={G\bibinitperiod},
+           given={AmirMohammad},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4f05ce510076c4f5f30ac7e33209c38b}{%
+           family={Alizadeh},
+           familyi={A\bibinitperiod},
+           given={Milad},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9557b9c377fbfc2abab4ca02dffb2ff8}{%
+           family={Sadedel},
+           familyi={S\bibinitperiod},
+           given={Majid},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Nature Publishing Group UK London}%
+      }
+      \strng{namehash}{cdfc4bb496405d2018e8ab718647ad8f}
+      \strng{fullhash}{cdfc4bb496405d2018e8ab718647ad8f}
+      \strng{fullhashraw}{cdfc4bb496405d2018e8ab718647ad8f}
+      \strng{bibnamehash}{cdfc4bb496405d2018e8ab718647ad8f}
+      \strng{authorbibnamehash}{cdfc4bb496405d2018e8ab718647ad8f}
+      \strng{authornamehash}{cdfc4bb496405d2018e8ab718647ad8f}
+      \strng{authorfullhash}{cdfc4bb496405d2018e8ab718647ad8f}
+      \strng{authorfullhashraw}{cdfc4bb496405d2018e8ab718647ad8f}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific Reports}
+      \field{number}{1}
+      \field{title}{Simulation and kinematic analysis of a 3-DOF marine antenna pedestal focusing on singularity avoidance and its effects on angular velocity and angular acceleration}
+      \field{volume}{14}
+      \field{year}{2024}
+      \field{pages}{28373}
+      \range{pages}{1}
+    \endentry
+    \entry{kim2023}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=d07ed90cfd7f2602b0783617c23d7b12}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Se-jun},
+           giveni={S\bibinithyphendelim j\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9fecd0e04a36224130a5b2bc1b89d222}{%
+           family={Choi},
+           familyi={C\bibinitperiod},
+           given={Jong-pil},
+           giveni={J\bibinithyphendelim p\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c44df0a44d9b36447823c2bb60e93bad}{%
+           family={Oh},
+           familyi={O\bibinitperiod},
+           given={Dong-huyn},
+           giveni={D\bibinithyphendelim h\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {The Korean Navigation Institute}%
+      }
+      \strng{namehash}{958368749ce9defb2f231ec6dc5b8996}
+      \strng{fullhash}{958368749ce9defb2f231ec6dc5b8996}
+      \strng{fullhashraw}{958368749ce9defb2f231ec6dc5b8996}
+      \strng{bibnamehash}{958368749ce9defb2f231ec6dc5b8996}
+      \strng{authorbibnamehash}{958368749ce9defb2f231ec6dc5b8996}
+      \strng{authornamehash}{958368749ce9defb2f231ec6dc5b8996}
+      \strng{authorfullhash}{958368749ce9defb2f231ec6dc5b8996}
+      \strng{authorfullhashraw}{958368749ce9defb2f231ec6dc5b8996}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Advanced Navigation Technology}
+      \field{number}{6}
+      \field{title}{Development of Ground Antenna Tracker for Drones Based on Satellite System}
+      \field{volume}{27}
+      \field{year}{2023}
+      \field{pages}{740\bibrangedash 745}
+      \range{pages}{6}
+    \endentry
+    \entry{nugroho2018}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=f0a3884273fa76fd57c7bfcdd85e5b9b}{%
+           family={Nugroho},
+           familyi={N\bibinitperiod},
+           given={Gesang},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b4df75d449000abbb0ce06b59adfe29b}{%
+           family={Dectaviansyah},
+           familyi={D\bibinitperiod},
+           given={Dicky},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{36259778b6dba81336ca71a1fe60102c}
+      \strng{fullhash}{36259778b6dba81336ca71a1fe60102c}
+      \strng{fullhashraw}{36259778b6dba81336ca71a1fe60102c}
+      \strng{bibnamehash}{36259778b6dba81336ca71a1fe60102c}
+      \strng{authorbibnamehash}{36259778b6dba81336ca71a1fe60102c}
+      \strng{authornamehash}{36259778b6dba81336ca71a1fe60102c}
+      \strng{authorfullhash}{36259778b6dba81336ca71a1fe60102c}
+      \strng{authorfullhashraw}{36259778b6dba81336ca71a1fe60102c}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Mechatronics, Electrical Power, and Vehicular Technology}
+      \field{number}{1}
+      \field{title}{Design, manufacture and performance analysis of an automatic antenna tracker for an unmanned aerial vehicle (UAV)}
+      \field{volume}{9}
+      \field{year}{2018}
+      \field{pages}{32\bibrangedash 40}
+      \range{pages}{9}
+    \endentry
+    \entry{rochol2018}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=9ef30d050e50ff0299592cb392c583e9}{%
+           family={ROCHOL},
+           familyi={R\bibinitperiod},
+           given={Juergen},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Porto Alegre}%
+      }
+      \list{publisher}{1}{%
+        {LTC}%
+      }
+      \strng{namehash}{9ef30d050e50ff0299592cb392c583e9}
+      \strng{fullhash}{9ef30d050e50ff0299592cb392c583e9}
+      \strng{fullhashraw}{9ef30d050e50ff0299592cb392c583e9}
+      \strng{bibnamehash}{9ef30d050e50ff0299592cb392c583e9}
+      \strng{authorbibnamehash}{9ef30d050e50ff0299592cb392c583e9}
+      \strng{authornamehash}{9ef30d050e50ff0299592cb392c583e9}
+      \strng{authorfullhash}{9ef30d050e50ff0299592cb392c583e9}
+      \strng{authorfullhashraw}{9ef30d050e50ff0299592cb392c583e9}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Sistemas de comunicação sem fio}
+      \field{year}{2018}
+    \endentry
+    \entry{ueba2016}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=91752cd7a83d813a54c2361ec4d26b2b}{%
+           family={Ueba},
+           familyi={U\bibinitperiod},
+           given={Masazumi},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6d4c8ba5d832b5250f74dc55bfa2cf61}{%
+           family={Suzaki},
+           familyi={S\bibinitperiod},
+           given={Kouhei},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=16b5bf6076c1c6d260973923da0fbed5}{%
+           family={Sugiyama},
+           familyi={S\bibinitperiod},
+           given={Takatoshi},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{2}{%
+        {THE JAPAN SOCIETY FOR AERONAUTICAL}%
+        {SPACE SCIENCES}%
+      }
+      \strng{namehash}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \strng{fullhash}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \strng{fullhashraw}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \strng{bibnamehash}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \strng{authorbibnamehash}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \strng{authornamehash}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \strng{authorfullhash}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \strng{authorfullhashraw}{21ee1e3c52e3be0515f6c7e6b31ca41c}
+      \field{sortinit}{U}
+      \field{sortinithash}{6901a00e45705986ee5e7ca9fd39adca}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{TRANSACTIONS OF THE JAPAN SOCIETY FOR AERONAUTICAL AND SPACE SCIENCES, AEROSPACE TECHNOLOGY JAPAN}
+      \field{number}{ists30}
+      \field{title}{Study on Hybrid Satellite-tracking Antenna Control System Using Torque Compensation Methods for Small Vessels}
+      \field{volume}{14}
+      \field{year}{2016}
+      \field{pages}{Pj\_7\bibrangedash Pj\_12}
+      \range{pages}{-1}
+    \endentry
+    \entry{hubregt2014}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=cbb8d9a95a20665821afcb32cee04210}{%
+           family={VISSER},
+           familyi={V\bibinitperiod},
+           given={Hubregt\bibnamedelima J.},
+           giveni={H\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Rio de Janeiro}%
+      }
+      \list{publisher}{1}{%
+        {LTC}%
+      }
+      \strng{namehash}{cbb8d9a95a20665821afcb32cee04210}
+      \strng{fullhash}{cbb8d9a95a20665821afcb32cee04210}
+      \strng{fullhashraw}{cbb8d9a95a20665821afcb32cee04210}
+      \strng{bibnamehash}{cbb8d9a95a20665821afcb32cee04210}
+      \strng{authorbibnamehash}{cbb8d9a95a20665821afcb32cee04210}
+      \strng{authornamehash}{cbb8d9a95a20665821afcb32cee04210}
+      \strng{authorfullhash}{cbb8d9a95a20665821afcb32cee04210}
+      \strng{authorfullhashraw}{cbb8d9a95a20665821afcb32cee04210}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Teoria e Aplicações de Antenas}
+      \field{year}{2014}
+    \endentry
+    \entry{wang2016}{inproceedings}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=e2baaf1c7fd30a6655c2f7e17a4ea643}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yunlong},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=aa3b36e8eb4ceec625a5520552348242}{%
+           family={Soltani},
+           familyi={S\bibinitperiod},
+           given={Mohsen},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{a613893e1544b547165f4e95b55ea074}
+      \strng{fullhash}{a613893e1544b547165f4e95b55ea074}
+      \strng{fullhashraw}{a613893e1544b547165f4e95b55ea074}
+      \strng{bibnamehash}{a613893e1544b547165f4e95b55ea074}
+      \strng{authorbibnamehash}{a613893e1544b547165f4e95b55ea074}
+      \strng{authornamehash}{a613893e1544b547165f4e95b55ea074}
+      \strng{authorfullhash}{a613893e1544b547165f4e95b55ea074}
+      \strng{authorfullhashraw}{a613893e1544b547165f4e95b55ea074}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2016 UKSim-AMSS 18th International Conference on Computer Modelling and Simulation (UKSim)}
+      \field{title}{Dynamic modeling and simulation of marine satellite tracking antenna using Lagrange method}
+      \field{year}{2016}
+      \field{pages}{135\bibrangedash 140}
+      \range{pages}{6}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
