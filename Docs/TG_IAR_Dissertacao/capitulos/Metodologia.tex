@@ -20,7 +20,7 @@ Para monitorar os parâmetros de posição e velocidade do sistema, serão utili
 Esses modelos de encoders possuem um disco interno com 90 feixes, ou seja, existem 90 pulsos distintos que o encoder consegue discernir até realizar uma rotação completa \cite{vexLibrary}. É possível expandir a resolução do enconder considerando o estado de desligado entre 
 Existem dois canais no encoder defasados $90^{\circ}$ entre eles (vide figura \ref{fig:canais_encoder}). A defasagem faz com que, ao comparar os dois sinais, existam quatro estados distintos para o sistema.
 Os estados intermediários gerados permitem que o encoder tenha uma resolução virtual de 360 pulsos (segundo tabela \ref{tab:num_estados_encoder}). Além disso, ao verificar os estados do encoder, existe uma ordem pela qual o sistema irá passar.
-Então essa característica torna possível encontrar também a direção de rotação do motor, navegando entre os estados $i \rightarrow i+1$ ou $i \rightarrow i-1$.
+Então essa característica torna possível encontrar também a direção de rotação do motor, navegando entre os estados $k \rightarrow k+1$ ou $k \rightarrow k-1$.
 
 \begin{table}[ht]
 \centering
