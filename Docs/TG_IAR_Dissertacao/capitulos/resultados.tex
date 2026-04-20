@@ -1,28 +1,34 @@
 \chapter{Resultados e Discussão}\label{cap:resultados}
 
-Utilizando o encoder descrito anteriormente para obter as medidas e utilizando somente um dos canais para simplificação do experimento, foi possível levantar a curva para relacionar rotação e porcentagem do PWM.
-Os dados encontrados estão na tabela \ref{tab:pwm_rpm}
-\begin{table}
+\section{Levantamento das Curvas dos Motores}
+Com os dados levantados, foi possível obter as curvas dos motores para um ciclo de trabalho crescente (figura \ref{fig:curva_crescente}) e um ciclo de trabalho decrescente (figura \ref{fig:curva_decrescente}).
+A partir das curvas, é possível perceber característica importantes sobre os motores. A primeira característica é a de quando os motores conseguem vencer o atrito estático e iniciar a rotação. Pela curva de duty cycle crescente, os motores deverão partir com 45\% do ciclo.
+Outra característica é o controle mínimo de velocidade possível. Isso é obtido observando o duty cycle mínimo no qual ainda é possível observar uma rotação mínima. Dessa forma, é possível afirmar que os motores ainda estarão com rotação enquanto o duty cycle estiver por volta de 34\%.
+Esses dois fatores indicam que, ao vencer o atrito estático, é possível obter mais 11\% de duty cycle para rotações menores.
+Um terceiro fator é a velocidade máxima dos motores, na qual a menor velocidade máxima é de 890 RPM. E o último parâmetro que pode ser obtido é o de que a velocidade mínima controlável de 23 RPM, sendo que para o ciclo de trabalho de 34\%, a velocidade é de aproximadamente 77 RPM.
+\begin{figure}[h]
     \centering
-    \begin{tabular}{cc}
-        \hline
-        \%PWM & RPM \\
-        \hline
-        0 & 0 \\
-        20 & 44 \\
-        40 & 376 \\
-        60 & 613 \\
-        80 & 761 \\
-        100 & 930 \\
-    \end{tabular}
-    \caption{Porcentagem de PWM e RPM medido para motores GM9413-3}
-    \label{tab:pwm_rpm}
-\end{table}
+    \includegraphics[width=0.8\textwidth]{figs/curva_motor_crescente.png}
+    \caption{Gráfico relacionando RPM e duty cycle crescente}
+    \caption*{Fonte: Autor(2026)}
+    \label{fig:curva_crescente}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/curva_motor_decrescente.png}
+    \caption{Gráfico relacionando RPM e duty cycle decrescente}
+    \caption*{Fonte: Autor(2026)}
+    \label{fig:curva_decrescente}
+\end{figure}
+É importante fazer algumas resalvas sobre as anomalias observadas nos experimentos. A primeira é que o sistema não foi travado em absoluto, então parte da energia pode ter sido desperdiçada em um torque que provoque um efeito giroscópico no sistema e tenta girar os dois elementos.
+A segunda é que durante alguns testes, foi observado um atrito entre o disco óptico do encoder e o interior do mesmo. Isso fez com que os motores não pudessem atingir suas verdadeiras rotações em alguns momentos, causando quedas bruscas na velocidade e mostrando anomalias no gráfico.
+Em particular, no experimento do segundo motor no sentido anti-horário, ocorreu algo inesperado: o encoder acabou rotacionando e saindo de alinhamento, criando um grande atrito interno no encoder. Esse fenômeno ocorreu três vezes durante os testes, causando as grandes diferenças de velocidade vistas no gráfico.
+Além disso, em uma ação para salvar os dados do teste, o encoder foi segurado. Ao fazer essa ação, foi possível observar uma redução na rotação do motor, porém foi a única solução encontrada já que manter o sistema solto fazia o motor voltar a rotacionar o encoder e travar o eixo como explicado anteriormente.
+Como as anomalias ocorrem em regiões curtas do gráfico e a velocidade pode ser considerada semelhante à de outros motores, os dados puderam ser aproveitados.
 
-\section{Base de Dados}
-
-\lipsum[72]
-
-\section{Considerações Finais}
-
-\lipsum[74]
+\section{Cálculo do Mecanismo de Elevação}
+Para auxiliar os cálculos do mecanismo de elevação, é possível normalizar os tamanhos dos elementos, permitindo o cálculo de suas proporções. Também foram consideradas algumas regiões do 
+Foi desenvolvido um programa para o cálculo numérico dos parâmetros do mecanismo. O programa funciona da seguinte forma: o fuso é considerado com tamanho unitário. O programa então varia o tamanho do poste e do braço da antena, com valores menores ou maiores que o unitário.
+O programa então calcula o maior e o menor ângulo possível utilizando algumas seções do fuso, que vão de 10\% a 90\% do tamanho total. Cada iteração salva seus parâmetros de tamanho do fuso e ângulo em uma nova lista. É importante ressaltar que essa lista possui todas as geometrias possíves de antena.
+Após os cálculos iniciais, o programa passa a encontrar as geometrias com a maior distância percorrida do fuso e minimiza a diferença entre a angulação mínima e máxima para a mais próxima possível de 90 graus ($\frac{\pi}{2}$).
+Por último, o programa insere um desvio na angulação do braço da antena para compensar pela angulação real ser fora dos ângulos de 0 a 90 graus. Dessa forma, é calculada toda geometria para o mecanismo.
