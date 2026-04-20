@@ -38,9 +38,54 @@ Então essa característica torna possível encontrar também a direção de rot
 \end{table}
 
 Os $360^{\circ}$ por volta resultam em uma resolução de $1^{\circ}$, que é baixa para a aplicação desejada. Uma forma simples de melhorar a resolução é inserir um acoplador
-com relação de transmissão dada por $i=\frac{\omega_ams}{\omega_obs}$, onde $\omega_smp$ é a velocidade angular do sistema amostrado, e $\omega_obs$ é a velocidade angular observada no encoder.
-Desse modo, ao obter uma relação de transmissão $i<1$, a nova resolução do sistema será dada por $\frac{1}{i}$ graus.
+com relação de transmissão dada por $i=\frac{\omega_ams}{\omega_obs}$, onde $\omega_ams$ é a velocidade angular do sistema amostrado, e $\omega_obs$ é a velocidade angular observada no encoder.
+Desse modo, ao obter uma relação de transmissão $i>1$, a nova resolução do sistema será dada por $\frac{1}{i}$ graus.
 
 \section{Motores}
 Para os motores do projeto, serão utilizados dois motores Pittman com caixa de redução reversível de 12 VDC, modelo GM9413-3 da marca Pittman.
 Esse motor possui uma razão de redução de $65,5:1$. Para motivos de simplificação, será observada somente a rotação do motor após a caixa de redução.
+Os testes realizados foram utilizando um programa especial que envia uma variação de 1024 estados (10 bits de resolução) de tempo de trabalho (duty cycle, DC) a uma frequência de 5 kHz para uma ponte H, na qual o motor é conectado (vide figura \ref{fig:setup_motor}). Ambos motores foram girados tanto para sentido horário (indicado por "HOR") e anti-horário ("ANTI").
+O programa faz duas medidas, sendo uma para o duty cycle crescente e uma para decrescente. Esse teste é feito para determinar alguns parâmetros do motor, como linearidade e porcentagem de duty cycle para partida ou parada.
+A união entre o motor e o encoder foi feita utilizando um acoplador flexível de 6 mm x 8 mm. Este acoplador serve para unir os dois eixos de tamanhos diferentes (8 mm do motor e 6 mm do eixo do encoder), além de permitir a passagem de potência mesmo com desalinhamento angular dos eixos.
+Como o encoder e o eixo possuem pouco momento de inércia quando comparado ao motor, é plausível inferir que o motor está funcionando em vazio.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/Setup_Motor.jpeg}
+    \caption{Montagem para teste de rotação do motor}
+    \caption*{Fonte: Autor(2026)}
+    \label{fig:setup_motor}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/scope_PWM_enc.png}
+    \caption{Sinais de PWM (verde) e pulso do enconder (amarelo) vistos no osciloscópio}
+    \caption*{Fonte: Autor(2026)}
+    \label{fig:exemplo_dc_osc}
+\end{figure}
+Com os dados levantados, foi possível obter as curvas dos motores para um ciclo de trabalho crescente (figura \ref{fig:curva_crescente}) e um ciclo de trabalho decrescente (figura \ref{fig:curva_decrescente}).
+A partir das curvas, é possível perceber característica importantes sobre os motores. A primeira característica é a de quando os motores conseguem vencer o atrito estático e iniciar a rotação. Pela curva de duty cycle crescente, os motores deverão partir com 45\% do ciclo.
+Outra característica é o controle mínimo de velocidade possível. Isso é obtido observando o duty cycle mínimo no qual ainda é possível observar uma rotação mínima. Dessa forma, é possível afirmar que os motores ainda estarão com rotação enquanto o duty cycle estiver por volta de 34\%.
+Esses dois fatores indicam que, ao vencer o atrito estático, é possível obter mais 11\% de duty cycle para rotações menores.
+Um terceiro fator é a velocidade máxima dos motores, na qual a menor velocidade máxima é de 890 RPM. E o último parâmetro que pode ser obtido é o de que a velocidade mínima controlável de 23 RPM, sendo que para o ciclo de trabalho de 34\%, a velocidade é de aproximadamente 77 RPM.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/curva_motor_crescente.png}
+    \caption{Gráfico relacionando RPM e duty cycle crescente}
+    \caption*{Fonte: Autor(2026)}
+    \label{fig:curva_crescente}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/curva_motor_decrescente.png}
+    \caption{Gráfico relacionando RPM e duty cycle decrescente}
+    \caption*{Fonte: Autor(2026)}
+    \label{fig:curva_decrescente}
+\end{figure}
+É importante fazer algumas resalvas sobre as anomalias observadas nos experimentos. A primeira é que o sistema não foi travado em absoluto, então parte da energia pode ter sido desperdiçada em um torque que provoque um efeito giroscópico no sistema e tenta girar os dois elementos.
+A segunda é que durante alguns testes, foi observado um atrito entre o disco óptico do encoder e o interior do mesmo. Isso fez com que os motores não pudessem atingir suas verdadeiras rotações em alguns momentos, causando quedas bruscas na velocidade e mostrando anomalias no gráfico.
+Em particular, no experimento do segundo motor no sentido anti-horário, ocorreu algo inesperado: o encoder acabou rotacionando e saindo de alinhamento, criando um grande atrito interno no encoder. Esse fenômeno ocorreu três vezes durante os testes, causando as grandes diferenças de velocidade vistas no gráfico.
+Além disso, em uma ação para salvar os dados do teste, o encoder foi segurado. Ao fazer essa ação, foi possível observar uma redução na rotação do motor, porém foi a única solução encontrada já que manter o sistema solto fazia o motor voltar a rotacionar o encoder e travar o eixo como explicado anteriormente.
+Como as anomalias ocorrem em regiões curtas do gráfico e a velocidade pode ser considerada semelhante à de outros motores, os dados puderam ser aproveitados.
+
+(TODO: explicar a resolução do azimute)
+(TODO: explicar o triângulo da elevação)

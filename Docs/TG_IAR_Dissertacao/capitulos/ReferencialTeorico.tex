@@ -3,7 +3,7 @@
 \chapter{Referencial Teórico}\label{cap:teo}
 
 Para iniciar a modelagem do sistema, é necessário descrever o mecanismo.
-Segundo \citeauthor{Ford2008}, o sistema pode ser modelado utilizando como base um (** A definição seria essa, mas é necessário confirmar e encontrar um modelo mostrando a dinâmica do sistema) manipulador esférico de dois graus de liberdade.
+Segundo \citeauthor{Ford2008}, o sistema pode ser modelado utilizando como base um (TODO:  A definição seria essa, mas é necessário confirmar e encontrar um modelo mostrando a dinâmica do sistema) manipulador esférico de dois graus de liberdade.
 Utilizando o modelo pela figura \ref{fig:pedestal}, e utilizando como referência a modelagem de \cite{Bien2021} o ponto fixo será o da base, dado pelo referencial de coordenadas $O_0$, com versores $[x_0,y_0,z_0]$.
 \begin{figure}[ht]
     \centering
@@ -20,17 +20,17 @@ O modelo da cinemática direta do sistema pode ser obtido a partir dos parâmetr
 \centering
 \begin{tabular}{rrrrr}
     \hline
-    Parâmetro & $\theta_i$ & $v_i$ & $a_i$ & $\alpha_i$ \\
+    Parâmetro & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
     \hline
     $O_0O_1$ & $\theta$ & h & 0 & frac{$\pi$}{2} \\
-    $O_1O_2$ & $\phi$ & d & 0 & 0 \\
+    $O_1O_2$ & $\phi$ & -d & 0 & 0 \\
     $O_2O_3$ & 0 & 0 & l & 0 \\
 \end{tabular}
 \caption{Tabela de parâmetros D-H para o sistema}
 \label{tab:params_d_h}
 \end{table}
 
-A partir da tabela D-H, a cinemática do sistema está completamente descrita e é possível determinar as matrizes de transformação homogênea de cada ponto.
+A partir da tabela D-H, a cinemática do sistema está completamente descrita e é possível determinar as matrizes de transformação homogênea de cada ponto utilizando o parâmetro \citeauthor{Siciliano2008}.
 \begin{equation}
 ^{i-1}_{i}T = \begin{bmatrix}
 \cos \theta_i & -\sin \theta_i \cos \alpha_i & \sin \theta_i \sin \alpha_i & a_i \cos \theta_i \\
@@ -39,33 +39,32 @@ A partir da tabela D-H, a cinemática do sistema está completamente descrita e 
 0 & 0 & 0 & 1
 \end{bmatrix}
 \end{equation}
-(** Continuar a modelagem do sistema)
-É possível descrever o mecanismo do pedestal a partir de dois movimentos independentes, sendo um de azimute e um de elevação.
+Assim, é possível calcular como referenciais intermediários os seguintes pontos:
+\begin{equation}
+^{0}_{1}T = \begin{bmatrix}
+\cos \theta & 0 & \sin \theta & 0 \\
+\sin \theta_i & \cos \theta_i \cos \alpha_i & -\cos \theta_i \sin \alpha_i & a_i \sin \theta_i \\
+0 & 1 & 0 & h \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\end{equation}
+\begin{equation}
+^{1}_{2}T = \begin{bmatrix}
+\cos \phi & -\sin \phi & 0 & 0 \\
+\sin \phi & \cos \phi & 0 & 0 \\
+0 & 0 & 1 & -d \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\end{equation}
+\begin{equation}
+^{2}_{3}T = \begin{bmatrix}
+1 & 0 & 0 & l \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+\end{equation}
+(TODO: Continuar a descrição com a multiplicação de matrizes)
+É possível descrever o mecanismo de apontamento da antena do pedestal a partir de dois movimentos independentes, sendo um de azimute e um de elevação.
 Para descrever uma semi-esfera, pode-se utilizar uma rotação de $0$ até $2\pi$ em azimute e $0$ até $\frac{\pi}{2} $ na elevação.
-
-% \begin{equation}
-% R_x(\theta) = \begin{pmatrix}
-% 1 & 0 & 0 \\
-% 0 & \cos\theta & -\sin\theta \\
-% 0 & \sin\theta & \cos\theta
-% \end{pmatrix}
-% \label{eq:rotacao_x}
-% \end{equation}
-% \begin{equation}
-% R_y(\theta) = \begin{pmatrix}
-% \cos\theta & 0 & \sin\theta \\
-% 0 & 1 & 0 \\
-% -\sin\theta & 0 & \cos\theta
-% \end{pmatrix}
-% \label{eq:rotacao_y}
-% \end{equation}
-% \begin{equation}
-% R_z(\theta) = \begin{pmatrix}
-% \cos\theta & -\sin\theta & 0 \\
-% \sin\theta & \cos\theta & 0 \\
-% 0 & 0 & 1
-% \end{pmatrix}
-% \label{eq:rotacao_z}
-% \end{equation}
-
-\lipsum[34-36]
+(TODO: Descrever como é possível descrever a posição utilizando os ângulos)
