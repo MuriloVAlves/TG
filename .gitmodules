@@ -1,0 +1,3 @@
+[submodule "satelliterotator_helicone"]
+	path = satelliterotator_helicone
+	url = https://github.com/MuriloVAlves/satelliterotator_helicone.git
