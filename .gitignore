@@ -15,6 +15,10 @@ Docs/TG_IAR_Dissertacao/**/*.xml
 Docs/TG_IAR_Dissertacao/**/*.toc
 Portables/*
 
+# Logs
+*.pcapng
+*.log
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
