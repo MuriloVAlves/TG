@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import socket, argparse
 from time import time, sleep
+from datetime import datetime
 
 TIMEOUT = 1
 MAX_RETRIES = 100
@@ -8,7 +9,14 @@ MAX_RETRIES = 100
 def threading_handle(handle):
     pass
 
+def log_capture(file,writeable):
+    with open(file,'a') as arquivo:
+        arquivo.write(f"{time()} {writeable}\n")
+
+
 def main(queue_handle=""):
+    capture_name = ""
+    capture_timeout = 0
     p = argparse.ArgumentParser()
     p.add_argument("--listen-host", default="127.0.0.1")
     p.add_argument("--listen-port", type=int, default=4533)
@@ -43,12 +51,19 @@ def main(queue_handle=""):
 
                         if cmd == 'p':
                             resp = f"{float(last_az):.16f} {float(last_el):.16f}"
+                            capture_timeout += 1
+                            if capture_timeout >3:
+                                capture_name = ""
                         elif cmd[0] == 'P':
                             _,az,el = cmd.split(' ')
                             resp = f"P {az} {el}"
                             last_az = az
                             last_el = el
                             threading_handle((az,el))
+                            capture_timeout = 0
+                            if capture_name == "":
+                                capture_name = f"./tracks/capture-{str(datetime.now()).replace(' ','_').replace(':','-').replace('.','_')}.txt"
+                            log_capture(capture_name,cmd)
                         elif cmd[0].upper() == 'S':
                             resp = "S0"
                         elif cmd[0].upper() == 'Q':

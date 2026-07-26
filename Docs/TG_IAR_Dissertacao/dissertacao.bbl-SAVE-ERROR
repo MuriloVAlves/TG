@@ -380,6 +380,106 @@
       \field{title}{Sistemas de comunicação sem fio}
       \field{year}{2018}
     \endentry
+    \entry{Siciliano2008}{book}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=38f7a70abf2d86e432d63826f560ab93}{%
+           family={Siciliano},
+           familyi={S\bibinitperiod},
+           given={Bruno},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8ee631ade831cd9df4fdd3ecba074704}{%
+           family={Sciavicco},
+           familyi={S\bibinitperiod},
+           given={Lorenzo},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ff3e3865edda89166207ec2d8a4c22aa}{%
+           family={Villani},
+           familyi={V\bibinitperiod},
+           given={Luigi},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dcc89269b2eb1155024b2da9fd7c68eb}{%
+           family={Oriolo},
+           familyi={O\bibinitperiod},
+           given={Giuseppe},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{language}{1}{%
+        {en}%
+      }
+      \list{location}{1}{%
+        {London, England}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{87b7a62a01263043a997b937dfe79845}
+      \strng{fullhash}{ee90168e098b65fb796c51b65c7348da}
+      \strng{fullhashraw}{ee90168e098b65fb796c51b65c7348da}
+      \strng{bibnamehash}{87b7a62a01263043a997b937dfe79845}
+      \strng{authorbibnamehash}{87b7a62a01263043a997b937dfe79845}
+      \strng{authornamehash}{87b7a62a01263043a997b937dfe79845}
+      \strng{authorfullhash}{ee90168e098b65fb796c51b65c7348da}
+      \strng{authorfullhashraw}{ee90168e098b65fb796c51b65c7348da}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{1}
+      \field{month}{11}
+      \field{series}{Advanced Textbooks in Control and Signal Processing}
+      \field{title}{Robotics}
+      \field{year}{2008}
+    \endentry
+    \entry{soler1994}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=81ba5aa98cfa2fbd816137f189f3a7ee}{%
+           family={Soler},
+           familyi={S\bibinitperiod},
+           given={Tomás},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=467ad1ca3515e471dfdc7932b3c9da53}{%
+           family={Eisemann},
+           familyi={E\bibinitperiod},
+           given={David\bibnamedelima W.},
+           giveni={D\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {American Society of Civil Engineers (ASCE)}%
+      }
+      \strng{namehash}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \strng{fullhash}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \strng{fullhashraw}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \strng{bibnamehash}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \strng{authorbibnamehash}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \strng{authornamehash}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \strng{authorfullhash}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \strng{authorfullhashraw}{f407eb52ebbfd107d1b1f3a59dfaf197}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0733-9453}
+      \field{journaltitle}{Journal of Surveying Engineering}
+      \field{number}{3}
+      \field{title}{Determination of Look Angles to Geostationary Communication Satellites}
+      \field{volume}{120}
+      \field{year}{1994}
+      \field{pages}{115\bibrangedash 122}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1061/(ASCE)0733-9453(1994)120:3(115)
+      \endverb
+    \endentry
     \entry{ueba2016}{article}{}{}
       \name{author}{3}{}{%
         {{un=0,uniquepart=base,hash=91752cd7a83d813a54c2361ec4d26b2b}{%
@@ -426,6 +526,31 @@
       \field{year}{2016}
       \field{pages}{Pj\_7\bibrangedash Pj\_12}
       \range{pages}{-1}
+    \endentry
+    \entry{vexLibrary}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=3ee218176e22aa6dbf65e220c02921da}{%
+           family={VEX},
+           familyi={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{3ee218176e22aa6dbf65e220c02921da}
+      \strng{fullhash}{3ee218176e22aa6dbf65e220c02921da}
+      \strng{fullhashraw}{3ee218176e22aa6dbf65e220c02921da}
+      \strng{bibnamehash}{3ee218176e22aa6dbf65e220c02921da}
+      \strng{authorbibnamehash}{3ee218176e22aa6dbf65e220c02921da}
+      \strng{authornamehash}{3ee218176e22aa6dbf65e220c02921da}
+      \strng{authorfullhash}{3ee218176e22aa6dbf65e220c02921da}
+      \strng{authorfullhashraw}{3ee218176e22aa6dbf65e220c02921da}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://kb.vex.com/hc/pt/articles/360039512851-{U}sando-o-codificador-de-eixo-\%{C}3\%{B}3ptico-de-3-fios-{V}5}}
+      \field{note}{[Acessado em 05-04-2026]}
+      \field{title}{{V}{E}{X} {L}ibrary --- kb.vex.com}
+      \field{year}{2025}
     \endentry
     \entry{hubregt2014}{book}{}{}
       \name{author}{1}{}{%

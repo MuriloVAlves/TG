@@ -1,4 +1,4 @@
-import dummyrot as rot
+import dummyrotcapture as rot
 import threading, queue
 import time
 import tkinter as tk
