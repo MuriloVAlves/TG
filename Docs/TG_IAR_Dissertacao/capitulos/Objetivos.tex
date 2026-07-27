@@ -20,19 +20,19 @@ estímulos e estabilizar o controle do mecanismo. O sistema de controle utilizad
 malha fechada, utilizando motores e encoder para realizar o controle e a observabilidade
 do sistema. (TODO: Provalvelmente a resposta do sistema será linear, então o sistema de controle utilizado será um PID discreto)
 O sistema de controle deve ser estável e responsivo o suficiente para acompanhar o rastreio
-do veículo selecionado. Além disso, o sistema de observabilidade deverá ser rápida suficiente
+do veículo selecionado. Além disso, o sistema de observabilidade deverá ser suficientemente rápido
 para detectar instabilidades, de mesmo modo, o sistema de controle deverá ser suficientemente rápido
 a ponto de corrigir e responder aos ruídos gerados.
 
 \subsection{Caracteríscticas Mecâncias e Sensibilidade}\label{sec:ssb}
 O mecanismo deverá possuir duas caracteríscticas principais: velocidade e sensibilidade.
 O primeiro fator está relacionado com a resposta do sistema à tarefa. Uma passagem de satélites
-de órbita baixa é marcada por momentos de aceleração e desaceleração. O protótipo deverá
-possuir visada em todas as direções e ter sensibilidade suficiente para ter a precissão de
+de órbita baixa é marcada por momentos de aceleração e desaceleração. O protótipo deverá ser capaz de
+efetuar o apontamento da antena em todas as direções de uma semi-esfera e ser sensível o suficiente para ter a precisão de
 apontamento necessária para a comunicação.
 
 \subsection{Interface com Sistemas Externos}
-Existem diversos aplicativos, programas e databases (bancos de dados) com informações sobre órbitas e passagens
-de satélites. Diversos desses programas utilizam comunicação TCP (via internet) para enviar
-parâmetros para sistemas automáticos de antenas. Dessa forma, o protótipo deverá ser capaz de
-receber e enviar parâmetros para esses aplicativos e programas.
+Diversos aplicativos, programas e bancos de dados, disponíveis na internet, fornecem informações sobre órbitas e mudanças de posição
+de satélites. O envio desses parâmetros acontece por uma comunicação TCP (Transmission Control Protocol), pelo qual
+sistemas de apontamento automáticos de antenas recebem informaççoes. Dessa forma, o protótipo deverá ser capaz de
+receber e enviar parâmetros para realizar a comunicação com aplicativos e programas.

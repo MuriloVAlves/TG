@@ -1,7 +1,7 @@
 \chapter{Referencial Teórico}\label{cap:teo}
 \section{Referencial e Rastreio de Satélites}\label{sec:ground_tracking}
 Para iniciar a modelagem do sistema, é necessário descrever o referencial e entender como a estação de solo e o satélite se localizam no espaço.
-Segundo \cite{soler1994}, utilizando um modelo esférico aproximado da Terra \ref{fig:modelagem_ang_visada} e sabendo a localização de latitude $\phi_S$ e longitude $\lambda_S$ da antena na estação, é possível estipular a direção em azimute e elevação para o apontamento da antena.
+Segundo \citeauthor{soler1994}, utilizando um modelo esférico aproximado da Terra, conforme a figura \ref{fig:modelagem_ang_visada}, e sabendo a localização de latitude $\phi_S$ e longitude $\lambda_S$ da antena na estação, é possível estipular a direção em azimute e elevação para o apontamento da antena.
 O raio da Terra para o modelo esférico será considerado de $R=6371 km$ e a distância do satélite em relação ao centro do modelo será considerada como $r = R+h$, com $h$ sendo a altitude de sua órbita.
 Pode-se obter a longitude $\lambda_S$ na qual o vetor $\vec{r}$ intercepta a superfície da Terra, sendo possível traçar um triângulo reto esférico e utilizar a lei de Napier para obter a relação $\cos\gamma=\cos\phi_S\cos(\lambda_S-\lambda)$ \cite{soler1994}. Dessa forma, a distância entre o satélite e a estação de solo é dada pela equação \cite{soler1994}:
 \begin{equation}
@@ -19,11 +19,11 @@ A partir da equação anterior, é possível calcular a elevação $\nu_S$ e o a
 \nu_S = \arccos[(r/d)sin\gamma] \\
 \beta_S = \arccos(\cot\gamma\tan\phi_S)
 \end{align}
-Essa modelagem foi feita considerando uma Terra esférica. Na realidade, a Terra possui uma forma aproximada de um elipsoide de revolução. Embora o modelo esférico ofereça uma aproximação inicial simples, ele introduz erros no cálculo do ângulo de elevação (ou distância zenital).
-O formato faz com que o modelo esférico tenha algumas discrepâncias com as posições reais. No entanto, como o escopo do trabalho não é o modelo da Terra, mas sim o sistema de controle de apontamento da antena, bastará dizer que há a dedução de na literatura de \cite{soler1994} caso necessária a consulta.
-Além disso, é esperado que os aplicativos com os quais o equipamento irá comunicar sejam baseados nos modelos mais completos, enviando a posição de azimute e elevação correta para o alinhamento com o satélite.
+Essa modelagem foi feita considerando uma Terra esférica. Todavia, a Terra possui uma forma aproximada de um elipsoide de revolução. Embora o modelo esférico ofereça uma aproximação inicial simples, ele introduz erros no cálculo do ângulo de elevação (ou distância zenital).
+O formato faz com que o modelo esférico tenha algumas discrepâncias com as posições reais. No entanto, como o escopo do trabalho não é o modelo da Terra, mas sim o sistema de controle de apontamento da antena, bastará dizer que há a dedução para o modelo elíptico na literatura de \cite{soler1994} caso necessária a consulta.
+Além disso, é esperado que os aplicativos de rastreio de satélites com os quais o equipamento irá comunicar sejam baseados nos modelos mais completos, enviando a posição de azimute e elevação correta para o alinhamento com o satélite.
 
-Podemos descrever o mecanismo apontamento da antena do pedestal a partir de dois movimentos independentes ortogonais, sendo um de azimute e um de elevação (sendo essa a configuração mais comum para mecanismos de apontamento).
+Podemos descrever o mecanismo de apontamento da antena do pedestal a partir de dois movimentos independentes ortogonais, sendo um de azimute e um de elevação.
 O espaço de trabalho necessário para o acompanhamento contínuo de passagens de satélites corresponde ao hemisfério superior delimitado pelo horizonte local do plano tangente à estação de solo encontrado a 0$^\circ$ de elevação.
 Para cobrir integralmente essa semi-esfera, o mecanismo deve ser capaz de efetuar uma rotação completa de $0$ até $2\pi$ (0$^\circ$ até 360$^\circ$) em azimute e uma articulação de $0$ até $\frac{\pi}{2}$ (0$^\circ$ até 90$^\circ$) na elevação.
 Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtado, já que em baixas elevações há a obstrução de relevo, estruturas ou atmosfera, o mecanismo desenvolvido nesse trabalho garantirá a varredura de toda região angular teórica.
@@ -32,15 +32,15 @@ Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtad
 
 \section{Modelagem do Pedestal}\label{sec:modelagem_pedestal}
 Segundo \citeauthor{Ford2008}, o sistema pode ser modelado utilizando como base um manipulador esférico de dois graus de liberdade.
-Utilizando o modelo pela figura \ref{fig:pedestal}, e utilizando como referência a modelagem de \cite{Bien2021} o ponto fixo que dará a referência do mecanismo com o solo será o da base, dado pelo referencial de coordenadas $O_0$, com versores $[x_0,y_0,z_0]$.
+Utilizando o modelo pela figura \ref{fig:pedestal}, e utilizando como referência a modelagem de \citeauthor{Bien2021}, o ponto fixo que dará a referência do mecanismo com o solo será o da base, dado pelo referencial de coordenadas $O_0$, com versores $[x_0,y_0,z_0]$.
 \begin{figure}[ht]
     \centering
     \caption{Modelo de pedestal com controle em azimute e elevação}
-    \includegraphics[width=0.8\textwidth]{figs/pedestal_proxy.png}
+    \includegraphics[width=0.8\textwidth]{figs/pedestal_3D.png}
     \legend{Fonte: Elaborado pelo autor (2026).}
     \label{fig:pedestal}
 \end{figure}
-(TODO: explicar a localização dos motores)
+
 Um motor é ligado por uma polia à base da antena, permitindo a rotação em torno do eixo Z. O ângulo de rotação do azimute é dado por $\theta$.
 O segundo motor está localizado na região na qual a antena se encaixa ao poste do pedestal e é ligado ao eixo da elevação também através do mecanismo de polia. A junção da polia movida com o eixo da elevação tem coordenadas dadas pela origem $O_1$ ($[x_1,y_1,z_1]$) e distância da base dada pelo valor "h".
 Além dos referenciais motorizados, será utilizando mais um referencial para descrever a excentricidade da antena, dado por $O_2$ ($[x_2,y_2,z_2]$) e distância de excentricidade "d"; e a região mais extrema que representa a ponta da antena, encontrada em  $O_3$ ($[x_3,y_3,z_3]$) e distância de braço "l".
@@ -59,14 +59,15 @@ O modelo da cinemática direta do sistema pode ser obtido a partir dos parâmetr
 \label{tab:params_d_h}
 \end{table}
 
-A partir da tabela D-H, a cinemática do sistema está completamente descrita e é possível determinar as matrizes de transformação homogênea de cada ponto utilizando o parâmetro \citeauthor{Siciliano2008}.
+A partir da tabela D-H \ref{tab:params_d_h}, a cinemática do sistema está completamente descrita.
+É possível determinar as matrizes de transformação homogênea de cada ponto utilizando o parâmetro de cada junta modelada através da matriz de transformação \ref{eq:matriz_rotacao} \citeauthor{Siciliano2008}.
 \begin{equation}
 A^{i-1}_{i} = \begin{bmatrix}
 \cos \theta_i & -\sin \theta_i \cos \alpha_i & \sin \theta_i \sin \alpha_i & a_i \cos \theta_i \\
 \sin \theta_i & \cos \theta_i \cos \alpha_i & -\cos \theta_i \sin \alpha_i & a_i \sin \theta_i \\
 0 & \sin \alpha_i & \cos \alpha_i & d_i \\
 0 & 0 & 0 & 1
-\end{bmatrix}
+\end{bmatrix}\label{eq:matriz_rotacao}
 \end{equation}
 Assim, é possível calcular como referenciais intermediários os seguintes pontos:
 \begin{equation}
@@ -120,13 +121,40 @@ T^{0}_{3} = \begin{bmatrix}
 \end{equation}
 
 \section{Estimação e Rastreio de Satélites}\label{sec:estimation}
-Segundo a explicação de \cite{Ford2008}, cada satélite possui um número de catalogação que é utilizada para registrar informações básicas sobre a espaçonave. Embora algumas identificações (como nome e código de catalogação) são inalteradas durante sua vida útil, informações de órbita devem ser atualizadas constantemente por serem dinâmicas.
+Segundo a explicação de \citeauthor{Ford2008}, cada satélite possui um número de catalogação que é utilizada para registrar informações básicas sobre a espaçonave. Embora algumas identificações, como nome e código de catalogação, são inalteradas durante sua vida útil, informações de órbita devem ser atualizadas constantemente por serem dinâmicas.
 Agências como a North American Aerospace Defense Command (NORAD) e a National Aeronautics and Space Administration (NASA) utilizam radares e outras formas de medição para determinar a posição e órbita exata de satélites, mantendo um rastreio completo do céu.
 Entre as métricas obtidas das observações estão os conhecidos elementos keplerianos. Esses elementos são informações como inclinação, excentricidade, decaimento de órbita, e perigeu.
-A partir dos keplerianos, é possível estipular a posição do satélite no espaço em relação a um determinado tempo (passado ou futuro).
+A partir dos keplerianos, é possível estipular a posição do satélite no espaço em relação a um determinado tempo, passado ou futuro.
 Softwares utilizam dessas informações para determinar passagens de diversos satélites e verificar quando estarão acima do horizonte, além de determinar o azimute e a elevação que a antena da estação de solo deverá ter para estar apontada para o satélite.
 Apesar de possuir a posição (quase) exata dos satélites, os softwares de rastreio de satélites normalmente não têm uma taxa muito alta de atualização de envio de dados alta, sendo necessário um algoritmo para manter o rastreio durante os pontos sem informações novas.
 
-Existem várias técnicas para a estimação da posição de um satélite ao longo do tempo. A primeira e mais simples é de enviar ao controlador dos motores a posição recebida do aplicativo e replicá-la na antena. O problema com esse método é que a estrutura sofre saltos grandes de posição, além de que a posição da antena ficará estática se o rotor perder a conexão com o software de rastreio.
-Uma outra técnica é utilizar um filtro Kalman, que possui camadas de previsão e correção recursiva para fazer com que o Mínimo Erro Quadrático Médio seja nulo em relação a um modelo inicial. E o problema com o Filtro Kalman para esse caso é que ele é relativamente exigente em quesitos de processos, já que precisa recorrentemente atualizar as matrizes de ganhos.
-Como é desejado que o projeto funcione completamente embarcado em um microcontrolador, esse tempo maior de processo pode causar demora no controle dos motores e fazer o sistema perder o rastreio do satélite. 
+Existem várias técnicas para a estimação da posição de um satélite ao longo do tempo. A primeira e mais simples é de enviar ao controlador dos motores a posição recebida do aplicativo e replicá-la na antena. Porém, a desvantagem desse método é que a estrutura sofre saltos grandes de posição, além de que a posição da antena ficará estática se o rotor perder a conexão com o software de rastreio.
+Uma outra técnica é utilizar um filtro Kalman, que possui camadas de previsão e correção recursiva para fazer com que o Mínimo Erro Quadrático Médio seja nulo em relação a um modelo inicial. E o problema com o Filtro Kalman para esse caso é que ele é relativamente exigente em quesitos de processos, pois precisa recorrentemente atualizar as matrizes de ganhos.
+Como é desejado que o projeto funcione completamente embarcado em um microcontrolador, esse tempo maior de processo pode causar demora no controle dos motores e fazer o sistema perder o rastreio do satélite. Um terceiro sistema com harmonia entre sua capacidade preditiva e seu tempo de processamento é o filtro $\alpha-\beta$ e seus derivados, que utiliza coeficientes constantes para corrigir as variáveis do modelo, mantendo a característica preditiva e mantendo baixo tempo de processamento \cite{wu2011}.
+
+Segundo \citeauthor{tenne2000} e \citeauthor{wu2011}, filtros $\alpha-\beta$ possuem diferentes ordens. O primeiro tipo é o $\alpha-\beta$, sendo um filtro de segunda ordem inicialmente utilizado para rastrear alvos através de radares. Esse filtro possui dois coeficientes, sendo $\alpha$ o coeficiente responsável por prever a variação de posição e $\beta$ para prever a velocidade do sistema, que deve ser constante para o bom funcionamento do filtro.
+A segunda forma do filtro é o $\alpha-\beta-\gamma$, sendo um filtro de terceira que, além de prever posição e velocidade, pode prever também a aceleração do sistema. O último tipo de filtro mais comum é o $\alpha-\beta-\gamma-\delta$, no qual é capaz de prever taxa de variação da aceleração.
+Para o escopo do projeto, e a projeção de posiçã descrita na seção \ref{sec:ground_tracking}, um bom compromisso entre manter o rastreio da variação de velocidade (aceleração) e não necessitar de cálculos extras é utilizar o filtro $\alpha-\beta-\gamma$, que se encaixa melhor aos requisitos do projeto.
+Um filtro $\alpha-\beta$ não será ideal porque é esperada uma grande variação de velocidade vista pela estação de solo enquanto ocorrer o rastreio do satélite.
+Em contrapartida, o filtro $\alpha-\beta-\gamma-\delta$ é mais utilizado quando há uma grande variação de aceleração. Não é o caso para o projeto, já que é esperado que a aceleração aumente levemente enquanto o satélite cruza o horizonte em direção à elevação máxima e diminua enquanto ele estiver se deslocando à outra região do horizonte em relação à estação de solo. Então a variação de aceleração é tão pequena que não justifica o maior processamento necessário.
+
+Utilizando como referência a modelagem feita por \citeauthor{tenne2000}, o filtro $\alpha-\beta-\gamma$ pode ser descrito por duas séries de equação: uma para os valores preditos e outra para os coeficientes suavizados. Os valores possuem um subscrito para indicar o que eles representam. O subscrito $s$ está relacionado aos dados suavizados, $p$ em relação aos dados preditos, e $o$ relacionado aos dados observados (com a posição exata do objeto). As equações de predição e suavização são dadas da seguinte forma:
+\begin{align}
+x_p(k+1)=x_s(k)+Tv_s(k)+\frac{1}{2}T^2a_s(k)\label{eq:x_p} \\
+v_p(k+1) = v_s(k)+Ta_s(k)\label{eq:v_p} \\
+x_s(k) = x_p(k)+\alpha(x_o(k)-x_p(k))\label{eq:x_s} \\
+v_s(k) = v_p(k)+\frac{\beta}{T}(x_o(k)-x_p(k))\label{eq:v_s} \\
+a_s(k) = a_p(k)+\frac{\gamma}{2T^2}(x_o(k)-x_p(k))\label{eq:a_s}
+\end{align}
+
+Como \citeauthor{tenne2000} propõe, é possível fazer a transformada Z das equações \eqref{eq:x_p} até \eqref{eq:a_s} e respolvê-la para $\frac{x_p}{x_o}$, obtendo a seguinte razão de polinômios:
+\begin{equation}
+G(z) = \frac{x_p}{x_o} = \frac{\alpha+(-2\alpha-\beta+\frac{1}{4}\gamma)z+(\alpha+\beta+\frac{1}{4}\gamma)z^2}{z^3+(\alpha+\beta+\frac{1}{4}\gamma-3)z^2+(-2\alpha-\beta+\frac{1}{4}\gamma+3)z+\alpha-1} \label{eq:g(z)_alpha_beta_gamma}
+\end{equation}
+Utilizando o polinômio característico do denominador de \eqref{eq:g(z)_alpha_beta_gamma}, \citeauthor{tenne2000} utiliza o Teste da Estabilidade de Jury para garantir que os polos se encontrem dentro do círculo unitário do plano Z, obtendo as seguintes equações para atender um sistema estável:
+\begin{align}
+0<\alpha<2,                             \label{eq:alpha_lim} \\
+0<\beta<4-2\alpha,                      \label{eq:beta_lim}  \\
+0<\gamma<\frac{4\alpha\beta}{2-\alpha}. \label{eq:gamma_lim}
+\end{align}
+Durante o desenvolvido do projeto, esses valores de limite irão ser utilizados para garantir a estabilidade e convergência do filtro.

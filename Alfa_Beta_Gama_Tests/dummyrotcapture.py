@@ -62,7 +62,7 @@ def main(queue_handle=""):
                             threading_handle((az,el))
                             capture_timeout = 0
                             if capture_name == "":
-                                capture_name = f"./tracks/capture-{str(datetime.now()).replace(' ','_').replace(':','-').replace('.','_')}.txt"
+                                capture_name = f"./Alfa_Beta_Gama_Tests/tracks/capture-{str(datetime.now()).replace(' ','_').replace(':','-').replace('.','_')}.txt"
                             log_capture(capture_name,cmd)
                         elif cmd[0].upper() == 'S':
                             resp = "S0"

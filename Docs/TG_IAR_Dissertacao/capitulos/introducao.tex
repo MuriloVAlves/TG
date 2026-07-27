@@ -6,30 +6,26 @@
 \chapter*[Introdução]{Introdução}
 \addcontentsline{toc}{chapter}{Introdução}
 
-- O que é o que vc tá fazendo em termos simples (explicar o que é uma antena, seu uso pra Trackear satélite)
+Todas as antenas, desde modelos mais simples, possuem direções nas quais elas irradiam seu campo eletromagnético com maior intensidade. Essa característica é conhecida como diretividade. O ganho (capacidade de concentrar energia) da antena também está diretamente relacionado com a diretividade \autocite{Ford2008}. Antenas parabólicas são conhecidas pelo sua alta diretivida e seu alto ganho \autocite{hubregt2014}. Segundo \cite{Ford2008}, essas características são a principal vantagem dessa geometria, sendo excelentes para prover sinal forte e consistente de satélites de órbita baixa (Low-Earth Orbit, ou LEO).
 
-Todas as antenas, mesmo sendo de modelos mais simples, possuem direções nas quais elas irradiam com maior intensidade. Essa característica é conhecida como diretividade. O ganho da antena também está diretamente relacionado com a diretividade \autocite{Ford2008}. Antenas parabólicas são conhecidas pelo sua alta diretivida e seu alto ganho \autocite{hubregt2014}. Segundo \cite{Ford2008}, essas características são a principal vantagem dessa geometria, sendo excelentes para prover sinal forte e consistente de satélites de órbita baixa (Low-Earth Orbit, ou LEO). 
+Também, segundo \citeauthor{Ford2008}, a diretividade pode ser uma desvantagem das antenas, pois é necessário manter a antena apontada para o satélite desejado durante todo o momento da comunicação. Para isso, é necessário um sistema automático de apontamento de antena. 
 
-Também, segundo \citeauthor{Ford2008}, essa diretividade é a maior desvantagem das antenas, pois é necessário manter a antena apontada para o satélite desejado durante todo o momento da comunicação. Para isso, é necessário um sistema automático de apontamento de antena. 
 
-- panorama histórico, quem começou a usar, usos comuns etc
 % Introdução antiga, divaga do tema principal
-Em 1860, James Maxwell previu a existência de ondas eletromagnéticas em radiofrequência. Em 1886, Hertz criou o primeiro sistema de rádio utilizando dois centelhadores \autocite{fusco2006}. Marconi, então, iniciou seus experimentos na área de telecomunicação em 1899, inventando o campo da comunicação sem fio a longas distâncias \autocite{rochol2018}. Desde então, a comunicação através de antenas está sendo utilizada em várias facetas de nossas vidas, sendo em comunicação sem fio, Wi-Fi e Bluetooth, radioastrologia, radares, e entre outras aplicações. 
+Em 1860, James Maxwell previu a existência de ondas eletromagnéticas em radiofrequência. Em 1886, Hertz criou o primeiro sistema de rádio utilizando dois centelhadores \autocite{fusco2006}. Marconi, então, iniciou seus experimentos na área de telecomunicação em 1899, inventando o campo da comunicação sem fio a longas distâncias \autocite{rochol2018}.
 
 %Nova introdução
-No final dos anos 50 e início dos 60, com o advento da corrida espacial, a União Soviética realizou o feito histórico que indicou uma nova era à humanidade. Sputnik 1, o primeiro satélite artificial alcançou órbita e transmitia a todas partes do mundo dois canais de "Radiobaliza" (beacon, em inglês) em \SI{20,005}{\mega\hertz} e \SI{40,002}{\mega\hertz} \autocite{Ford2008}. Segundo \cite{Ford2008}, os radios amadores estavam entre os únicos meios de notícias sobre a nave revolucionária (tradução livre). Atualmente, na camada LEO, existe o lançamento de milhares de satélites da nova constelação da Starlink, além de outras constelações já planejadas para cobrir boa parte da Terra, com um satélite em horizonte local em poucos minutos \autocite{app12199505}.
+No final dos anos 50 e início dos 60, com o advento da corrida espacial, a União Soviética realizou o feito histórico que indicou uma nova era à humanidade. Sputnik 1, o primeiro satélite artificial alcançou órbita e transmitia a todas partes do mundo dois canais de "Radiobaliza" (beacon, em inglês) em \SI{20,005}{\mega\hertz} e \SI{40,002}{\mega\hertz} \autocite{Ford2008}. Segundo \cite{Ford2008}, os radios amadores estavam entre os únicos meios de notícias sobre a nave revolucionária (tradução livre).
+Atualmente, na camada LEO, existe o lançamento de milhares de satélites da nova constelação da Starlink, além de outras constelações já planejadas para cobrir boa parte da Terra, com um satélite em horizonte local em poucos minutos \autocite{app12199505}.
 
-- como é usada, o que é feito (casos mais clássicos)
-
-O apontamento automático de antenas é utilizado para diversas aplicações. A principal funcionalidade desses mecanismos é a de obter uma conexão estável com qualquer equipamento desejado. Para o caso de radioamadorismo, satélites de órbita baixa \autocite{Ford2008}.
-Atualmente, esse sistema é utilizado em antenas pelas é a de obter comunicação de fragatas e navios em alto mar, pois o acesso por solo é impossível \autocite{ueba2016}.  
+O apontamento automático de antenas é utilizado para diversas aplicações. A principal funcionalidade desse mecanismo é a de obter uma conexão estável com qualquer equipamento desejado. Para o caso de radioamadorismo, seriam os satélites de órbita baixa \autocite{Ford2008}.
+Atualmente, esse sistema é utilizado em antenas é a de obter comunicação de fragatas e navios em alto mar, pois o acesso por solo é impossível \autocite{ueba2016}.
 (TODO:  Explicar o que é pedestal de antena)
 
 - como está o panorama de pesquisa atual tipo o que é mais recente de publicação 
  %Feito na seção "estado da arte"
 
-- daí vc fala seus objetivos e fecha a introdução
-O objetivo desse trabalho está em desenvolver a modelagem dinâmica e cinemática de um sistema pedestal biaxial, criando um protótipo funcional e aplicando os conceitos de controle para a obtenção de parâmetros aceitáveis para a função proposta.
+O objetivo desse trabalho está em desenvolver a modelagem dinâmica e cinemática de um sistema pedestal biaxial, criando um protótipo funcional e aplicando os conceitos de controle para a obtenção de imagens meteorológicas vindas de satélites de órbita baixa.
 
  
 
