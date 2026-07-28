@@ -9,14 +9,14 @@
 \end{figure}
 O aplicativo de rastreio de satélites principal do trabalho será o SatDump.
 Esse programa será utilizado porque ele possui um conglomerado de ferramentas para permitir o rastreio de satélites e a decodificação dos sinais recebidos pela antena da estação de solo.
-Na figura \ref{fig:satdump}, é possível observar a interface do Software. O software está dividido em duas partes principais: a painel de controle/rastreio (à esquerda) e o analisador de espectro/cachoeira RF (à direita).
+Na figura \ref{fig:satdump}, é possível observar a interface do Software. O software está dividido em duas partes principais: o painel de controle/rastreio (à esquerda) e o analisador de espectro/cachoeira RF (à direita).
 
 Na região esquerda, existe uma roda polar no topo, que indica algumas informações sobre o satélite rasteado. O texto acima da roda indica o satélite que está sendo rastreado (no caso, o CAPELLA-18), além de suas informações de azimute e elevação.
 Abaixo do texto, está a roda polar de fato. A roda polar é uma representação bidimensional de 360° de toda a abóbada celeste visível a partir da localização da estação em solo. O centro do círculo, onde há a intersecção dos eixos, representa o Zênite (elevação de $90^{\circ}$), enquanto os círculos concêntricos indicam as elevações intermediárias de $0^{\circ}$, $30^{\circ}$ e $60^{\circ}$ (do mais externo para o mais interno).
 A cruz interna representa a direção cardeal, ou seja, em qual direção do horizonte a antena deve apontar. A seção superior da cruz indica $0/360^{\circ}$, representando o Norte, e o ângulo de azimute é crescente no sentido horário. Desta forma, a linha direita indica $90^{\circ}$ (Leste), a linha inferior indica $180^{\circ}$ (Sul), e a linha esquerda indica $270^{\circ}$ (Oeste).
 A linha amarela representa todo o arco que o satélite faz durante essa passagem. O ponto vermelho indica a posição real do satélite. O ícone de mira azul indica a posição que foi passada ao rotor da antena, enquanto o círculo azul representa a posição que o rotor acusa estar.
 Mais abaixo há um texto com a informação de tempo estimado até ocorrer a LOS (Loss of signal, ou perda de sinal) do satélite quando este se encontrar abaixo do horizonte.
-Na seção de nome "Rotator Configuration" (configuração de rotor), esta área está destinada à conexão do programa com o rotor. Os números de azimute e elevação de da linha superior é a posição teórica onde o satélite está, calculada com base nas informações de órbita e a posição da estação de solo.
+Na seção de nome "Rotator Configuration" (configuração de rotor), esta área está destinada à conexão do programa com o rotor. Os números de azimute e elevação da linha superior é a posição teórica onde o satélite está, calculada com base nas informações de órbita e a posição da estação de solo.
 A linha inferior indica a posição real de apontamento da antena indicada pelo rotor. Abaixo disso, há a configuração do servidor de controle dos rotores, na qual estão configurados o endereço de IP e a porta para a comunicação. Além disso, existem as opções de "Engage" (engajar), que inicia a conexão com servidor, e "Track" (rastrear), que envia posições atualizadas ao mecanismo de apontamento.
 
 A região direita é dedicada ao processamento e à representação visual do sinal de radiofrequência (RF) recebido pelo aplicativo. Este painel fornece diagnóstico em tempo real da qualidade do enlace de comunicação e é composto por dois elementos gráficos fundamentais alinhados no domínio da frequência: o Analisador de Espectro e o Exibidor em Cachoeira (Waterfall).
@@ -42,8 +42,8 @@ Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{kgf}\cdo
     \label{fig:motores_drivers}
 \end{figure}
 
-Para o acionamento dos motores, serão utilizados drivers dedicados DRV8825, configurados para conseguirem atingir a resolução de $1/32$ passo, permitindo elevar a resolução angular teórica de acionamento dos motores para $0,05625^\circ$ por micropasso.
-A calibração da posição inicial (homing) das eixos de azimute e elevação será realizada por meio de sensores ópticos, que serão desenvolvidos a partir de LDRs e LEDs. O controlador fará uma varredura para verificar quando o LDR receberá a maior intensidade luminosa. Esse valor máximo indicará o zero do azimute e da elevação.
+Para o acionamento dos motores, serão utilizados drivers dedicados DRV8825, configurados para conseguirem atingir a resolução de $1/32$ passo, permitindo elevar a resolução angular teórica de acionamento dos motores para $0{,}05625^\circ$ por micropasso.
+A calibração da posição inicial (homing) dos eixos de azimute e elevação será realizada por meio de sensores ópticos, que serão desenvolvidos a partir de LDRs e LEDs. O controlador fará uma varredura para verificar quando o LDR receberá a maior intensidade luminosa. Esse valor máximo indicará o zero do azimute e da elevação.
 O acoplamento entre o eixo dos motores e a estrutura da antena será feito utilizando um sistema de redução por correias GT2 de relação 2:1, fazendo com que a resolução real na estrutura seja metade da resolução angular desenvolvida pelo motor.
 
 \begin{figure}[h]
@@ -59,7 +59,7 @@ Para o recebimento do sinal de satélite, será utilizando um rádio definido po
 O modelo em questão é capaz de operar em frequências de \SI{500}{\kilo\hertz} a \SI{1766}{\mega\hertz}. Além disso, há um circuito Bias-Tee interno ativável por software, que é capaz de fornecer uma tensão contínua de 4,5 V no conector SMA para alimentação de pré-amplificadores localizados na linha de transmissão utilizando o mesmo cabo coaxial por onde o sinal é recebido.
 
 Devido à extrema atenuação sofrida pelos sinais emitidos pelos satélites ao se propagarem através da atmosfera até a antena de recepção, será utilizado um módulo pré-amplificador e filtrador Nooelec SAWBird+ GOES.
-O módulo é composto por dois estágios de amplificação de baixo ruído (LNA) em cascata com um filtro de Onda Acústica de Superfície (SAW) intercalado. Esses compontentes são responsáveis por tratar, filtrar e amplificar os sinais recebidos pela antena.
+O módulo é composto por dois estágios de amplificação de baixo ruído (LNA) em cascata com um filtro de Onda Acústica de Superfície (SAW) intercalado. Esses componentes são responsáveis por tratar, filtrar e amplificar os sinais recebidos pela antena.
 O conjunto apresenta frequência central em aproximadamente \SI{1688}{\mega\hertz}, com banda passante ajustada para a recepção de \SI{1694,1}{\mega\hertz} e ganho típico de 35 dB, reduzindo interferências de sinais fora da faixa de interesse e compensando as perdas de transmissão.
 
 Todo o sistema será montado dentro do cabo da antena e haverá um cabo extensor USB de \SI{2}{\meter} para realizar a conexão com o computador. O sistema de recepção está representado na figura \ref{fig:sistema_coms}.
@@ -77,13 +77,13 @@ Todo o sistema será montado dentro do cabo da antena e haverá um cabo extensor
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/antena_peças.jpeg}
-    \caption{Sistema de comunicação com ponto de alimentação da antena (dourado) à esquerda, filtro Nooelec (azul) ao centro e SDR (preto) à direita}
+    \caption{Peças que formam a estrutura da antena, feitas com o auxílio de uma impressora 3D}
     \caption*{Fonte: Autor(2026)}
     \label{fig:pecas_antena}
 \end{figure}
 
 A antena apresentada no projeto de \cite{tonito2024} é uma Antena Helicone projetada especificamente para a recepção de sinais de alta resolução de satélites meteorológicos na faixa de 1,7 GHz, desenvolvida para a captura de imagens enviadas no modo HRPT (High Resolution Picture Transmission).
-Este modelo combina a simplicidade construtiva com características eletromagnéticas de alto ganho e alta diretividade, sendo ideal tanto para uso  montado no sistema de rastreio automatizado desenvolvido nessa tese.
+Este modelo combina a simplicidade construtiva com características eletromagnéticas de alto ganho e alta diretividade, sendo ideal tanto para uso  montado no sistema de rastreio automatizado desenvolvido nesse trabalho.
 A antena helicone é uma variação da antena helicoidal no modo axial combinada com um plano Terra (ground plane) levemente cônico.
 
 Satélites que transmitem em HRPT operam com Polarização Circular (normalmente RHCP — Right-Hand Circular Polarization).
@@ -105,8 +105,8 @@ Além disso, para manter uma interface gráfica disponível para fácil entendim
 
 A arquitetura do sistema foi desenvolvida aproveitando a estrutura dual-core do ESP32, permitindo o processamento paralelo de tarefas por meio do FreeRTOS (Real-Time Operating System).
 Esse sistema operacional em tempo real e de código aberto permite a divisão do programa em tarefas independentes, alocadas em cada um dos núcleos do microcontrolador.
-A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas o controle do servidor TCP e a interface com o LCD, enquando o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado.
-Dessa forma, essa arquitetura garante um processador esteja exclusivamente destinado ao controle das malhas do motor, evitando que interferências ou latências de comunicação afetem a estabilidade e a precisão do rotor.
+A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado.
+Dessa forma, essa arquitetura garante que um processador esteja exclusivamente destinado ao controle das malhas do motor, evitando que interferências ou latências de comunicação afetem a estabilidade e a precisão do rotor.
 
 \begin{figure}[h]
     \centering

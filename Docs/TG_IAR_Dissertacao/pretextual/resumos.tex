@@ -5,26 +5,24 @@
 % RESUMO em português
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 \begin{resumo}
- Segundo a ABNT, o resumo deve ressaltar o
- objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
- destes itens dependem do tipo de resumo (informativo ou indicativo) e do
- tratamento que cada item recebe no documento original. O resumo deve ser
- precedido da referência do documento, com exceção do resumo inserido no
- próprio documento. Umas 10 linhas (\ldots) As palavras-chave devem figurar logo abaixo do
- resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
- ponto e finalizadas também por ponto.
+  O rastreio contínuo de satélites em órbita baixa (LEO) exige sistemas de apontamento dinâmicos e precisos para mitigar perdas de enlace decorrentes da alta velocidade relativa e da diretividade das antenas.
+  Este trabalho apresenta o desenvolvimento, modelagem cinemática, implementação e controle de um sistema de pedestal bi-axial (azimute e elevação) automatizado para o rastreio de satélites e recepção de dados meteorológicos de alta resolução (HRPT) na faixa de 1,7 GHz. A cinemática direta do mecanismo foi formulada via parâmetros de Denavit-Hartenberg (D-H). 
+  Para garantir a estabilidade e suavidade da trajetória em tempo real com baixo custo computacional, implementou-se um filtro preditivo $\alpha-\beta-\gamma$ embarcado, cujos parâmetros de suavização foram otimizados via varredura sistemática e validados pelo critério de estabilidade de Jury. A arquitetura de hardware e controle foi estruturada em um microcontrolador dual-core ESP32 sob o sistema operacional FreeRTOS, segregando as tarefas de comunicação TCP/interface LCD e a malha de controle do filtro com acionamento dos motores de passo NEMA 17 via drivers DRV8825. A recepção e filtragem do sinal de radiofrequência foram realizadas por meio de uma antena helicone customizada, aliada a um módulo LNA/filtro SAW e um dispositivo SDR. Os resultados demonstram a funcionalidade mecânica e eletrônica do protótipo de baixo custo, garantindo cobertura hemisférica completa e suavização satisfatória na estimativa de posições orbitais.
 
- \textbf{Palavras-chaves}: latex. abntex. editoração de texto.
+  \vspace{\onelineskip}
+  \textbf{Palavras-chave}: Rastreio de satélites. Pedestal bi-axial. Cinemática D-H. Filtro $\alpha-\beta-\gamma$. Sistema embarcado. ESP32.
 \end{resumo}
 
 % ABSTRACT in english
 \begin{resumo}[Abstract]
  \begin{otherlanguage*}{english}
-   This is the english abstract.
+  Continuous tracking of Low-Earth Orbit (LEO) satellites requires dynamic and precise pointing systems to mitigate link losses resulting from high relative velocity and antenna directivity. 
+  This work presents the development, kinematic modeling, implementation, and control of an automated bi-axial (azimuth and elevation) pedestal system for satellite tracking and high-resolution meteorological data reception (HRPT) at 1.7 GHz. The direct kinematics of the mechanism was formulated using Denavit-Hartenberg (D-H) parameters. 
+  To ensure trajectory stability and smoothness in real-time with low computational overhead, an embedded predictive $\alpha-\beta-\gamma$ filter was implemented, whose smoothing parameters were optimized via grid search and validated using Jury's stability criterion. 
+  The hardware and control architecture was structured on a dual-core ESP32 microcontroller running the FreeRTOS real-time operating system, segregating TCP communication and LCD interface tasks from the predictive filter loop and stepper motor driving (NEMA 17 via DRV8825 drivers). 
+  Radio frequency signal reception and filtering were accomplished using a custom helicone antenna combined with an LNA/SAW filter module and a Software Defined Radio (SDR). The results demonstrate the mechanical and electronic feasibility of the low-cost prototype, ensuring complete hemispheric coverage and satisfactory smoothing of orbital position estimates.
 
-   \vspace{\onelineskip}
- 
-   \noindent 
-   \textbf{Keywords}: latex. abntex. text editoration.
+  \vspace{\onelineskip}
+  \textbf{Keywords}: Satellite tracking. Bi-axial pedestal. D-H kinematics. $\alpha-\beta-\gamma$ filter. Embedded system. ESP32.
  \end{otherlanguage*}
 \end{resumo}

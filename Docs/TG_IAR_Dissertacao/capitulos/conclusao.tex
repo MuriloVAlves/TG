@@ -1,12 +1,31 @@
-\chapter*{Conclusões e Trabalhos Futuros}\label{cap:conclusao}
-\addcontentsline{toc}{chapter}{Conclusão e Trabalhos Futuros}
+\chapter{Conclusão e Trabalhos Futuros}
 
-\lipsum[81]
+O presente trabalho apresentou o projeto, a modelagem, a implementação e a validação experimental de um protótipo automatizado de pedestal bi-axial (azimute e elevação) integrado a uma antena helicone para o rastreio automático de satélites em órbita terrestre baixa (LEO) e recepção de sinais meteorológicos no padrão HRPT na faixa de 1,7~GHz.
 
-%\section*{Conclusões}
+A modelagem cinemática direta do mecanismo bi-axial, formulada rigorosamente por meio da convenção dos parâmetros de Denavit-Hartenberg (D-H), forneceu a base geométrica para o cálculo das matrizes de transformação homogênea, assegurando o correto apontamento angular da antena ao longo de toda a semiesfera do horizonte local.
 
-\lipsum[82-84]
+No âmbito dos sistemas embarcados e de controle, a arquitetura dual-core do microcontrolador ESP32 sob a gerência do sistema operacional em tempo real FreeRTOS demonstrou elevada eficiência. A segregação estruturada do processamento — alocando o servidor de comunicação TCP e a interface de telemetria LCD no Núcleo 0, enquanto o Núcleo 1 executou exclusivamente as malhas de controle dos motores de passo NEMA 17 (via drivers DRV8825 em micropasso) e o algoritmo do filtro preditivo $\alpha-\beta-\gamma$ — eliminou latências de comunicação e preveniu flutuações no tempo de amostragem do controle.
+
+Para garantir a suavidade e a continuidade da trajetória sem comprometer a capacidade computacional do sistema embarcado, implementou-se o filtro preditivo de terceira ordem $\alpha-\beta-\gamma$. A sintonia otimizada dos coeficientes via varredura sistemática (\textit{grid search}), balizada pelos limites do Critério de Estabilidade de Jury e avaliada pelo Erro Quadrático Médio (EQM), resultou no conjunto de parâmetros calibrados $\alpha = 1{,}00$, $\beta = 0{,}05$ e $\gamma = 0{,}00$.
+
+A convergência observada do ganho de velocidade $\beta$ para um patamar estritamente reduzido ($\beta \approx 0{,}05$) e do ganho de aceleração $\gamma$ para zero justifica-se teórica e empiricamente por três fatores determinantes:
+\begin{enumerate}
+    \item \textbf{Atenuação da Propagação de Ruído:} A atualização do estado de velocidade no filtro $\alpha-\beta-\gamma$ envolve a divisão pelo período de amostragem ($\frac{\beta}{T}$). Valorações mais elevadas de $\beta$ provocam a amplificação do ruído de medição proveniente das estimativas angulares, introduzindo derivadas espúrias que desestabilizam o acionamento dos motores.
+    \item \textbf{Consistência e Previsibilidade Orbital:} Uma vez que as posições orbitais fornecidas pelo software de rastreio (SatDump via TLE/Keplerianos) apresentam elevada acurácia determinística ao longo do tempo, a dinâmica de variação de velocidade é adequadamente sustentada pela equação de propagação do modelo preditivo, reduzindo a necessidade de correções derivativas agressivas baseadas no termo de inovação.
+    \item \textbf{Estabilidade e Alocação de Polos:} A análise de estabilidade em tempo discreto via teste de Jury confirma que o aumento simultâneo dos ganhos $\beta$ e $\gamma$ desloca os autovalores da matriz de transição do filtro em malha fechada para fora do círculo unitário no plano $z$, resultando em instabilidade e divergência do erro de estimativa.
+\end{enumerate}
+
+No subsistema de radiofrequência, a antena helicone desenvolvida em estrutura impressa em PLA e malha de alumínio (com massa total de aproximadamente 600~g) operou em regime de modo axial compatível com a polarização circular à direita (RHCP). Associada ao estágio pré-amplificador e filtro SAW (Nooelec SAWBird+ GOES) e ao receptor SDR (RTL-SDR V4), a estação em solo comprovou viabilidade técnica ao estabelecer enlaces estáveis de RF e viabilizar a recepção de telemetria sem perdas de desalinhamento angular.
+
+Em suma, os objetivos propostos foram plenamente alcançados, resultando em um sistema de alinhamento e rastreio de baixo custo, estruturalmente leve, estável e computacionalmente eficiente.
 
 \section*{Trabalhos Futuros}
 
-\lipsum[85] 
+Como continuidade deste trabalho e visando o aprimoramento do protótipo, sugerem-se as seguintes linhas de pesquisa e desenvolvimento:
+
+\begin{itemize}
+    \item \textbf{Filtro Adaptativo de Ganhos:} Implementar uma estrutura de filtragem $\alpha-\beta-\gamma$ adaptativa, capaz de ajustar os coeficientes $\beta$ e $\gamma$ em tempo real apenas durante a detecção de manobras com elevada aceleração angular (como no momento de culminação do satélite próximo ao Zênite), mantendo os ganhos atenuados durante o regime permanente.
+    \item \textbf{Feedback de Posição em Malha Fechada:} Incorporar encoders absolutos de alta resolução nos eixos de azimute e elevação para proporcionar malha fechada de posição direta na estrutura mecânica, mitigando eventuais perdas de passos dos motores sob torque de carga externa ou ventos.
+    \item \textbf{Rastreio Autônomo por Sinal de RF (\textit{Closed-loop Autotrack}):} Desenvolver um algoritmo de alinhamento fino baseado no indicador de intensidade do sinal recebido (RSSI) ou técnica monopulso, permitindo que a antena corrija pequenos desvios de apontamento de forma autônoma a partir da máxima potência de RF capturada pelo receptor SDR.
+    \item \textbf{Aprimoramento Mecânico e Proteção Ambiental:} Evoluir a estrutura do pedestal para ligas metálicas leves (ou polímeros de grau engenharia) com cúpula de proteção (\textit{radome}), permitindo a operação contínua do sistema em ambientes externos sujeitos a intempéries atmosféricas.
+\end{itemize}

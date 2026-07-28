@@ -18,17 +18,15 @@ direta do mecanismo e permitir o apontamento do sistema.
 Após a modelagem do sistema, será necessário calcular a resposta do sistema a
 estímulos e estabilizar o controle do mecanismo. O sistema de controle utilizado será de
 malha fechada, utilizando motores e encoder para realizar o controle e a observabilidade
-do sistema. (TODO: Provalvelmente a resposta do sistema será linear, então o sistema de controle utilizado será um PID discreto)
-O sistema de controle deve ser estável e responsivo o suficiente para acompanhar o rastreio
-do veículo selecionado. Além disso, o sistema de observabilidade deverá ser suficientemente rápido
-para detectar instabilidades, de mesmo modo, o sistema de controle deverá ser suficientemente rápido
-a ponto de corrigir e responder aos ruídos gerados.
+do sistema.
+O sistema de controle deve ser estável e responsivo para acompanhar a trajetória do veículo selecionado. 
+Além disso, a amostragem de observabilidade e a malha de controle devem ter desempenho temporal adequado para detectar e rejeitar ruídos e distúrbios operacionais.
 
-\subsection{Caracteríscticas Mecâncias e Sensibilidade}\label{sec:ssb}
-O mecanismo deverá possuir duas caracteríscticas principais: velocidade e sensibilidade.
+\subsection{Características Mecâncias}\label{sec:ssb}
+O mecanismo deverá possuir duas características principais: velocidade e sensibilidade.
 O primeiro fator está relacionado com a resposta do sistema à tarefa. Uma passagem de satélites
 de órbita baixa é marcada por momentos de aceleração e desaceleração. O protótipo deverá ser capaz de
-efetuar o apontamento da antena em todas as direções de uma semi-esfera e ser sensível o suficiente para ter a precisão de
+efetuar o apontamento da antena em todas as direções de uma semiesfera e ser sensível o suficiente para ter a precisão de
 apontamento necessária para a comunicação.
 
 \subsection{Interface com Sistemas Externos}

@@ -185,38 +185,6 @@
       \field{title}{The {ARRL} Satellite Handbook}
       \field{year}{2008}
     \endentry
-    \entry{fusco2006}{book}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=d325eda72edeb5c7cc421f950f2dd286}{%
-           family={FUSCO},
-           familyi={F\bibinitperiod},
-           given={Viincent\bibnamedelima F.},
-           giveni={V\bibinitperiod\bibinitdelim F\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{location}{1}{%
-        {Porto Alegre}%
-      }
-      \list{publisher}{1}{%
-        {Bookman}%
-      }
-      \strng{namehash}{d325eda72edeb5c7cc421f950f2dd286}
-      \strng{fullhash}{d325eda72edeb5c7cc421f950f2dd286}
-      \strng{fullhashraw}{d325eda72edeb5c7cc421f950f2dd286}
-      \strng{bibnamehash}{d325eda72edeb5c7cc421f950f2dd286}
-      \strng{authorbibnamehash}{d325eda72edeb5c7cc421f950f2dd286}
-      \strng{authornamehash}{d325eda72edeb5c7cc421f950f2dd286}
-      \strng{authorfullhash}{d325eda72edeb5c7cc421f950f2dd286}
-      \strng{authorfullhashraw}{d325eda72edeb5c7cc421f950f2dd286}
-      \field{sortinit}{F}
-      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Teoria e técnicas de antenas: princípios e prática}
-      \field{year}{2006}
-    \endentry
     \entry{gholamiomali2024}{article}{}{}
       \name{author}{3}{}{%
         {{un=0,uniquepart=base,hash=caac99ec2b36723a1b6c5be1fd62c559}{%
@@ -348,38 +316,6 @@
       \field{pages}{32\bibrangedash 40}
       \range{pages}{9}
     \endentry
-    \entry{rochol2018}{book}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=9ef30d050e50ff0299592cb392c583e9}{%
-           family={ROCHOL},
-           familyi={R\bibinitperiod},
-           given={Juergen},
-           giveni={J\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{location}{1}{%
-        {Porto Alegre}%
-      }
-      \list{publisher}{1}{%
-        {LTC}%
-      }
-      \strng{namehash}{9ef30d050e50ff0299592cb392c583e9}
-      \strng{fullhash}{9ef30d050e50ff0299592cb392c583e9}
-      \strng{fullhashraw}{9ef30d050e50ff0299592cb392c583e9}
-      \strng{bibnamehash}{9ef30d050e50ff0299592cb392c583e9}
-      \strng{authorbibnamehash}{9ef30d050e50ff0299592cb392c583e9}
-      \strng{authornamehash}{9ef30d050e50ff0299592cb392c583e9}
-      \strng{authorfullhash}{9ef30d050e50ff0299592cb392c583e9}
-      \strng{authorfullhashraw}{9ef30d050e50ff0299592cb392c583e9}
-      \field{sortinit}{R}
-      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Sistemas de comunicação sem fio}
-      \field{year}{2018}
-    \endentry
     \entry{Siciliano2008}{book}{}{}
       \name{author}{4}{}{%
         {{un=0,uniquepart=base,hash=38f7a70abf2d86e432d63826f560ab93}{%
@@ -436,6 +372,45 @@
       \field{title}{Robotics}
       \field{year}{2008}
     \endentry
+    \entry{tenne2000}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=ca04a7b86053944df32f51340c360189}{%
+           family={Singh},
+           familyi={S\bibinitperiod},
+           given={Tarunraj},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9e8a31d812489d1b171429b12d818d03}{%
+           family={Tenne},
+           familyi={T\bibinitperiod},
+           given={Dirk},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Center for Multisource Information Fusion, State University of New York at Buffalo}%
+      }
+      \list{location}{1}{%
+        {Buffalo, NY}%
+      }
+      \strng{namehash}{3afa24706a878da1037710b8b8b86c9b}
+      \strng{fullhash}{3afa24706a878da1037710b8b8b86c9b}
+      \strng{fullhashraw}{3afa24706a878da1037710b8b8b86c9b}
+      \strng{bibnamehash}{3afa24706a878da1037710b8b8b86c9b}
+      \strng{authorbibnamehash}{3afa24706a878da1037710b8b8b86c9b}
+      \strng{authornamehash}{3afa24706a878da1037710b8b8b86c9b}
+      \strng{authorfullhash}{3afa24706a878da1037710b8b8b86c9b}
+      \strng{authorfullhashraw}{3afa24706a878da1037710b8b8b86c9b}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the American Control Conference}
+      \field{title}{Optimal Design of $\alpha-\beta-(\gamma)$ Filters}
+      \field{year}{2000}
+    \endentry
     \entry{soler1994}{article}{}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=81ba5aa98cfa2fbd816137f189f3a7ee}{%
@@ -478,6 +453,42 @@
       \range{pages}{8}
       \verb{doi}
       \verb 10.1061/(ASCE)0733-9453(1994)120:3(115)
+      \endverb
+    \endentry
+    \entry{tonito2024}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=dc7b180ff0982cda1948e6d142d75518}{%
+           family={{t0nito}},
+           familyi={t\bibinitperiod}}}%
+      }
+      \strng{namehash}{dc7b180ff0982cda1948e6d142d75518}
+      \strng{fullhash}{dc7b180ff0982cda1948e6d142d75518}
+      \strng{fullhashraw}{dc7b180ff0982cda1948e6d142d75518}
+      \strng{bibnamehash}{dc7b180ff0982cda1948e6d142d75518}
+      \strng{authorbibnamehash}{dc7b180ff0982cda1948e6d142d75518}
+      \strng{authornamehash}{dc7b180ff0982cda1948e6d142d75518}
+      \strng{authorfullhash}{dc7b180ff0982cda1948e6d142d75518}
+      \strng{authorfullhashraw}{dc7b180ff0982cda1948e6d142d75518}
+      \field{sortinit}{t}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{Thingiverse}
+      \field{month}{1}
+      \field{note}{Thing 6436342}
+      \field{title}{1.7 {GHz} {HRPT} {Helicone} {Antenna}}
+      \field{urlday}{26}
+      \field{urlmonth}{7}
+      \field{urlyear}{2026}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.thingiverse.com/thing:6436342
+      \endverb
+      \verb{url}
+      \verb https://www.thingiverse.com/thing:6436342
       \endverb
     \endentry
     \entry{ueba2016}{article}{}{}
@@ -526,31 +537,6 @@
       \field{year}{2016}
       \field{pages}{Pj\_7\bibrangedash Pj\_12}
       \range{pages}{-1}
-    \endentry
-    \entry{vexLibrary}{misc}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=3ee218176e22aa6dbf65e220c02921da}{%
-           family={VEX},
-           familyi={V\bibinitperiod}}}%
-      }
-      \strng{namehash}{3ee218176e22aa6dbf65e220c02921da}
-      \strng{fullhash}{3ee218176e22aa6dbf65e220c02921da}
-      \strng{fullhashraw}{3ee218176e22aa6dbf65e220c02921da}
-      \strng{bibnamehash}{3ee218176e22aa6dbf65e220c02921da}
-      \strng{authorbibnamehash}{3ee218176e22aa6dbf65e220c02921da}
-      \strng{authornamehash}{3ee218176e22aa6dbf65e220c02921da}
-      \strng{authorfullhash}{3ee218176e22aa6dbf65e220c02921da}
-      \strng{authorfullhashraw}{3ee218176e22aa6dbf65e220c02921da}
-      \field{sortinit}{V}
-      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{howpublished}{\url{https://kb.vex.com/hc/pt/articles/360039512851-{U}sando-o-codificador-de-eixo-\%{C}3\%{B}3ptico-de-3-fios-{V}5}}
-      \field{note}{[Acessado em 05-04-2026]}
-      \field{title}{{V}{E}{X} {L}ibrary --- kb.vex.com}
-      \field{year}{2025}
     \endentry
     \entry{hubregt2014}{book}{}{}
       \name{author}{1}{}{%
@@ -623,6 +609,49 @@
       \field{year}{2016}
       \field{pages}{135\bibrangedash 140}
       \range{pages}{6}
+    \endentry
+    \entry{wu2011}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=e678d25a80ffc412f774221dea1f48fa}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Chun-Mu},
+           giveni={C\bibinithyphendelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3e3491961e7b15c4b949cd32336e66ec}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Ching-Kao},
+           giveni={C\bibinithyphendelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6e784baa7e77ac93eed568df0cdc1e14}{%
+           family={Chu},
+           familyi={C\bibinitperiod},
+           given={Tung-Te},
+           giveni={T\bibinithyphendelim T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f32e8e0cea39017343a859be7430fa9c}
+      \strng{fullhash}{f32e8e0cea39017343a859be7430fa9c}
+      \strng{fullhashraw}{f32e8e0cea39017343a859be7430fa9c}
+      \strng{bibnamehash}{f32e8e0cea39017343a859be7430fa9c}
+      \strng{authorbibnamehash}{f32e8e0cea39017343a859be7430fa9c}
+      \strng{authornamehash}{f32e8e0cea39017343a859be7430fa9c}
+      \strng{authorfullhash}{f32e8e0cea39017343a859be7430fa9c}
+      \strng{authorfullhashraw}{f32e8e0cea39017343a859be7430fa9c}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Chinese Society of Mechanical Engineers, Transactions of the Chinese Institute of Engineers - Series C}
+      \field{month}{06}
+      \field{title}{An Optimal Design of Target Tracker by alpha-beta-gamma-delta Filter with Genetic Algorithm (vol 30, pg 467, 2009)}
+      \field{volume}{32}
+      \field{year}{2011}
+      \field{pages}{273\bibrangedash 273}
+      \range{pages}{1}
     \endentry
   \enddatalist
 \endrefsection

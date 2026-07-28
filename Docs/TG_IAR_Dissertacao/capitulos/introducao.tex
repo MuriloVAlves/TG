@@ -6,70 +6,14 @@
 \chapter*[Introdução]{Introdução}
 \addcontentsline{toc}{chapter}{Introdução}
 
-Todas as antenas, desde modelos mais simples, possuem direções nas quais elas irradiam seu campo eletromagnético com maior intensidade. Essa característica é conhecida como diretividade. O ganho (capacidade de concentrar energia) da antena também está diretamente relacionado com a diretividade \autocite{Ford2008}. Antenas parabólicas são conhecidas pelo sua alta diretivida e seu alto ganho \autocite{hubregt2014}. Segundo \cite{Ford2008}, essas características são a principal vantagem dessa geometria, sendo excelentes para prover sinal forte e consistente de satélites de órbita baixa (Low-Earth Orbit, ou LEO).
+A evolução das telecomunicações espaciais, iniciada na segunda metade do século XX com o lançamento do satélite Sputnik 1 em 1957, transformou a infraestrutura global de dados e monitoramento ambiental \autocite{Ford2008}. Atualmente, o cenário aeroespacial é marcado pela expansão massiva de constelações em órbita terrestre baixa (\textit{Low-Earth Orbit} -- LEO), que operam em altitudes reduzidas e exigem enlaces de comunicação dinâmicos para a recepção de telemetria, imagens de sensoriamento remoto e sinais meteorológicos de alta resolução \autocite{app12199505}.
 
-Também, segundo \citeauthor{Ford2008}, a diretividade pode ser uma desvantagem das antenas, pois é necessário manter a antena apontada para o satélite desejado durante todo o momento da comunicação. Para isso, é necessário um sistema automático de apontamento de antena. 
+Em aplicações de radiofrequência (RF) envolvendo satélites LEO, a maximização da razão sinal-ruído ($S/N$) e a mitigação de atenuações atmosféricas dependem diretamente do ganho e da diretividade da antena utilizada na estação de solo \autocite{hubregt2014}. Contudo, enquanto antenas de alta diretividade (como arranjos helicoidais ou refletores parabólicos) concentram a energia irradiada em feixes estreitos, elas impõem o desafio do alinhamento angular rigoroso e contínuo com a espaçonave em movimento \autocite{Ford2008}. Como o tempo de passagem de um satélite LEO pelo horizonte local é restrito a poucos minutos, qualquer desalinhamento no feixe principal ocasiona a perda de sincronismo e a degradação do enlace.
 
+Para viabilizar o acompanhamento contínuo da trajetória orbital, empregam-se pedestais de rastreio automático. Trata-se de mecanismos robotizados dotados de juntas motorizadas — comumente dispostas em uma configuração bi-axial ortogonal de azimute e elevação — capazes de orientar a antena ao longo de toda a abóbada celeste visível \autocite{Bien2021}. A precisão desse sistema depende da modelagem cinemática do mecanismo, do controle preciso de atuadores e da integração com algoritmos de estimação orbital em tempo real.
 
-% Introdução antiga, divaga do tema principal
-Em 1860, James Maxwell previu a existência de ondas eletromagnéticas em radiofrequência. Em 1886, Hertz criou o primeiro sistema de rádio utilizando dois centelhadores \autocite{fusco2006}. Marconi, então, iniciou seus experimentos na área de telecomunicação em 1899, inventando o campo da comunicação sem fio a longas distâncias \autocite{rochol2018}.
+Em particular, a comunicação com satélites meteorológicos para recepção de dados no padrão HRPT (\textit{High Resolution Picture Transmission}) na faixa de $1,7\text{ GHz}$ demanda uma infraestrutura de recepção estável, combinando antenas de polarização circular com sistemas de rastreio de baixo ruído e resposta dinâmica rápida. Embora existam soluções comerciais de apontamento, o custo elevado e a rigidez arquitetural limitam sua aplicação em estações acadêmicas e de radioamadorismo, justificando o desenvolvimento de protótipos embarcados customizados e de baixo custo.
 
-%Nova introdução
-No final dos anos 50 e início dos 60, com o advento da corrida espacial, a União Soviética realizou o feito histórico que indicou uma nova era à humanidade. Sputnik 1, o primeiro satélite artificial alcançou órbita e transmitia a todas partes do mundo dois canais de "Radiobaliza" (beacon, em inglês) em \SI{20,005}{\mega\hertz} e \SI{40,002}{\mega\hertz} \autocite{Ford2008}. Segundo \cite{Ford2008}, os radios amadores estavam entre os únicos meios de notícias sobre a nave revolucionária (tradução livre).
-Atualmente, na camada LEO, existe o lançamento de milhares de satélites da nova constelação da Starlink, além de outras constelações já planejadas para cobrir boa parte da Terra, com um satélite em horizonte local em poucos minutos \autocite{app12199505}.
+Diante desse contexto, o objetivo deste trabalho é projetar, modelar e construir um protótipo funcional de um sistema de pedestal bi-axial com antena helicone para o rastreio automático de satélites LEO. O projeto abrange a modelagem cinemática via parâmetros de Denavit-Hartenberg (D-H), a implementação embarcada de um filtro preditivo $\alpha-\beta-\gamma$ para suavização de trajetórias em microcontrolador dual-core (ESP32 via FreeRTOS), e a validação do enlace de comunicação de RF para a captura e decodificação de imagens meteorológicas.
 
-O apontamento automático de antenas é utilizado para diversas aplicações. A principal funcionalidade desse mecanismo é a de obter uma conexão estável com qualquer equipamento desejado. Para o caso de radioamadorismo, seriam os satélites de órbita baixa \autocite{Ford2008}.
-Atualmente, esse sistema é utilizado em antenas é a de obter comunicação de fragatas e navios em alto mar, pois o acesso por solo é impossível \autocite{ueba2016}.
-(TODO:  Explicar o que é pedestal de antena)
-
-- como está o panorama de pesquisa atual tipo o que é mais recente de publicação 
- %Feito na seção "estado da arte"
-
-O objetivo desse trabalho está em desenvolver a modelagem dinâmica e cinemática de um sistema pedestal biaxial, criando um protótipo funcional e aplicando os conceitos de controle para a obtenção de imagens meteorológicas vindas de satélites de órbita baixa.
-
- 
-
-
-% \section*{Figuras}\label{sec:figuras}
-% \addcontentsline{toc}{section}{figuras}
-
-% % As normas da~\citeonline[3.1-3.2]{NBR6028:2003} especificam que o caption da figura deve vir abaixo da mesma.
-
-% A Figura~\ref{fig:log} ilustra...
-
-% \begin{figure}[htpb]
-%    \centering
-%    \includegraphics[scale=.3]{figs/logo}
-%    \caption{Breve explicação sobre a figura. Deve vir abaixo da mesma.}
-%    \label{fig:log}
-% \end{figure}
-
-% \section*{Tabelas}\label{sec:tabelas}
-% \addcontentsline{toc}{section}{tabelas}
-
-% A Tabela~\ref{tab:tabela} apresenta os resultados...
-
-% \begin{table}[htpb]
-%    \centering
-%    \caption{Breve explicação sobre a tabela. Deve vir acima da mesma.}\label{tab:tabela}
-%    \begin{tabular}{|l|c|c|c|c|c|c|r|}
-%         \hline
-%         \small{XX} & \small{FF} & \small{PP} & \small{YY} & \small{Yr} & \small{xY} & \small{Yx} & \small{ZZ} \\ \hline
-%                615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-%                615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-%                615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-%                615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-%                615 &    18      &     2558   &    0,9930  &    0,9930  &    0,9930  &    0,9930  &    0,9930  \\ \hline
-%    \end{tabular}
-% \end{table}
-
-% \section*{Motivação}\label{sec:motivacao}
-% \addcontentsline{toc}{section}{Motivação}
-
-% \lipsum[35]
-
-% \section*{Objetivos}\label{sec:objetivos}
-% \addcontentsline{toc}{section}{Objetivos}
-
-% \lipsum[36]
-
+O presente documento está estruturado da seguinte forma: o Capítulo~\ref{cap:obj} detalha os objetivos gerais e específicos; o Capítulo~\ref{cap:teo} fundamenta a teoria de rastreio, cinemática e filtragem preditiva; o Capítulo~\ref{cap:metod} descreve a metodologia de hardware, software e integração do sistema; o Capítulo~\ref{cap:resultados} discute os resultados obtidos com o protótipo; e, por fim, apresentam-se as conclusões e propostas de trabalhos futuros.

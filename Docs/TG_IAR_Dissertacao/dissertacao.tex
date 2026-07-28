@@ -112,16 +112,17 @@
 \input{pretextual/assinaturas}
 
 % Dedicatória
-\input{pretextual/dedicatoria}
+% \input{pretextual/dedicatoria}
 
 % Agradecimentos
-\input{pretextual/agradecimentos}
+% \input{pretextual/agradecimentos}
 
 % Epígrafe
-\input{pretextual/epigrafe}
+% \input{pretextual/epigrafe}
 
 % Resumo e Abstract
 \input{pretextual/resumos}
+\newpage
 
 % Lista de ilustrações
 \pdfbookmark[0]{\listfigurename}{lof}
@@ -133,18 +134,39 @@
 \listoftables*
 \cleardoublepage
 
-% Lista de abreviaturas e siglas
+% ---
+% LISTA DE ABREVIATURAS E SIGLAS
+% ---
 \begin{siglas}
   \item[ABNT] Associação Brasileira de Normas Técnicas
-  \item[abnTeX] Normas para TeX
+  \item[D-H] Denavit-Hartenberg
+  \item[ESP32] Microcontrolador de Sistema em Chip da Espressif Systems
+  \item[FreeRTOS] \textit{Free Real-Time Operating System}
+  \item[HRPT] \textit{High Resolution Picture Transmission}
+  \item[LCD] \textit{Liquid Crystal Display} (Mostrador de Cristal Líquido)
+  \item[LEO] \textit{Low-Earth Orbit} (Órbita Terrestre Baixa)
+  \item[LNA] \textit{Low Noise Amplifier} (Amplificador de Baixo Ruído)
+  \item[NEMA] \textit{National Electrical Manufacturers Association}
+  \item[PWM] \textit{Pulse Width Modulation} (Modulação por Largura de Pulso)
+  \item[RF] Radiofrequência
+  \item[SAW] \textit{Surface Acoustic Wave} (Onda Acústica de Superfície)
+  \item[SDR] \textit{Software Defined Radio} (Rádio Definido por Software)
+  \item[TCP] \textit{Transmission Control Protocol}
 \end{siglas}
 
-% Lista de símbolos
+% ---
+% LISTA DE SÍMBOLOS
+% ---
 \begin{simbolos}
-  \item[$ \Gamma $] Letra grega Gama
-  \item[$ \Lambda $] Lambda
-  \item[$ \zeta $] Letra grega minúscula zeta
-  \item[$ \in $] Pertence
+  \item[$ \alpha $] Parâmetro de suavização de posição do filtro $\alpha-\beta-\gamma$
+  \item[$ \beta $] Parâmetro de suavização de velocidade do filtro $\alpha-\beta-\gamma$
+  \item[$ \gamma $] Parâmetro de suavização de aceleração do filtro $\alpha-\beta-\gamma$
+  \item[$ \theta_i $] Ângulo da junta articulada $i$ nos parâmetros de Denavit-Hartenberg
+  \item[$ d_i $] Deslocamento do elo ao longo do eixo $z_i$ na convenção D-H
+  \item[$ a_i $] Comprimento do elo ao longo do eixo $x_i$ na convenção D-H
+  \item[$ \alpha_i $] Ângulo de torção do elo no eixo $x_i$ na convenção D-H
+  \item[$ f $] Frequência da onda de radiofrequência
+  \item[$ T_s $] Período de amostragem do sistema de controle
 \end{simbolos}
 
 % Inserir o SUMÁRIO
@@ -163,7 +185,7 @@
 
 % Inclui cada capitulo da Dissertação
 \input{capitulos/introducao}
-\input{capitulos/estadodaarte}
+% \input{capitulos/estadodaarte}
 \input{capitulos/Objetivos}
 \input{capitulos/ReferencialTeorico}
 \input{capitulos/Metodologia}
@@ -198,10 +220,10 @@
 %\glossary
 
 % Apêndices
-\input{postextual/apendices}
+% \input{postextual/apendices}
 
 % Anexos
-\input{postextual/anexos}
+% \input{postextual/anexos}
 
 % Índice remissivo (Consultar manual)
 %\phantompart

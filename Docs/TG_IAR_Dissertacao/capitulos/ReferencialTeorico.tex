@@ -25,7 +25,7 @@ Além disso, é esperado que os aplicativos de rastreio de satélites com os qua
 
 Podemos descrever o mecanismo de apontamento da antena do pedestal a partir de dois movimentos independentes ortogonais, sendo um de azimute e um de elevação.
 O espaço de trabalho necessário para o acompanhamento contínuo de passagens de satélites corresponde ao hemisfério superior delimitado pelo horizonte local do plano tangente à estação de solo encontrado a 0$^\circ$ de elevação.
-Para cobrir integralmente essa semi-esfera, o mecanismo deve ser capaz de efetuar uma rotação completa de $0$ até $2\pi$ (0$^\circ$ até 360$^\circ$) em azimute e uma articulação de $0$ até $\frac{\pi}{2}$ (0$^\circ$ até 90$^\circ$) na elevação.
+Para cobrir integralmente essa semiesfera, o mecanismo deve ser capaz de efetuar uma rotação completa de $0$ até $2\pi$ (0$^\circ$ até 360$^\circ$) em azimute e uma articulação de $0$ até $\frac{\pi}{2}$ (0$^\circ$ até 90$^\circ$) na elevação.
 Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtado, já que em baixas elevações há a obstrução de relevo, estruturas ou atmosfera, o mecanismo desenvolvido nesse trabalho garantirá a varredura de toda região angular teórica.
 
 É importante salientar que a partir das próximas modelagens as variáveis $\theta$ e $\phi$ serão também utilizadas ao se referir ao azimute e à elevação do mecanismo da antena.
@@ -51,7 +51,7 @@ O modelo da cinemática direta do sistema pode ser obtido a partir dos parâmetr
     \hline
     Parâmetro & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
     \hline
-    $O_0O_1$ & $\theta$ & h & 0 & frac{$\pi$}{2} \\
+    $O_0O_1$ & $\theta$ & h & 0 & $\frac{\pi}{2}$ \\
     $O_1O_2$ & $\phi$ & -d & 0 & 0 \\
     $O_2O_3$ & 0 & 0 & l & 0 \\
 \end{tabular}
@@ -133,8 +133,8 @@ Uma outra técnica é utilizar um filtro Kalman, que possui camadas de previsão
 Como é desejado que o projeto funcione completamente embarcado em um microcontrolador, esse tempo maior de processo pode causar demora no controle dos motores e fazer o sistema perder o rastreio do satélite. Um terceiro sistema com harmonia entre sua capacidade preditiva e seu tempo de processamento é o filtro $\alpha-\beta$ e seus derivados, que utiliza coeficientes constantes para corrigir as variáveis do modelo, mantendo a característica preditiva e mantendo baixo tempo de processamento \cite{wu2011}.
 
 Segundo \citeauthor{tenne2000} e \citeauthor{wu2011}, filtros $\alpha-\beta$ possuem diferentes ordens. O primeiro tipo é o $\alpha-\beta$, sendo um filtro de segunda ordem inicialmente utilizado para rastrear alvos através de radares. Esse filtro possui dois coeficientes, sendo $\alpha$ o coeficiente responsável por prever a variação de posição e $\beta$ para prever a velocidade do sistema, que deve ser constante para o bom funcionamento do filtro.
-A segunda forma do filtro é o $\alpha-\beta-\gamma$, sendo um filtro de terceira que, além de prever posição e velocidade, pode prever também a aceleração do sistema. O último tipo de filtro mais comum é o $\alpha-\beta-\gamma-\delta$, no qual é capaz de prever taxa de variação da aceleração.
-Para o escopo do projeto, e a projeção de posiçã descrita na seção \ref{sec:ground_tracking}, um bom compromisso entre manter o rastreio da variação de velocidade (aceleração) e não necessitar de cálculos extras é utilizar o filtro $\alpha-\beta-\gamma$, que se encaixa melhor aos requisitos do projeto.
+A segunda forma do filtro é o $\alpha-\beta-\gamma$, sendo um filtro de terceira que, além de prever posição e velocidade, pode prever também a aceleração do sistema. O último tipo de filtro mais comum é o $\alpha-\beta-\gamma-\delta$, capaz de prever taxa de variação da aceleração.
+Para o escopo do projeto, e a projeção de posição descrita na seção \ref{sec:ground_tracking}, um bom compromisso entre manter o rastreio da variação de velocidade (aceleração) e não necessitar de cálculos extras é utilizar o filtro $\alpha-\beta-\gamma$, que se encaixa melhor aos requisitos do projeto.
 Um filtro $\alpha-\beta$ não será ideal porque é esperada uma grande variação de velocidade vista pela estação de solo enquanto ocorrer o rastreio do satélite.
 Em contrapartida, o filtro $\alpha-\beta-\gamma-\delta$ é mais utilizado quando há uma grande variação de aceleração. Não é o caso para o projeto, já que é esperado que a aceleração aumente levemente enquanto o satélite cruza o horizonte em direção à elevação máxima e diminua enquanto ele estiver se deslocando à outra região do horizonte em relação à estação de solo. Então a variação de aceleração é tão pequena que não justifica o maior processamento necessário.
 
