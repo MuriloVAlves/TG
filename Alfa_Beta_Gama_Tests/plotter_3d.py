@@ -21,6 +21,9 @@ for key_str, errors in data_az.items():
     # Calcula a média dos erros
     erro_medio = np.mean(errors)
 
+    if erro_medio > 100:
+        pass
+
     p1_list.append(p1)
     p2_list.append(p2)
     p3_list.append(p3)
@@ -38,7 +41,7 @@ scatter = ax.scatter(
     p3_list,
     c=mean_errors,
     cmap="viridis",
-    norm=LogNorm(vmin=max(min(mean_errors), 1e-3), vmax=max(mean_errors)), # vmin evita log(0)
+    norm=LogNorm(vmin=max(min(mean_errors), 1e-3), vmax=min(max(mean_errors), 1e5)), # vmin evita log(0)
     s=35,           # Tamanho do ponto levemente reduzido
     linewidths=0.2, # Borda mais fina para não poluir
     edgecolor="k",
@@ -101,7 +104,7 @@ scatter = ax.scatter(
     p3_list,
     c=mean_errors,
     cmap="viridis",
-    norm=LogNorm(vmin=max(min(mean_errors), 1e-3), vmax=max(mean_errors)), # vmin evita log(0)
+    norm=LogNorm(vmin=max(min(mean_errors), 1e-3), vmax=min(max(mean_errors), 1e5)), # vmin evita log(0)
     s=35,           # Tamanho do ponto levemente reduzido
     linewidths=0.2, # Borda mais fina para não poluir
     edgecolor="k",

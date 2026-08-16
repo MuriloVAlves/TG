@@ -4,16 +4,19 @@ import json
 def alfa_beta_gamma_filter(x_obs,alpha,beta,gamma,deltat):
     # --- Execução rápida do Filtro ---
     x_p, v_p, a_p = x_obs[0], 0.0, 0.0
-    x_s_list = []
+    x_p_list = []
+
+    if alpha == 1:
+        pass
 
     for idx in range(1,min(len(x_obs),len(deltat))):
         x_o = x_obs[idx]
         dt = deltat[idx]
-        inovacao = x_o - x_p
-        x_s = x_p + alpha * inovacao
-        v_s = v_p + (beta / dt) * inovacao
-        a_s = a_p + (gamma / (2.0 * (dt ** 2))) * inovacao
-        x_s_list.append(x_s)
+        erro = x_o - x_p
+        x_s = x_p + alpha * erro
+        v_s = v_p + (beta / dt) * erro
+        a_s = a_p + ((2.0 *gamma) / (dt ** 2)) * erro
+        x_p_list.append(x_p)
 
         # Predição do próximo passo (k+1)
         x_p = x_s + (dt * v_s) + (0.5 * (dt ** 2) * a_s)
@@ -21,7 +24,7 @@ def alfa_beta_gamma_filter(x_obs,alpha,beta,gamma,deltat):
         a_p = a_s
 
     # --- Cálculo do Erro Médio Quadrático (RMSE) ---
-    rmse = np.sqrt(np.mean((np.array(np.array(x_obs[1:])) - np.array(x_s_list)) ** 2))
+    rmse = np.sqrt(np.mean((np.array(np.array(x_obs[1:])) - np.array(x_p_list)) ** 2))
     return rmse
 
 def filtro_abg_otimo(t_obs,x_obs):
@@ -62,7 +65,7 @@ if __name__ == "__main__":
     from pathlib import Path
 
     # Define the directory path
-    dir_path = Path('./tracks/')
+    dir_path = Path('./track_test/')
 
     timestamp = []
     az_data = []
