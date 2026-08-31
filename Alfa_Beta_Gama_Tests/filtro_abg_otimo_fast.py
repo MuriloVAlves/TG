@@ -1,67 +1,75 @@
-import numpy as np
 import json
+from pathlib import Path
+import numpy as np
+from numba import njit
 
 MAX_ALPHA_AZ = 2
 MAX_ALPHA_EL = 2
 N_STEPS   = 30
-ITERATIONS = 3
-N_BEST_RESULTS = 15
+ITERATIONS = 10
+N_BEST_RESULTS = 1
 
-def alfa_beta_gamma_filter(x_obs,alpha,beta,gamma,deltat):
-    # --- Execução rápida do Filtro ---
-    x_p, v_p, a_p = x_obs[0], 0.0, 0.0
-    x_p_list = []
 
-    for idx in range(1,min(len(x_obs),len(deltat))):
+@njit
+def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
+    n = min(len(x_obs), len(deltat))
+    if n <= 1:
+        return 1e3
+
+    x_p = x_obs[0]
+    v_p = 0.0
+    a_p = 0.0
+
+    sum_sq_err = 0.0
+
+    for idx in range(1, n):
         x_o = x_obs[idx]
         dt = deltat[idx]
+
         erro = x_o - x_p
         if erro > 1e3:
             return 1e3
+
         x_s = x_p + alpha * erro
         v_s = v_p + (beta / dt) * erro
-        a_s = a_p + ((2.0 *gamma) / (dt ** 2)) * erro
-        x_p_list.append(x_p)
+        a_s = a_p + ((2.0 * gamma) / (dt**2)) * erro
 
-        # Predição do próximo passo (k+1)
-        x_p = x_s + (dt * v_s) + (0.5 * (dt ** 2) * a_s)
+        sum_sq_err += (x_o - x_p) ** 2
+
+        # Predição para k+1
+        x_p = x_s + (dt * v_s) + (0.5 * (dt**2) * a_s)
         v_p = v_s + (dt * a_s)
         a_p = a_s
 
-    # --- Cálculo do Erro Médio Quadrático (RMSE) ---
-    rmse = np.sqrt(np.mean((np.array(np.array(x_obs[1:])) - np.array(x_p_list)) ** 2))
+    rmse = np.sqrt(sum_sq_err / (n - 1))
     return rmse
 
-def filtro_abg_otimo(t_obs,x_obs,MAX_ALPHA):
-    """
-    Varia alpha, beta e gamma em passos de 0.1 dentro da região de estabilidade de Jury
-    e retorna o menor Erro Quadrático Médio (MSE/RMSE) e os coeficientes ótimos.
 
-    :param t: Array com os instantes de tempo
-    :param x_obs: Array com as posições observadas/medidas (com ruído)
-    :param x_ref: Array opcional com a posição real (se conhecido). Se None, usa x_obs.
-    """
-
+def filtro_abg_otimo_fast(t_obs, x_obs, max_alpha, n_steps):
     rmse_list = []
     config_list = []
 
-    # Variação em passos de 0.1 dentro dos limites de Jury:
-    # 0 < alpha < 2
-    for alpha in np.arange(0, MAX_ALPHA, MAX_ALPHA/N_STEPS):
-        # 0 < beta < 4 - 2*alpha
+    # Converter entradas para float64 continuous arrays para o Numba
+    t_obs_arr = np.ascontiguousarray(t_obs, dtype=np.float64)
+    x_obs_arr = np.ascontiguousarray(x_obs, dtype=np.float64)
+
+    step_alpha = max_alpha / n_steps
+    step_grid = max_alpha / (2 * n_steps)
+
+    for alpha in np.arange(0, max_alpha, step_alpha):
         beta_max = 4.0 - 2.0 * alpha
-        for beta in np.arange(0, beta_max, MAX_ALPHA/(2*N_STEPS)):
-            gamma_max = (4.0 * alpha * beta) / (2.0 - alpha)
-            # 0 < gamma < gamma_max
-            for gamma in np.arange(0, gamma_max, MAX_ALPHA/(2*N_STEPS)):
-                # Calcular filtro
-                print(f"Alpha: {alpha:.4f}; Beta: {beta:.4f}; Gamma: {gamma:.4f}",end='\r')
-                rmse = alfa_beta_gamma_filter(x_obs,alpha,beta,gamma,t_obs)
-                # Salvar configuração
+        for beta in np.arange(0, beta_max, step_grid):
+            gamma_max = (4.0 * alpha * beta) / (2.0 - alpha) if alpha < 2.0 else 0.0
+            for gamma in np.arange(0, gamma_max, step_grid):
+
+                rmse = alfa_beta_gamma_filter_fast(
+                    x_obs_arr, t_obs_arr, alpha, beta, gamma
+                )
+
                 rmse_list.append(rmse)
                 config_list.append((round(alpha, 4), round(beta, 4), round(gamma, 4)))
-    return config_list, rmse_list
 
+    return config_list, rmse_list
 
 # ==============================================================================
 # PROGRAMA PRINCIPAL
@@ -123,8 +131,8 @@ if __name__ == "__main__":
         print(f"Pass {stlt_pass+1}/{len(timestamp)}"+" "*50)
         for iteration in range(ITERATIONS):
             print(f"ITERATION {iteration+1}"+" "*50)
-            config_az, rmse_az = filtro_abg_otimo(timestamp[stlt_pass],az_data[stlt_pass],MAX_ALPHA_AZ)
-            config_el, rmse_el = filtro_abg_otimo(timestamp[stlt_pass],el_data[stlt_pass],MAX_ALPHA_EL)
+            config_az, rmse_az = filtro_abg_otimo_fast(timestamp[stlt_pass],az_data[stlt_pass],MAX_ALPHA_AZ,N_STEPS)
+            config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass],MAX_ALPHA_EL,N_STEPS)
             for idx in range(len(config_az)):
                 adicionar_dado_az(str(config_az[idx]),rmse_az[idx])
             for idx in range(len(config_el)):

@@ -132,10 +132,10 @@ Existem várias técnicas para a estimação da posição de um satélite ao lon
 Uma outra técnica é utilizar um filtro Kalman, que possui camadas de previsão e correção recursiva para fazer com que o Mínimo Erro Quadrático Médio seja nulo em relação a um modelo inicial. E o problema com o Filtro Kalman para esse caso é que ele é relativamente exigente em quesitos de processos, pois precisa recorrentemente atualizar as matrizes de ganhos.
 Como é desejado que o projeto funcione completamente embarcado em um microcontrolador, esse tempo maior de processo pode causar demora no controle dos motores e fazer o sistema perder o rastreio do satélite. Um terceiro sistema com harmonia entre sua capacidade preditiva e seu tempo de processamento é o filtro $\alpha-\beta$ e seus derivados, que utiliza coeficientes constantes para corrigir as variáveis do modelo, mantendo a característica preditiva e mantendo baixo tempo de processamento \cite{wu2011}.
 
-Segundo \citeauthor{tenne2000} e \citeauthor{wu2011}, filtros $\alpha-\beta$ possuem diferentes ordens. O primeiro tipo é o $\alpha-\beta$, sendo um filtro de segunda ordem inicialmente utilizado para rastrear alvos através de radares. Esse filtro possui dois coeficientes, sendo $\alpha$ o coeficiente responsável por prever a variação de posição e $\beta$ para prever a velocidade do sistema, que deve ser constante para o bom funcionamento do filtro.
+Segundo \citeauthor{tenne2000} e \citeauthor{wu2011}, filtros $\alpha-\beta$ possuem diferentes ordens. O primeiro tipo é o $\alpha-\beta$, sendo um filtro de segunda ordem inicialmente utilizado para rastrear alvos através de radares. Esse filtro possui dois coeficientes, sendo $\alpha$ o coeficiente responsável por prever a variação de posição e $\beta$ responsável por prever a velocidade do sistema, que deve ser constante para o bom funcionamento do filtro.
 A segunda forma do filtro é o $\alpha-\beta-\gamma$, sendo um filtro de terceira que, além de prever posição e velocidade, pode prever também a aceleração do sistema. O último tipo de filtro mais comum é o $\alpha-\beta-\gamma-\delta$, capaz de prever taxa de variação da aceleração.
-Para o escopo do projeto, e a projeção de posição descrita na seção \ref{sec:ground_tracking}, um bom compromisso entre manter o rastreio da variação de velocidade (aceleração) e não necessitar de cálculos extras é utilizar o filtro $\alpha-\beta-\gamma$, que se encaixa melhor aos requisitos do projeto.
-Um filtro $\alpha-\beta$ não será ideal porque é esperada uma grande variação de velocidade vista pela estação de solo enquanto ocorrer o rastreio do satélite.
+Para o escopo do projeto e para a projeção de posição descrita na seção \ref{sec:ground_tracking}, um bom compromisso entre manter o rastreio da variação de velocidade (aceleração) e não necessitar de cálculos extras é utilizar o filtro $\alpha-\beta-\gamma$, que é previsto para se encaixar melhor aos requisitos do projeto.
+Um filtro $\alpha-\beta$, em teoria, não será ideal porque é esperada uma grande variação de velocidade vista pela estação de solo enquanto ocorrer o rastreio do satélite. Entretanto, como haverá uma grade quantidade de pontos enviados à estação de solo, é possível que o filtro corrija o fator da aceleração considerando que a velocidade foi estimada erroneamente.
 Em contrapartida, o filtro $\alpha-\beta-\gamma-\delta$ é mais utilizado quando há uma grande variação de aceleração. Não é o caso para o projeto, já que é esperado que a aceleração aumente levemente enquanto o satélite cruza o horizonte em direção à elevação máxima e diminua enquanto ele estiver se deslocando à outra região do horizonte em relação à estação de solo. Então a variação de aceleração é tão pequena que não justifica o maior processamento necessário.
 
 Utilizando como referência a modelagem feita por \citeauthor{tenne2000}, o filtro $\alpha-\beta-\gamma$ pode ser descrito por duas séries de equação: uma para os valores preditos e outra para os coeficientes suavizados. Os valores possuem um subscrito para indicar o que eles representam. O subscrito $s$ está relacionado aos dados suavizados, $p$ em relação aos dados preditos, e $o$ relacionado aos dados observados (com a posição exata do objeto). As equações de predição e suavização são dadas da seguinte forma:
@@ -146,15 +146,22 @@ x_s(k) = x_p(k)+\alpha(x_o(k)-x_p(k))\label{eq:x_s} \\
 v_s(k) = v_p(k)+\frac{\beta}{T}(x_o(k)-x_p(k))\label{eq:v_s} \\
 a_s(k) = a_p(k)+\frac{\gamma}{2T^2}(x_o(k)-x_p(k))\label{eq:a_s}
 \end{align}
+Para o filtro $\alpha-\beta$, é considerado que o fator $\gamma$ equivale a 0.
+
 
 Como \citeauthor{tenne2000} propõe, é possível fazer a transformada Z das equações \eqref{eq:x_p} até \eqref{eq:a_s} e respolvê-la para $\frac{x_p}{x_o}$, obtendo a seguinte razão de polinômios:
 \begin{equation}
 G(z) = \frac{x_p}{x_o} = \frac{\alpha+(-2\alpha-\beta+\frac{1}{4}\gamma)z+(\alpha+\beta+\frac{1}{4}\gamma)z^2}{z^3+(\alpha+\beta+\frac{1}{4}\gamma-3)z^2+(-2\alpha-\beta+\frac{1}{4}\gamma+3)z+\alpha-1} \label{eq:g(z)_alpha_beta_gamma}
 \end{equation}
-Utilizando o polinômio característico do denominador de \eqref{eq:g(z)_alpha_beta_gamma}, \citeauthor{tenne2000} utiliza o Teste da Estabilidade de Jury para garantir que os polos se encontrem dentro do círculo unitário do plano Z, obtendo as seguintes equações para atender um sistema estável:
+Além disso, é possível obter a função de transferência, utilizando a dedução de \cite{ekstrand2012}. A função de transferência em tempo discreto tem a seguinte forma:
+\begin{equation}
+G(z) = \frac{x_p}{x_o} = \frac{\alpha z^2+(\beta - \alpha)z}{z^2+(\alpha+\beta-2)z+1- \alpha} \label{eq:g(z)_alpha_beta_gamma}
+\end{equation}
+Utilizando o polinômio característico do denominador de \eqref{eq:g(z)_alpha_beta_gamma}, \citeauthor{tenne2000} utiliza o Teste da Estabilidade de Jury para garantir que os polos se encontrem dentro do círculo unitário do plano Z, obtendo as seguintes equações para atender um sistema estável para o filtro $\alpha-\beta-\gamma$:
 \begin{align}
 0<\alpha<2,                             \label{eq:alpha_lim} \\
 0<\beta<4-2\alpha,                      \label{eq:beta_lim}  \\
 0<\gamma<\frac{4\alpha\beta}{2-\alpha}. \label{eq:gamma_lim}
 \end{align}
+Para o filtro $\alpha-\beta$, a estabilidade é atingida utilizando os mesmos parâmetros e considerando $\gamma$ igual a $0$.
 Durante o desenvolvido do projeto, esses valores de limite irão ser utilizados para garantir a estabilidade e convergência do filtro.
