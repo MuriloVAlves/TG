@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import numpy as np
+import time
 from numba import njit
 
 MAX_ALPHA = 2
@@ -126,20 +127,23 @@ if __name__ == "__main__":
     for filtro in test_filter:
         max_filters += 1
     filter_params = lazy_alpha_beta_gamma(MAX_ALPHA,N_STEPS)
-
-    for iteration in range(ITERATIONS):
-        print(f"ITERATION {iteration+1}"+" "*50)
-        counter = 0
-        for alpha, beta, gamma in filter_params:
-            counter += 1
-            for stlt_pass in range(len(timestamp)):
-                print(f"Filtro {counter}/{max_filters}: Pass {stlt_pass+1}/{len(timestamp)}     ", end='\r')
-                config_az, rmse_az = filtro_abg_otimo_fast(timestamp[stlt_pass],az_data[stlt_pass], alpha, beta, gamma)
-                config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha, beta, gamma)
-                for idx in range(len(config_az)):
-                    adicionar_dado_az(str(config_az),rmse_az)
-                for idx in range(len(config_el)):
-                    adicionar_dado_el(str(config_el),rmse_el)
+    init = time.time()
+    elapsed = 0
+    counter = 0
+    ETA_time = 0
+    for alpha, beta, gamma in filter_params:
+        counter += 1
+        for stlt_pass in range(len(timestamp)):
+            if (time.time()-elapsed) > 1:
+                ETA_time = (max_filters-counter)*((time.time()-init)/counter)
+                elapsed = time.time()
+            print(f"[ETA: {ETA_time//60:.0f}:{int(ETA_time%60):02d}] Filtro {counter}/{max_filters}: Pass {stlt_pass+1}/{len(timestamp)} ", end='\r')
+            config_az, rmse_az = filtro_abg_otimo_fast(timestamp[stlt_pass],az_data[stlt_pass], alpha, beta, gamma)
+            config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha, beta, gamma)
+            for idx in range(len(config_az)):
+                adicionar_dado_az(str(config_az),rmse_az)
+            for idx in range(len(config_el)):
+                adicionar_dado_el(str(config_el),rmse_el)
     print("Gravando dados em arquivos...")
     with open("./az_dict.json", "w", encoding="utf-8") as f:
         json.dump(az_dict, f, ensure_ascii=False, indent=4)

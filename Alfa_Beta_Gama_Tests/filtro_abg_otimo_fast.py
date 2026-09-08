@@ -6,8 +6,8 @@ from numba import njit
 MAX_ALPHA_AZ = 2
 MAX_ALPHA_EL = 2
 N_STEPS   = 30
-ITERATIONS = 10
-N_BEST_RESULTS = 1
+ITERATIONS = 1
+N_BEST_RESULTS = 10
 
 
 @njit
@@ -55,13 +55,17 @@ def filtro_abg_otimo_fast(t_obs, x_obs, max_alpha, n_steps):
 
     step_alpha = max_alpha / n_steps
     step_grid = max_alpha / (2 * n_steps)
+    print(f"Step alpha: {step_alpha}, Step grid: {step_grid}")
 
+    counter = 0
     for alpha in np.arange(0, max_alpha, step_alpha):
         beta_max = 4.0 - 2.0 * alpha
         for beta in np.arange(0, beta_max, step_grid):
             gamma_max = (4.0 * alpha * beta) / (2.0 - alpha) if alpha < 2.0 else 0.0
             for gamma in np.arange(0, gamma_max, step_grid):
-
+                print(f"{round(alpha, 4):.4f}/{max_alpha:.6f}, {round(beta, 4):.4f}/{beta_max:.6f}, {round(gamma, 4):.4f}/{gamma_max:.6f}", end='\r')
+                counter = counter + 1
+                # print(f"Teste de filtro {counter}",end='\r')
                 rmse = alfa_beta_gamma_filter_fast(
                     x_obs_arr, t_obs_arr, alpha, beta, gamma
                 )
@@ -78,7 +82,7 @@ if __name__ == "__main__":
     from pathlib import Path
 
     # Define the directory path
-    dir_path = Path('./track_test/')
+    dir_path = Path('./tracks/')
 
     timestamp = []
     az_data = []
