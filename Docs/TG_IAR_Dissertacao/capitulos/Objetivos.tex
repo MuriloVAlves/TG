@@ -3,27 +3,25 @@
 \chapter{Objetivos}\label{cap:obj}
 
 O objetivo desse trabalho é desenvolver o protótipo de um sistema de alinhamento automático
-de antena. Esse protótipo contará com um sistema de controle motorizado e uma integração com sistemas externos,
+de antena helicoidal impressa em impressora 3D. Esse protótipo contará com um sistema de controle motorizado e uma integração com sistemas externos,
 como aplicativo de rastreamento de satélites.
 
 
 \section{Objetivos Especificos}\label{sec:esp}
-\addcontentsline{toc}{section}{obj}
 \subsection{Modelagem e Prototipagem}\label{sec:mod}
-O protótipo deverá ser calculado para atingir as especificações do projeto. Primeiramente,
-será necessária uma modelagem dos ângulos e os modelos para permitir o cálculo da cinemática
+A fim de obter êxito no rastreio do sinal enviado pelos satélites, .
+Primeiramente, será necessária uma modelagem dos ângulos e os modelos para permitir o cálculo da cinemática
 direta do mecanismo e permitir o apontamento do sistema.
 
 \subsection{Sistema de Controle}\label{sec:ctr}
 Após a modelagem do sistema, será necessário calcular a resposta do sistema a
 estímulos e estabilizar o controle do mecanismo. O sistema de controle utilizado será de
-malha fechada, utilizando motores e encoder para realizar o controle e a observabilidade
-do sistema.
+malha aberta, utilizando motores de passo para realizar o controle do mecanismo do sistema.
 O sistema de controle deve ser estável e responsivo para acompanhar a trajetória do veículo selecionado. 
-Além disso, a amostragem de observabilidade e a malha de controle devem ter desempenho temporal adequado para detectar e rejeitar ruídos e distúrbios operacionais.
+Além disso, será utilizado um filtro $\alpha-\beta-\gamma$ para permitir um rastreio 
 
 \subsection{Características Mecâncias}\label{sec:ssb}
-O mecanismo deverá possuir duas características principais: velocidade e sensibilidade.
+O mecanismo deverá possuir duas características principais: velocidade e precisão.
 O primeiro fator está relacionado com a resposta do sistema à tarefa. Uma passagem de satélites
 de órbita baixa é marcada por momentos de aceleração e desaceleração. O protótipo deverá ser capaz de
 efetuar o apontamento da antena em todas as direções de uma semiesfera e ser sensível o suficiente para ter a precisão de
@@ -31,6 +29,6 @@ apontamento necessária para a comunicação.
 
 \subsection{Interface com Sistemas Externos}
 Diversos aplicativos, programas e bancos de dados, disponíveis na internet, fornecem informações sobre órbitas e mudanças de posição
-de satélites. O envio desses parâmetros acontece por uma comunicação TCP (Transmission Control Protocol), pelo qual
-sistemas de apontamento automáticos de antenas recebem informaççoes. Dessa forma, o protótipo deverá ser capaz de
+de satélites. O envio desses parâmetros acontece por uma comunicação TCP (Transmission Control Protocol), pelo qual o
+sistema irá receber ângulos de azimute e elevação para o apontamento da antena e irá retornar os dados de sua posição atual. Dessa forma, o protótipo deverá ser capaz de
 receber e enviar parâmetros para realizar a comunicação com aplicativos e programas.
