@@ -82,7 +82,7 @@ A^{i-1}_{i} = \begin{bmatrix}
 0 & 0 & 0 & 1
 \end{bmatrix}\label{eq:matriz_rotacao}
 \end{equation}
-Assim, é possível calcular como referenciais intermediários os seguintes pontos:
+Assim, é possível calcular como referenciais intermediários obtendo as matrizes \eqref{eq:matriz_rotacao_a01}, \eqref{eq:matriz_rotacao_a12} e \eqref{eq:matriz_rotacao_a23}.
 \begin{equation}
 A^{0}_{1} = \begin{bmatrix}
 \cos \theta & 0 & \sin \theta & 0 \\
@@ -90,7 +90,7 @@ A^{0}_{1} = \begin{bmatrix}
 0 & 1 & 0 & h \\
 0 & 0 & 0 & 1
 \end{bmatrix}
-\end{equation}
+\end{equation}\label{eq:matriz_rotacao_a01}
 \begin{equation}
 A^{1}_{2} = \begin{bmatrix}
 \cos \phi & -\sin \phi & 0 & 0 \\
@@ -98,7 +98,7 @@ A^{1}_{2} = \begin{bmatrix}
 0 & 0 & 1 & -d \\
 0 & 0 & 0 & 1
 \end{bmatrix}
-\end{equation}
+\end{equation}\label{eq:matriz_rotacao_a12}
 \begin{equation}
 A^{2}_{3} = \begin{bmatrix}
 1 & 0 & 0 & l \\
@@ -106,8 +106,8 @@ A^{2}_{3} = \begin{bmatrix}
 0 & 0 & 1 & 0 \\
 0 & 0 & 0 & 1
 \end{bmatrix}
-\end{equation}
-Utilizando a dedução de \cite{Siciliano2008}, pode-se computar a transformação homogênea de estado $T_{i}^{0} = A_{i}^{i-1} A_{i-1}^{i-2}(...)A_{1}^{0}$.
+\end{equation}\label{eq:matriz_rotacao_a23}
+Como cada matriz descreve o referencial do próximo membro a partir do membro anterior, segundo \cite{Siciliano2008}, pode-se multiplicar cada matriz para obter a transformação homogênea de estado $T_{i}^{0} = A_{i}^{i-1} A_{i-1}^{i-2}(...)A_{1}^{0}$, obtendo as matrizes \eqref{eq:matriz_rotacao_t01}, \eqref{eq:matriz_rotacao_t02} e \eqref{eq:matriz_rotacao_t03}.
 \begin{equation}
 T^{0}_{1} = \begin{bmatrix}
 \cos \theta & 0 & \sin \theta & 0 \\
@@ -115,7 +115,7 @@ T^{0}_{1} = \begin{bmatrix}
 0 & 1 & 0 & h \\
 0 & 0 & 0 & 1
 \end{bmatrix}
-\end{equation}
+\end{equation}\label{eq:matriz_rotacao_t01}
 \begin{equation}
 T^{0}_{2} = \begin{bmatrix}
 \cos\theta\cos\phi - \sin\theta\sin\phi & -\cos\theta\sin\phi & \cos\theta\sin\phi+\sin\theta\cos\phi & \sin\theta(-\sin\phi) \\
@@ -123,7 +123,7 @@ T^{0}_{2} = \begin{bmatrix}
 0 & 1 & 0 & h-d \\
 0 & 0 & 0 & 1
 \end{bmatrix}
-\end{equation}
+\end{equation}\label{eq:matriz_rotacao_t02}
 \begin{equation}
 T^{0}_{3} = \begin{bmatrix}
 \cos\theta\cos\phi - \sin\theta\sin\phi & -\cos\theta\sin\phi & \cos\theta\sin\phi+\sin\theta\cos\phi & l-\sin\theta\sin\phi \\
@@ -131,27 +131,28 @@ T^{0}_{3} = \begin{bmatrix}
 0 & 1 & 0 & h-d \\
 0 & 0 & 0 & 1
 \end{bmatrix}
-\end{equation}
+\end{equation}\label{eq:matriz_rotacao_t03}
 
 \section{Estimação e Rastreio de Satélites}\label{sec:estimation}
 Segundo a explicação de \cite{Ford2008}, cada satélite possui um número de catalogação que é utilizada para registrar informações básicas sobre a espaçonave. Embora algumas identificações, como nome e código de catalogação, são inalteradas durante sua vida útil, informações de órbita devem ser atualizadas constantemente por serem dinâmicas.
+
 Agências como a North American Aerospace Defense Command (NORAD) e a National Aeronautics and Space Administration (NASA) utilizam radares e outras formas de medição para determinar a posição e órbita exata de satélites, mantendo um rastreio completo do céu.
 Entre as métricas obtidas das observações estão os conhecidos elementos keplerianos. Esses elementos são informações como inclinação, excentricidade, decaimento de órbita, e perigeu.
 A partir dos keplerianos, é possível estipular a posição do satélite no espaço em relação a um determinado tempo, passado ou futuro.
 Softwares utilizam dessas informações para determinar passagens de diversos satélites e verificar quando estarão acima do horizonte, além de determinar o azimute e a elevação que a antena da estação de solo deverá ter para estar apontada para o satélite.
-Apesar de possuir a posição (quase) exata dos satélites, os softwares de rastreio de satélites normalmente não têm uma taxa muito alta de atualização de envio de dados alta, sendo necessário um algoritmo para manter o rastreio durante os pontos sem informações novas.
+Apesar de possuir a posição dos satélites, os softwares de rastreio de satélites normalmente reduzem a taxa de atualização de envio de dados, enviando uma nova informação ao sistema de controle da antena a cada um segundo.
 
-Segundo \cite{Skolnik1970}, existem várias técnicas para a estimação da posição de um satélite ao longo do tempo. A primeira e mais simples é de enviar ao controlador dos motores a posição recebida do aplicativo e replicá-la na antena. Porém, a desvantagem desse método é que a estrutura sofre saltos grandes de posição, além de que a posição da antena ficará estática se o rotor perder a conexão com o software de rastreio.
+Segundo \cite{ekstrand2012}, existem várias técnicas para a estimação da posição de um alvo ao longo do tempo. A primeira e mais simples é de enviar ao controlador dos motores a posição recebida do aplicativo e replicá-la na antena. Porém, a desvantagem desse método é que a estrutura sofre saltos grandes de posição, além de que a posição da antena ficará estática se o rotor perder a conexão com o software de rastreio.
 Uma outra técnica é utilizar um filtro Kalman, que possui camadas de previsão e correção recursiva para fazer com que o Mínimo Erro Quadrático Médio seja nulo em relação a um modelo inicial. E o problema com o Filtro Kalman para esse caso é que ele é relativamente exigente em quesitos de processos, pois precisa recorrentemente atualizar as matrizes de ganhos \cite{ekstrand2012}.
-Como é desejado que o projeto funcione completamente embarcado em um microcontrolador, esse tempo maior de processo pode causar demora no controle dos motores e fazer o sistema perder o rastreio do satélite. Um terceiro sistema com harmonia entre sua capacidade preditiva e seu tempo de processamento é o filtro $\alpha-\beta$ e seus derivados, que utiliza coeficientes constantes para corrigir as variáveis do modelo, mantendo a característica preditiva e mantendo baixo tempo de processamento \cite{wu2011}.
+Como é desejado que o projeto funcione completamente embarcado em um microcontrolador, esse tempo maior de processo pode causar demora no controle dos motores e fazer o sistema perder o rastreio do satélite. Um terceiro sistema com harmonia entre sua capacidade preditiva e seu tempo de processamento é o filtro $\alpha-\beta$ e seus derivados, que utiliza coeficientes constantes (diferentemente dos coeficientes varíaveis do filtro Kalman \cite{ekstrand2012}) para corrigir as variáveis do modelo, mantendo a característica preditiva e mantendo baixo tempo de processamento \cite{wu2011}.
 
 Segundo \cite{tenne2000} e \cite{wu2011}, filtros $\alpha-\beta$ possuem diferentes ordens. O primeiro tipo é o $\alpha-\beta$, sendo um filtro de segunda ordem inicialmente utilizado para rastrear alvos através de radares. Esse filtro possui dois coeficientes, sendo $\alpha$ o coeficiente responsável por prever a variação de posição e $\beta$ responsável por prever a velocidade do sistema, que deve ser constante para o bom funcionamento do filtro.
 A segunda forma do filtro é o $\alpha-\beta-\gamma$, sendo um filtro de terceira que, além de prever posição e velocidade, pode prever também a aceleração do sistema. O último tipo de filtro mais comum é o $\alpha-\beta-\gamma-\delta$, capaz de prever taxa de variação da aceleração.
-Para o escopo do projeto e para a projeção de posição descrita na seção \ref{sec:ground_tracking}, um bom compromisso entre manter o rastreio da variação de velocidade (aceleração) e não necessitar de cálculos extras é utilizar o filtro $\alpha-\beta-\gamma$, que é previsto para se encaixar melhor aos requisitos do projeto.
-Um filtro $\alpha-\beta$, em teoria, não será ideal porque é esperada uma grande variação de velocidade vista pela estação de solo enquanto ocorrer o rastreio do satélite. Entretanto, como haverá uma grade quantidade de pontos enviados à estação de solo, é possível que o filtro corrija o fator da aceleração considerando que a velocidade foi estimada erroneamente.
-Em contrapartida, o filtro $\alpha-\beta-\gamma-\delta$ é mais utilizado quando há uma grande variação de aceleração. Não é o caso para o projeto, já que é esperado que a aceleração aumente levemente enquanto o satélite cruza o horizonte em direção à elevação máxima e diminua enquanto ele estiver se deslocando à outra região do horizonte em relação à estação de solo. Então a variação de aceleração é tão pequena que não justifica o maior processamento necessário.
+Para o escopo do projeto envolvendo o rastreio de objetos em trajetórias circulares e para a projeção de posição descrita na seção \ref{sec:ground_tracking}, um bom compromisso entre manter o rastreio da variação de velocidade (aceleração) e não necessitar de cálculos extras é utilizar o filtro $\alpha-\beta-\gamma$, que é previsto para se encaixar melhor às necessidades do controle do pedestal.
+Um filtro $\alpha-\beta$, em teoria, não será ideal porque é esperada uma grande variação de velocidade vista pela estação de solo enquanto ocorrer o rastreio do satélite, gerando um erro de regime permanente pela aceleração envolvida em trajetórias circulares \cite{tenne2000}.
+Em contrapartida, o filtro $\alpha-\beta-\gamma-\delta$ é mais utilizado quando há uma grande variação de aceleração \cite{wu2011}. Não é o caso para o projeto, já que é esperado que a aceleração aumente levemente enquanto o satélite cruza o horizonte em direção à elevação máxima e diminua enquanto ele estiver se deslocando à outra região do horizonte em relação à estação de solo. Então a variação de aceleração é tão pequena que não justifica o maior processamento necessário.
 
-Utilizando como referência a modelagem feita por \cite{tenne2000}, o filtro $\alpha-\beta-\gamma$ pode ser descrito por duas séries de equação: uma para os valores preditos e outra para os coeficientes suavizados. Os valores possuem um subscrito para indicar o que eles representam. O subscrito $s$ está relacionado aos dados suavizados, $p$ em relação aos dados preditos, e $o$ relacionado aos dados observados (com a posição exata do objeto). As equações de predição e suavização são dadas da seguinte forma:
+Utilizando como referência a modelagem feita por \cite{tenne2000}, o filtro $\alpha-\beta-\gamma$ pode ser descrito por duas séries de equação: uma para os valores preditos e outra para os coeficientes estimados a partir dos dados recebidos. Os valores possuem um subscrito para indicar o que eles representam. O subscrito $s$ está relacionado aos dados suavizados, $p$ em relação aos dados preditos, e $o$ relacionado aos dados observados (com a posição exata do objeto). As equações de predição e suavização são dadas pelas fórmulas \eqref{eq:x_p}, \eqref{eq:v_p}, \eqref{eq:x_s}, \eqref{eq:v_s} e \eqref{eq:a_s}.
 \begin{align}
 x_p(k+1)=x_s(k)+Tv_s(k)+\frac{1}{2}T^2a_s(k)\label{eq:x_p} \\
 v_p(k+1) = v_s(k)+Ta_s(k)\label{eq:v_p} \\
@@ -166,11 +167,11 @@ Como \cite{tenne2000} propõe, é possível fazer a transformada Z das equaçõe
 \begin{equation}
 G(z) = \frac{x_p}{x_o} = \frac{\alpha+(-2\alpha-\beta+\frac{1}{4}\gamma)z+(\alpha+\beta+\frac{1}{4}\gamma)z^2}{z^3+(\alpha+\beta+\frac{1}{4}\gamma-3)z^2+(-2\alpha-\beta+\frac{1}{4}\gamma+3)z+\alpha-1} \label{eq:g(z)_alpha_beta_gamma_pols}
 \end{equation}
-Além disso, é possível obter a função de transferência, utilizando a dedução de \cite{ekstrand2012}. A função de transferência em tempo discreto tem a seguinte forma:
+Além disso, é possível obter a função de transferência, utilizando a dedução de \cite{ekstrand2012}. A função de transferência em tempo discreto tem a forma apresentada na equação \eqref{eq:g(z)_alpha_beta_gamma}.
 \begin{equation}
 G(z) = \frac{x_p}{x_o} = \frac{\alpha z^2+(\beta - \alpha)z}{z^2+(\alpha+\beta-2)z+1- \alpha} \label{eq:g(z)_alpha_beta_gamma}
 \end{equation}
-Utilizando o polinômio característico do denominador de \eqref{eq:g(z)_alpha_beta_gamma}, \cite{tenne2000} utiliza o Teste da Estabilidade de Jury para garantir que os polos se encontrem dentro do círculo unitário do plano Z, obtendo as equações \eqref{eq:alpha_lim}, \eqref{eq:beta_lim} e \eqref{eq:gamma_lim} para atender um sistema estável para o filtro $\alpha-\beta-\gamma$:
+Utilizando o polinômio característico do denominador de \eqref{eq:g(z)_alpha_beta_gamma}, \cite{tenne2000} utiliza o Teste da Estabilidade de Jury. Esse teste é efetuado utilizando os coeficientes do denominador da função de transferência e é capaz de garantir que os polos se encontrem dentro do círculo unitário do plano Z. Utilizando variáveis genéricas para o critério de Jury, é possível obter as equações \eqref{eq:alpha_lim}, \eqref{eq:beta_lim} e \eqref{eq:gamma_lim} para que os coeficientes do filtro $\alpha-\beta-\gamma$ estejam dentro da região de estabilidade.
 \begin{align}
 0<\alpha<2,                             \label{eq:alpha_lim} \\
 0<\beta<4-2\alpha,                      \label{eq:beta_lim}  \\

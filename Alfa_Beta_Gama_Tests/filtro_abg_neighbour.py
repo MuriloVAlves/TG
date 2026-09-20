@@ -6,11 +6,14 @@ import numpy as np
 from numba import njit
 import ast
 
-STEP = 0.001
+STEP = 0.01
+RETRY_TRIES = 3
 
+print("Carregando dados de azimute...")
 with open("./az_dict.json", "r") as file:
     data_az = json.load(file)
 
+print("Carregando dados de elevação...")
 with open("./el_dict.json", "r") as file:
     data_el = json.load(file)
 
@@ -84,7 +87,7 @@ print("\n---ELEVAÇÃO---")
 print(f"Melhores valores de alfa beta gamma: {el_min_key}")
 print(f"Erro médio: {el_min_rms}")
 
-print("Carregando valores das passagens...")
+print("\nCarregando valores das passagens...")
 # Define the directory path
 dir_path = Path('./tracks/')
 
@@ -147,7 +150,7 @@ while searching:
                     new_beta  = beta_search if beta_search > 0 else 0
                     new_gamma = gamma_search if gamma_search > 0 else 0
     if not changed:
-        if retry >= 3:
+        if retry >= RETRY_TRIES:
             searching = False
         else:
             retry +=1

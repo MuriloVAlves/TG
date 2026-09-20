@@ -100,8 +100,8 @@ canvas = FigureCanvasTkAgg(fig, master=root)
 canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
 # Ganhos do filtro
-az_filter = filter(0.4, 0.05, 0.005)
-el_filter = filter(0.4, 0.05, 0.005)
+az_filter = filter(0.9333, 0.2, 0.01)
+el_filter = filter(0.9333, 0.2, 0.01)
 
 # Histórico de dados
 real_tm, real_az, real_el = [], [], []
@@ -137,16 +137,17 @@ def handle_thread():
 def update_plot():
     handle_thread()
     
-    # Limita o histórico visual aos últimos 50 pontos
-    slice_size = -50
+    # Limita o histórico visual aos últimos 30 pontos
+    slice_size_real = -30
+    slice_size_pred = 3*slice_size_real
     
     if real_tm:
-        line_az_real.set_data(real_tm[slice_size:], real_az[slice_size:])
-        line_el_real.set_data(real_tm[slice_size:], real_el[slice_size:])
+        line_az_real.set_data(real_tm[slice_size_real:], real_az[slice_size_real:])
+        line_el_real.set_data(real_tm[slice_size_real:], real_el[slice_size_real:])
         
     if pred_tm:
-        line_az_pred.set_data(pred_tm[slice_size:], pred_az[slice_size:])
-        line_el_pred.set_data(pred_tm[slice_size:], pred_el[slice_size:])
+        line_az_pred.set_data(pred_tm[slice_size_pred:], pred_az[slice_size_pred:])
+        line_el_pred.set_data(pred_tm[slice_size_pred:], pred_el[slice_size_pred:])
 
     # Auto-ajuste dos eixos (Essencial para os dados aparecerem)
     for ax in [ax_az, ax_el]:

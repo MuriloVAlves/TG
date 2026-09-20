@@ -17,7 +17,7 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
     v_p = 0.0
     a_p = 0.0
 
-    # sum_sq_err = 0.0
+    sum_sq_err = 0.0
 
     for idx in range(1, n):
         x_o = x_obs[idx]
@@ -31,14 +31,16 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
         v_s = v_p + (beta / dt) * erro
         a_s = a_p + ((2.0 * gamma) / (dt**2)) * erro
 
-        # sum_sq_err += (x_o - x_p) ** 2
+        sum_sq_err += (x_o - x_p) ** 2
 
         # Predição para k+1
         x_p = x_s + (dt * v_s) + (0.5 * (dt**2) * a_s)
         v_p = v_s + (dt * a_s)
         a_p = a_s
         x_prediction.append(x_p)
-    return x_prediction
+
+    rmse = np.sqrt(sum_sq_err / (n - 1))
+    return x_prediction, rmse
 
 if __name__ == "__main__":
     from pathlib import Path
@@ -88,11 +90,11 @@ if __name__ == "__main__":
         for t in timestamp[k]:
             tst_change += t
             real_tst.append(tst_change)
-        az_filter = alfa_beta_gamma_filter_fast(el_data[k],timestamp[k],ALPHA_EL,BETA_EL,GAMMA_EL)
-        el_filter = alfa_beta_gamma_filter_fast(az_data[k],timestamp[k],ALPHA_AZ,BETA_AZ,GAMMA_AZ)
+        az_filter, rmse_az = alfa_beta_gamma_filter_fast(el_data[k],timestamp[k],ALPHA_EL,BETA_EL,GAMMA_EL)
+        el_filter, rmse_el = alfa_beta_gamma_filter_fast(az_data[k],timestamp[k],ALPHA_AZ,BETA_AZ,GAMMA_AZ)
         plt.plot(real_tst,az_data[k])
         plt.plot(real_tst,el_data[k])
         plt.plot(real_tst[1:],az_filter,'--')
         plt.plot(real_tst[1:],el_filter,'--')
-        plt.title(f"{k+1}/{len(filename)} {filename[k]}")
+        plt.title(f"{k+1}/{len(filename)} {filename[k]} - rmse: {rmse_az:.2f} {rmse_el:.2f}")
         plt.show()
