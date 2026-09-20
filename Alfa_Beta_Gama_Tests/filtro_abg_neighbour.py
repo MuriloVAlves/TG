@@ -158,6 +158,8 @@ while searching:
         beta_min  = new_beta
         gamma_min = new_gamma
 
+alpha_min_az, beta_min_az, gamma_min_az = alpha_min, beta_min, gamma_min
+
 print("Procurando melhores valores para a Elevação...")
 searching = True
 retry = 0
@@ -193,5 +195,7 @@ while searching:
         beta_min  = new_beta
         gamma_min = new_gamma
 
-print(f"Best value AZ: Alpha = {alpha_min}, Beta = {beta_min}, Gamma = {gamma_min}, rmse = {az_min_rms}")
-print(f"Best value EL: Alpha = {alpha_min}, Beta = {beta_min}, Gamma = {gamma_min}, rmse = {el_min_rms}")
+alpha_min_el, beta_min_el, gamma_min_el = alpha_min, beta_min, gamma_min
+
+print(f"Best value AZ: Alpha = {alpha_min_az}, Beta = {beta_min_az}, Gamma = {gamma_min_az}, rmse = {az_min_rms}")
+print(f"Best value EL: Alpha = {alpha_min_el}, Beta = {beta_min_el}, Gamma = {gamma_min_el}, rmse = {el_min_rms}")
