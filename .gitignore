@@ -14,8 +14,8 @@ Docs/TG_IAR_Dissertacao/**/*.lot
 Docs/TG_IAR_Dissertacao/**/*.xml
 Docs/TG_IAR_Dissertacao/**/*.toc
 Portables/*
-**/az_dict.json
-**/el_dict.json
+Alfa_Beta_Gama_Tests/az_dict.json
+Alfa_Beta_Gama_Tests/el_dict.json
 
 # Logs
 *.pcapng
