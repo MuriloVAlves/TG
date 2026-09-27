@@ -37,6 +37,17 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
         dt = deltat[idx]
 
         erro = x_o - x_p
+        # Unwrap function for the filter
+        x_pred = x_o
+        x_o_plus  = x_o + 360
+        x_o_minus = x_o - 360
+        if abs(x_o_plus - x_p) < abs(erro):
+            erro = x_o_plus - x_p
+            x_pred = x_o_plus
+        if abs(x_o_minus - x_p) < abs(erro):
+            erro = x_o_minus - x_p
+            x_pred = x_o_minus
+
         if erro > 1e3:
             return 1e3
 
@@ -44,7 +55,7 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
         v_s = v_p + (beta / dt) * erro
         a_s = a_p + ((2.0 * gamma) / (dt**2)) * erro
 
-        sum_sq_err += (x_o - x_p) ** 2
+        sum_sq_err += (x_pred - x_p) ** 2
 
         # Predição para k+1
         x_p = x_s + (dt * v_s) + (0.5 * (dt**2) * a_s)
@@ -153,7 +164,7 @@ while searching:
             for gamma_search in [gamma_min,gamma_min+step,gamma_min-step]:
                 test_list = []
                 for stlt_pass in range(len(timestamp)):
-                    _, rmse_az = filtro_abg_otimo_fast(timestamp[stlt_pass],az_data[stlt_pass], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
+                    _, rmse_az = filtro_abg_otimo_fast(timestamp[stlt_pass][:-2],az_data[stlt_pass][:-2], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
                     test_list.append(rmse_az)
                 mean_rmse = np.mean(test_list)
                 if mean_rmse < az_min_rms:
@@ -190,7 +201,7 @@ while searching:
             for gamma_search in [gamma_min,gamma_min+step,gamma_min-step]:
                 test_list = []
                 for stlt_pass in range(len(timestamp)):
-                    _, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
+                    _, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass][:-2],el_data[stlt_pass][:-2], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
                     test_list.append(rmse_el)
                 mean_rmse = np.mean(test_list)
                 if mean_rmse < el_min_rms:

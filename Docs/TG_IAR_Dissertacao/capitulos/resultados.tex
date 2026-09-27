@@ -27,7 +27,7 @@ Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gra
 \section{Levantamento dos Parâmetros do Filtro $\alpha-\beta-\gamma$}
 
 Conforme apresentado na Seção~\ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO). 
-Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $0,1$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando estritamente os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
+Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $0,1$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
 O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido. 
 Essa representação permitiu identificar uma região operacional ótima, na qual o filtro $\alpha-\beta-\gamma$ apresenta convergência satisfatória para a maioria das trajetórias orbitais analisadas.
