@@ -21,6 +21,8 @@ dir_path = script_dir/'tracks/' # Define the directory path with capture data
 def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
     x_prediction = []
     t_prediction = []
+    t_smoothed = []
+    x_smoothed = []
     n = min(len(x_obs), len(deltat))
     if n <= 1:
         return 1e3
@@ -59,11 +61,14 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
         v_p = v_s + (dt * a_s)
         a_p = a_s
         x_prediction.append(x_p)
+        for k in np.linspace(0,dt,10,endpoint=True):
+            t_smoothed.append(sum_delta_t+k)
+            x_smoothed.append(x_s + (k * v_s) + (0.5 * (k**2) * a_s))
         sum_delta_t += dt
         t_prediction.append(sum_delta_t)
 
     rmse = np.sqrt(sum_sq_err / (n - 1))
-    return t_prediction, x_prediction, rmse
+    return t_prediction, x_prediction, rmse, t_smoothed, x_smoothed
 
 def read_capture():
     # Loop through all files in the immediate folder
@@ -129,12 +134,14 @@ if __name__ == "__main__":
                     filter_arr.append(True)
             else:
                 filter_arr.append(True)
-        t_az,az_filter, rmse_az = alfa_beta_gamma_filter_fast(az_data[filter_arr],real_tst[filter_arr],ALPHA_EL,BETA_EL,GAMMA_EL)
-        t_el,el_filter, rmse_el = alfa_beta_gamma_filter_fast(el_data[filter_arr],real_tst[filter_arr],ALPHA_AZ,BETA_AZ,GAMMA_AZ)
+        t_az,az_filter, rmse_az, pred_t_az, pred_val_az = alfa_beta_gamma_filter_fast(az_data[filter_arr],real_tst[filter_arr],ALPHA_EL,BETA_EL,GAMMA_EL)
+        t_el,el_filter, rmse_el, pred_t_el, pred_val_el = alfa_beta_gamma_filter_fast(el_data[filter_arr],real_tst[filter_arr],ALPHA_AZ,BETA_AZ,GAMMA_AZ)
         plt.plot(real_tst,az_data,'.',color="tab:blue")
         plt.plot(real_tst,el_data,'.',color="tab:orange")
         plt.plot(t_az,az_filter,'-.',color="tab:red")
         plt.plot(t_el,el_filter,'-.',color="tab:green")
+        # plt.plot(pred_t_az,pred_val_az,'-.',color="tab:purple")
+        # plt.plot(pred_t_el,pred_val_el,'-.',color="tab:cyan")
         # plt.title(f"{k}/{len(os.listdir(dir_path))} {filename} - rmse: {rmse_az:.2f} {rmse_el:.2f}")
         plt.title(f"Erro : {rmse_az:.2f} {rmse_el:.2f}")
         plt.xlabel("Tempo [s]")
