@@ -5,17 +5,20 @@ from pathlib import Path
 import numpy as np
 from numba import njit
 import ast
+import gc
 
 STEP = 0.01
-RETRY_TRIES = 3
+RETRY_TRIES = 10
 
 print("Carregando dados de azimute...")
-with open("./az_dict.json", "r") as file:
-    data_az = json.load(file)
 
-print("Carregando dados de elevação...")
-with open("./el_dict.json", "r") as file:
-    data_el = json.load(file)
+import os
+
+file_path = os.path.realpath(__file__)
+script_dir = Path(file_path).parent
+
+with open(script_dir/"az_dict.json", "r") as file:
+    data_az = json.load(file)
 
 @njit
 def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
@@ -70,8 +73,19 @@ for az_key in data_az.keys():
         az_min_rms = rms_mean
         az_min_key = az_key
 
+del data_az
+gc.collect()
+
+print("---AZIMUTE---")
+print(f"Melhores valores de alfa beta gamma: {az_min_key}")
+print(f"Erro médio: {az_min_rms}")
+
 el_min_rms = np.inf
 el_min_key = ''
+
+print("Carregando dados de elevação...")
+with open(script_dir/"el_dict.json", "r") as file:
+    data_el = json.load(file)
 
 for el_key in data_el.keys():
     rms_mean = np.mean(data_el[el_key])
@@ -79,9 +93,8 @@ for el_key in data_el.keys():
         el_min_rms = rms_mean
         el_min_key = el_key
 
-print("---AZIMUTE---")
-print(f"Melhores valores de alfa beta gamma: {az_min_key}")
-print(f"Erro médio: {az_min_rms}")
+del data_el
+gc.collect()
 
 print("\n---ELEVAÇÃO---")
 print(f"Melhores valores de alfa beta gamma: {el_min_key}")
@@ -89,14 +102,14 @@ print(f"Erro médio: {el_min_rms}")
 
 print("\nCarregando valores das passagens...")
 # Define the directory path
-dir_path = Path('./tracks/')
+track_dir_path = script_dir/'tracks/'
 
 timestamp = []
 az_data = []
 el_data = []
 
 # Loop through all files in the immediate folder
-for file_path in dir_path.iterdir():
+for file_path in track_dir_path.iterdir():
     if file_path.is_file():
         print(f"--- Reading: {file_path.name} ---",end='\r')
         tst = []
@@ -187,7 +200,7 @@ while searching:
                     new_beta  = beta_search if beta_search > 0 else 0
                     new_gamma = gamma_search if gamma_search > 0 else 0
     if not changed:
-        if retry >= 3:
+        if retry >= RETRY_TRIES:
             searching = False
         else:
             retry +=1
