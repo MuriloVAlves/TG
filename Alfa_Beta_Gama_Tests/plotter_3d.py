@@ -4,8 +4,13 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 import numpy as np
 
+import os
+from pathlib import Path
+file_path = os.path.realpath(__file__)
+script_dir = Path(file_path).parent
+
 # Carregar os dados (utilize json.loads se estiver lendo de um arquivo .json)
-with open("./az_dict.json", "r") as file:
+with open(script_dir/"az_dict.json", "r") as file:
     data_az = json.load(file)
 
 # 2. Processamento dos dados
@@ -50,7 +55,7 @@ scatter = ax.scatter(
 
 # Adiciona a barra de cores para indicar a intensidade do erro
 cbar = fig.colorbar(scatter, ax=ax, pad=0.1)
-cbar.set_label("Erro Médio", fontsize=11)
+cbar.set_label("Erro Médio em escala Log", fontsize=11)
 
 # Rótulos dos eixos e título
 ax.set_xlabel('Alpha (α)')
@@ -64,6 +69,8 @@ beta = p2_list[idx]
 gama = p3_list[idx]
 min_error = mean_errors[idx]
 
+del data_az
+
 print(f"Melhor valor AZ: {alfa}, {beta}, {gama}, {min_error}")
 
 # Exibe o gráfico
@@ -71,7 +78,7 @@ plt.tight_layout()
 plt.show()
 
 # Carregar os dados (utilize json.loads se estiver lendo de um arquivo .json)
-with open("./az_dict.json", "r") as file:
+with open(script_dir/"el_dict.json", "r") as file:
     data_az = json.load(file)
 
 # 2. Processamento dos dados
@@ -104,8 +111,8 @@ scatter = ax.scatter(
     p3_list,
     c=mean_errors,
     cmap="viridis",
-    norm=LogNorm(vmin=max(min(mean_errors), 1e-3), vmax=min(max(mean_errors), 1e5)), # vmin evita log(0)
-    s=35,           # Tamanho do ponto levemente reduzido
+    norm=LogNorm(vmin=max(min(mean_errors), 1e-3), vmax=min(max(mean_errors), 1e3)), # vmin evita log(0)
+    s=20,           # Tamanho do ponto levemente reduzido
     linewidths=0.2, # Borda mais fina para não poluir
     edgecolor="k",
     alpha=0.85,
@@ -113,7 +120,7 @@ scatter = ax.scatter(
 
 # Adiciona a barra de cores para indicar a intensidade do erro
 cbar = fig.colorbar(scatter, ax=ax, pad=0.1)
-cbar.set_label("Erro Médio", fontsize=11)
+cbar.set_label("Erro Médio em escala Log", fontsize=11)
 
 # Rótulos dos eixos e título
 ax.set_xlabel('Alpha (α)')

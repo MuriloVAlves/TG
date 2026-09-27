@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 import numpy as np
-import time
+import time, os
 from numba import njit
 
 MAX_ALPHA = 2
@@ -9,6 +9,8 @@ N_STEPS   = 30
 ITERATIONS = 1
 N_BEST_RESULTS = 10
 
+file_path = os.path.realpath(__file__)
+script_dir = Path(file_path).parent # Get the script path
 
 @njit
 def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
@@ -62,7 +64,7 @@ if __name__ == "__main__":
     from pathlib import Path
 
     # Define the directory path
-    dir_path = Path('./tracks/')
+    dir_path = script_dir/'tracks/'
 
     timestamp = []
     az_data = []
@@ -145,9 +147,9 @@ if __name__ == "__main__":
             for idx in range(len(config_el)):
                 adicionar_dado_el(str(config_el),rmse_el)
     print("Gravando dados em arquivos...")
-    with open("./az_dict.json", "w", encoding="utf-8") as f:
+    with open(script_dir/"az_dict.json", "w", encoding="utf-8") as f:
         json.dump(az_dict, f, ensure_ascii=False, indent=4)
-    with open("./el_dict.json", "w", encoding="utf-8") as f:
+    with open(script_dir/"el_dict.json", "w", encoding="utf-8") as f:
         json.dump(el_dict, f, ensure_ascii=False, indent=4)
 
     # print(f"--- Configuração Ótima Encontrada ---")

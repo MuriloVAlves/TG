@@ -7,8 +7,8 @@ from numba import njit
 import ast
 import gc
 
-STEP = 0.01
-RETRY_TRIES = 10
+STEP = 0.1
+RETRY_TRIES = 5
 
 print("Carregando dados de azimute...")
 
@@ -23,39 +23,39 @@ with open(script_dir/"az_dict.json", "r") as file:
 @njit
 def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
     n = min(len(x_obs), len(deltat))
-    if n <= 1:
-        return 1e3
+    if n <= 3:
+        return 2e3
 
     x_p = x_obs[0]
-    v_p = 0.0
-    a_p = 0.0
+    x_s = x_obs[0]
+    v_p = v_s = 0.0
+    a_p = a_s = 0.0
 
     sum_sq_err = 0.0
 
-    for idx in range(1, n):
+    for idx in range(1, n-2):
         x_o = x_obs[idx]
         dt = deltat[idx]
 
         erro = x_o - x_p
         # Unwrap function for the filter
-        x_pred = x_o
         x_o_plus  = x_o + 360
         x_o_minus = x_o - 360
         if abs(x_o_plus - x_p) < abs(erro):
             erro = x_o_plus - x_p
-            x_pred = x_o_plus
         if abs(x_o_minus - x_p) < abs(erro):
             erro = x_o_minus - x_p
-            x_pred = x_o_minus
 
         if erro > 1e3:
             return 1e3
 
+        # Predição para k
+        sum_sq_err += (erro) ** 2
+
+        # Correção de parâmetros
         x_s = x_p + alpha * erro
         v_s = v_p + (beta / dt) * erro
         a_s = a_p + ((2.0 * gamma) / (dt**2)) * erro
-
-        sum_sq_err += (x_pred - x_p) ** 2
 
         # Predição para k+1
         x_p = x_s + (dt * v_s) + (0.5 * (dt**2) * a_s)
@@ -63,6 +63,8 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
         a_p = a_s
 
     rmse = np.sqrt(sum_sq_err / (n - 1))
+    if rmse > 2:
+        return 2e3
     return rmse
 
 def filtro_abg_otimo_fast(t_obs, x_obs, alpha, beta, gamma):
@@ -156,6 +158,7 @@ retry = 0
 alpha_min, beta_min, gamma_min = ast.literal_eval(az_min_key)
 step = STEP
 new_alpha, new_beta, new_gamma = (0,0,0)
+az_min_rms = 1e3
 while searching:
     changed = False
     print(f"Trying with: Alpha = {alpha_min}, Beta = {beta_min}, Gamma = {gamma_min}")
@@ -164,8 +167,9 @@ while searching:
             for gamma_search in [gamma_min,gamma_min+step,gamma_min-step]:
                 test_list = []
                 for stlt_pass in range(len(timestamp)):
-                    _, rmse_az = filtro_abg_otimo_fast(timestamp[stlt_pass][:-2],az_data[stlt_pass][:-2], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
-                    test_list.append(rmse_az)
+                    _, rmse_az = filtro_abg_otimo_fast(timestamp[stlt_pass],az_data[stlt_pass], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
+                    if rmse_az < 1.5e3:
+                        test_list.append(rmse_az)
                 mean_rmse = np.mean(test_list)
                 if mean_rmse < az_min_rms:
                     az_min_rms = mean_rmse
@@ -193,6 +197,7 @@ retry = 0
 alpha_min, beta_min, gamma_min = ast.literal_eval(el_min_key)
 step = STEP
 new_alpha, new_beta, new_gamma = (0,0,0)
+el_min_rms = 1e3
 while searching:
     changed = False
     print(f"Trying with: Alpha = {alpha_min}, Beta = {beta_min}, Gamma = {gamma_min}")
@@ -201,7 +206,7 @@ while searching:
             for gamma_search in [gamma_min,gamma_min+step,gamma_min-step]:
                 test_list = []
                 for stlt_pass in range(len(timestamp)):
-                    _, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass][:-2],el_data[stlt_pass][:-2], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
+                    _, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
                     test_list.append(rmse_el)
                 mean_rmse = np.mean(test_list)
                 if mean_rmse < el_min_rms:

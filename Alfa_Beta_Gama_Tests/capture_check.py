@@ -4,21 +4,23 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import random
 
-ALPHA_AZ = 0.933
-BETA_AZ = 0.0333
-GAMMA_AZ = 0.0
-ALPHA_EL = 0.933
-BETA_EL = 0.2
+ALPHA_AZ = 0.937
+BETA_AZ = 0.3
+GAMMA_AZ = 0.1
+ALPHA_EL = 0.939
+BETA_EL = 0.17
 GAMMA_EL = 0.0
 
-RANDOM_TEST = False
-REMOVE_PERCENT = 5
+ERROR_TEST = False
+REMOVE_PERCENT = 10
+BURST_ERROR = True
+BURST_INDEXES = 5
 
 file_path = os.path.realpath(__file__)
 script_dir = Path(file_path).parent # Get the script path
 dir_path = script_dir/'tracks/' # Define the directory path with capture data
 
-def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
+def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma, filter_arr):
     x_prediction = []
     t_prediction = []
     t_smoothed = []
@@ -28,15 +30,17 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
         return 1e3
 
     x_p = x_obs[0]
-    v_p = 0.0
-    a_p = 0.0
+    x_s = x_obs[0]
+    v_p = v_s = 0.0
+    a_p = a_s = 0.0
 
     sum_sq_err = 0.0
     sum_delta_t = 0.0
+    last_idx = 0
 
-    for idx in range(1, n):
+    for idx in range(1, n-2):
         x_o = x_obs[idx]
-        dt = deltat[idx] - deltat[idx-1]
+        dt = deltat[idx] - deltat[last_idx]
 
         erro = x_o - x_p
         # Unwrap function for the filter
@@ -47,25 +51,24 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma):
         if abs(x_o_minus - x_p) < abs(erro):
             erro = x_o_minus - x_p
 
-        if erro > 1e3:
-            return 1e3
-
-        x_s = x_p + alpha * erro
-        v_s = v_p + (beta / dt) * erro
-        a_s = a_p + ((2.0 * gamma) / (dt**2)) * erro
-
         sum_sq_err += (x_o - x_p) ** 2
+
+        if filter_arr[idx]:
+            x_s = x_p + alpha * erro
+            v_s = v_p + (beta / dt) * erro
+            a_s = a_p + ((2.0 * gamma) / (dt**2)) * erro
+            last_idx = idx
+
+        # Predição para k
+        x_prediction.append(x_p)
+        t_prediction.append(deltat[idx])
 
         # Predição para k+1
         x_p = x_s + (dt * v_s) + (0.5 * (dt**2) * a_s)
         v_p = v_s + (dt * a_s)
         a_p = a_s
-        x_prediction.append(x_p)
-        for k in np.linspace(0,dt,10,endpoint=True):
-            t_smoothed.append(sum_delta_t+k)
-            x_smoothed.append(x_s + (k * v_s) + (0.5 * (k**2) * a_s))
-        sum_delta_t += dt
-        t_prediction.append(sum_delta_t)
+        t_smoothed.append(deltat[idx])
+        x_smoothed.append(x_s)
 
     rmse = np.sqrt(sum_sq_err / (n - 1))
     return t_prediction, x_prediction, rmse, t_smoothed, x_smoothed
@@ -125,27 +128,47 @@ if __name__ == "__main__":
             real_tst.append(tst_change)
         real_tst = np.array(real_tst)
         filter_arr = []
+        still_burst = 0
         for k in range(len(timestamp)):
-            if RANDOM_TEST:
+            if ERROR_TEST:
                 val = random.random()
+                if still_burst > 0:
+                    still_burst -= 1
+                    filter_arr.append(False)
+                    continue
                 if val < REMOVE_PERCENT/100:
                     filter_arr.append(False)
+                    if BURST_ERROR:
+                        still_burst = BURST_INDEXES-1
                 else:
                     filter_arr.append(True)
             else:
                 filter_arr.append(True)
-        t_az,az_filter, rmse_az, pred_t_az, pred_val_az = alfa_beta_gamma_filter_fast(az_data[filter_arr],real_tst[filter_arr],ALPHA_EL,BETA_EL,GAMMA_EL)
-        t_el,el_filter, rmse_el, pred_t_el, pred_val_el = alfa_beta_gamma_filter_fast(el_data[filter_arr],real_tst[filter_arr],ALPHA_AZ,BETA_AZ,GAMMA_AZ)
-        plt.plot(real_tst,az_data,'.',color="tab:blue")
-        plt.plot(real_tst,el_data,'.',color="tab:orange")
-        plt.plot(t_az,az_filter,'-.',color="tab:red")
-        plt.plot(t_el,el_filter,'-.',color="tab:green")
-        # plt.plot(pred_t_az,pred_val_az,'-.',color="tab:purple")
-        # plt.plot(pred_t_el,pred_val_el,'-.',color="tab:cyan")
+        filter_arr = np.array(filter_arr)
+        t_az,az_filter, rmse_az, pred_t_az, pred_val_az = alfa_beta_gamma_filter_fast(az_data,real_tst,ALPHA_EL,BETA_EL,GAMMA_EL,filter_arr)
+        t_el,el_filter, rmse_el, pred_t_el, pred_val_el = alfa_beta_gamma_filter_fast(el_data,real_tst,ALPHA_AZ,BETA_AZ,GAMMA_AZ,filter_arr)
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.plot(real_tst[:-2],az_data[:-2],'-',color="tab:blue")
+        ax.plot(real_tst[:-2],el_data[:-2],'-',color="tab:orange")
+        ax.plot(t_az,az_filter,'-.',color="tab:red")
+        ax.plot(t_el,el_filter,'-.',color="tab:green")
+        if ERROR_TEST:
+            ax.plot(pred_t_az,pred_val_az,'.',color="tab:purple")
+            ax.plot(pred_t_el,pred_val_el,'.',color="tab:cyan")
+            ax.plot(real_tst[~filter_arr],az_data[~filter_arr],'x',color='r')
+            ax.plot(real_tst[~filter_arr],el_data[~filter_arr],'x',color='r')
         # plt.title(f"{k}/{len(os.listdir(dir_path))} {filename} - rmse: {rmse_az:.2f} {rmse_el:.2f}")
-        plt.title(f"Erro : {rmse_az:.2f} {rmse_el:.2f}")
-        plt.xlabel("Tempo [s]")
-        plt.ylabel("Ângulo [º]")
-        plt.legend(["Real AZ", "Real EL", "Pred AZ", "Pred EL"])
+        props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
+        # Bottom Left
+        # ax.text(0.05,0.05,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='bottom',transform = ax.transAxes)
+        # center Left
+        ax.text(0.05,0.5,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='center',transform = ax.transAxes)
+        # Top Right
+        # ax.text(0.95,0.90,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='right',verticalalignment='top',transform = ax.transAxes)
+        ax.set_title("Ângulo do Satélite X Tempo")
+        ax.set_xlabel("Tempo [s]")
+        ax.set_ylabel("Ângulo [º]")
+        ax.grid(True,'both')
+        ax.legend(["Real AZ", "Real EL", "Pred AZ", "Pred EL"])
         plt.show()
         k += 1
