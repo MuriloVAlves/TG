@@ -84,7 +84,8 @@ O programa seleciona o filtro com o menor erro e repete o processo novamente. Qu
 Quando o algoritmo repete os mesmos parâmetros de filtro um determinado número de vezes (para o caso do projeto, 15 vezes), o programa é encerrado e os valores calculados são determinados como os valores ótimos para o filtro.
 
 Os valores obtidos continham 16 casas decimais, porém, nesse nível de precisão, erros de arredondamento em ponto flutuante acabam interferindo no resultado. Além disso, os parãmetros do filtro serão arredondados para baixo a fim de evitar instabilidades no sistema.
-Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}937$, $\beta = 0{,}298$, e $\gamma = 0.120$ para o azimute, e $\alpha = 1{,}071$, $\beta = 0{,}253$, e $\gamma = 0.122$ para a elevação
+Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}937$, $\beta = 0{,}298$, e $\gamma = 0.120$ para o azimute, e $\alpha = 1{,}071$, $\beta = 0{,}253$, e $\gamma = 0.122$ para a elevação.
+É importante ressaltar que o $\alpha$ para a elevação está selecionado como sendo maior que 1. Esse valor não é usual, já que india uma estimação de predição que estima um valor maior que a da amplitude do erro. Porém, como o algoritmo convergiu a este valor, os parâmetros embarcados serão os indicados anteriormente.
 
 % A partir dessa análise, definiram-se os parâmetros do filtro embarcado como $\alpha = 1{,}00$, $\beta = 0{,}05$ e $\gamma = 0{,}00$. Observa-se claramente a existência de uma região onde valores reduzidos de $\beta$ minimizam o erro de estimação. 
 % Esse comportamento evidencia que a informação orbital fornecida pelo software permite manter a precisão do rastreamento da posição do satélite ao longo da trajetória, sem a introdução de ruídos perceptíveis.
