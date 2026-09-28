@@ -5,16 +5,16 @@ import matplotlib.pyplot as plt
 import random
 
 ALPHA_AZ = 0.937
-BETA_AZ = 0.3
-GAMMA_AZ = 0.1
-ALPHA_EL = 0.939
-BETA_EL = 0.17
-GAMMA_EL = 0.0
+BETA_AZ = 0.298
+GAMMA_AZ = 0.12
+ALPHA_EL = 1.0
+BETA_EL = 0.253
+GAMMA_EL = 0.122
 
 ERROR_TEST = False
-REMOVE_PERCENT = 10
+REMOVE_PERCENT = 1
 BURST_ERROR = True
-BURST_INDEXES = 5
+BURST_INDEXES = 10
 
 file_path = os.path.realpath(__file__)
 script_dir = Path(file_path).parent # Get the script path
@@ -44,12 +44,12 @@ def alfa_beta_gamma_filter_fast(x_obs, deltat, alpha, beta, gamma, filter_arr):
 
         erro = x_o - x_p
         # Unwrap function for the filter
-        x_o_plus  = x_o + 360
-        x_o_minus = x_o - 360
-        if abs(x_o_plus - x_p) < abs(erro):
-            erro = x_o_plus - x_p
-        if abs(x_o_minus - x_p) < abs(erro):
-            erro = x_o_minus - x_p
+        # x_o_plus  = x_o + 360
+        # x_o_minus = x_o - 360
+        # if abs(x_o_plus - x_p) < abs(erro):
+        #     erro = x_o_plus - x_p
+        # if abs(x_o_minus - x_p) < abs(erro):
+        #     erro = x_o_minus - x_p
 
         sum_sq_err += (x_o - x_p) ** 2
 
@@ -148,10 +148,10 @@ if __name__ == "__main__":
         t_az,az_filter, rmse_az, pred_t_az, pred_val_az = alfa_beta_gamma_filter_fast(az_data,real_tst,ALPHA_EL,BETA_EL,GAMMA_EL,filter_arr)
         t_el,el_filter, rmse_el, pred_t_el, pred_val_el = alfa_beta_gamma_filter_fast(el_data,real_tst,ALPHA_AZ,BETA_AZ,GAMMA_AZ,filter_arr)
         fig, ax = plt.subplots(figsize=(8, 6))
-        ax.plot(real_tst[:-2],az_data[:-2],'-',color="tab:blue")
-        ax.plot(real_tst[:-2],el_data[:-2],'-',color="tab:orange")
-        ax.plot(t_az,az_filter,'-.',color="tab:red")
-        ax.plot(t_el,el_filter,'-.',color="tab:green")
+        ax.plot(real_tst[:-2],az_data[:-2],'-',color="tab:blue",linewidth=2)
+        ax.plot(real_tst[:-2],el_data[:-2],'-',color="tab:orange",linewidth=2)
+        ax.plot(t_az,az_filter,':',color="tab:red",linewidth=3)
+        ax.plot(t_el,el_filter,':',color="tab:green",linewidth=3)
         if ERROR_TEST:
             ax.plot(pred_t_az,pred_val_az,'.',color="tab:purple")
             ax.plot(pred_t_el,pred_val_el,'.',color="tab:cyan")
@@ -162,7 +162,9 @@ if __name__ == "__main__":
         # Bottom Left
         # ax.text(0.05,0.05,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='bottom',transform = ax.transAxes)
         # center Left
-        ax.text(0.05,0.5,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='center',transform = ax.transAxes)
+        # ax.text(0.05,0.5,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='center',transform = ax.transAxes)
+         # Top Left
+        ax.text(0.05,0.90,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='top',transform = ax.transAxes)
         # Top Right
         # ax.text(0.95,0.90,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='right',verticalalignment='top',transform = ax.transAxes)
         ax.set_title("Ângulo do Satélite X Tempo")

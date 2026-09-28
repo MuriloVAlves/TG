@@ -8,7 +8,7 @@ import ast
 import gc
 
 STEP = 0.1
-RETRY_TRIES = 5
+RETRY_TRIES = 15
 
 print("Carregando dados de azimute...")
 
@@ -207,7 +207,8 @@ while searching:
                 test_list = []
                 for stlt_pass in range(len(timestamp)):
                     _, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search) # config_el, rmse_el = filtro_abg_otimo_fast(timestamp[stlt_pass],el_data[stlt_pass], alpha_search, beta_search, gamma_search)
-                    test_list.append(rmse_el)
+                    if rmse_el < 1.5e3:
+                        test_list.append(rmse_el)
                 mean_rmse = np.mean(test_list)
                 if mean_rmse < el_min_rms:
                     el_min_rms = mean_rmse

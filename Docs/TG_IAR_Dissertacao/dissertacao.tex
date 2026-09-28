@@ -64,14 +64,15 @@
 \usepackage[style=abnt, backend=biber]{biblatex}
 \addbibresource{bibliografia.bib} % Verifique se o nome do seu arquivo .bib é este
 \usepackage{csquotes}
+\usepackage{float}
 % Configurações de CITAÇÕES para abntex2
-\include{extras/conf_citacoes}
+\input{extras/conf_citacoes}
 
 % Inclusão de dados para CAPA e FOLHA DE ROSTO (título, autor, orientador, etc.)
-\include{extras/dados}
+\input{extras/dados}
 
 % Inclui Configurações de aparência do PDF Final
-\include{extras/conf_pdf}
+\input{extras/conf_pdf}
 
 % O tamanho da identação do parágrafo é dado por:
 \setlength{\parindent}{1.3cm}
@@ -139,6 +140,7 @@
 % ---
 \begin{siglas}
   \item[D-H] Denavit-Hartenberg
+  \item[EQM] Erro Quadrático Médio
   \item[ESP32] Microcontrolador de Sistema em Chip da Espressif Systems
   \item[FreeRTOS] \textit{Free Real-Time Operating System}
   \item[HRPT] \textit{High Resolution Picture Transmission}
@@ -148,6 +150,7 @@
   \item[NEMA] \textit{National Electrical Manufacturers Association}
   \item[PWM] \textit{Pulse Width Modulation} (Modulação por Largura de Pulso)
   \item[RF] Radiofrequência
+  \item[RMS] Root Mean Square (Erro Quadrático Médio em inglês)
   \item[SAW] \textit{Surface Acoustic Wave} (Onda Acústica de Superfície)
   \item[SDR] \textit{Software Defined Radio} (Rádio Definido por Software)
   \item[TCP] \textit{Transmission Control Protocol}

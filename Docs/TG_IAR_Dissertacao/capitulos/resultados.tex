@@ -20,17 +20,45 @@ Para o acionamento dos motores, foram adotados os drivers DRV8825, comumente enc
 A estrutura do poste foi dimensionada para utilizar um pontalete de madeira de \SI{7,5}{\centi\meter} $\times$ \SI{7,5}{\centi\meter}, enquanto a base foi projetada para tábuas de \SI{0,9}{\centi\meter} $\times$ \SI{9,5}{\centi\meter}. O fio de cobre maciço usado para a confecção da antena foi obtido a partir do desmembramento de um cabo de aterramento de 7 vias, no qual cada condutor individual possui bitola \SI{10}{AWG}.
 
 A tela de alumínio empregada no plano de terra foi adaptada de uma tela mosquiteira de alumínio de \SI{1}{\square\meter}. Já a chapa metálica complementar do plano de terra foi produzida a partir de um rufo para telhado.
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/antena_frontal.jpeg}
+    \caption{Visão frontal da antena utilizada no projeto.}
+    \caption*{Fonte: Autor (2026)}
+    \label{fig:antena_frontal}
+\end{figure}
 A estrutura de suporte da antena foi confeccionada via impressão 3D em PLA (ácido polilático), conforme ilustrado na Figura~\ref{fig:pecas_antena}. A baixa densidade do polímero somada ao preenchimento interno (\textit{infill}) de \SI{20}{\percent} resultou em uma massa de \SI{233}{\gram} para a estrutura plástica da antena.
 
-Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gram} da chapa e \SI{225}{\gram} da tela de alumínio, a estrutura completa da antena apresenta uma massa total de aproximadamente \SI{600}{\gram}. Essa massa reduzida torna o conjunto adequado para a operação com os motores especificados na Seção~\ref{sec:motor_passo}, garantindo a compatibilidade mecânica do sistema.
-\section{Levantamento dos Parâmetros do Filtro $\alpha-\beta-\gamma$}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/antena_traseira.jpeg}
+    \caption{Visão traseira da antena utilizada no projeto.}
+    \caption*{Fonte: Autor (2026)}
+    \label{fig:antena_traseira}
+\end{figure}
 
-Conforme apresentado na Seção~\ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO). 
+Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gram} da chapa e \SI{225}{\gram} da tela de alumínio, a estrutura completa da antena apresenta uma massa total de aproximadamente \SI{600}{\gram}. Além disso, existem alguns parafusos utilizados para a fixação dos componentes que não foram considerados na conta, porém, seu peso não fará o protótipo distoar do peso calculado. Essa massa reduzida torna o conjunto adequado para a operação com os motores especificados na Seção~\ref{sec:motor_passo}, garantindo a compatibilidade mecânica do sistema.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/antena_peso.jpeg}
+    \caption{Superfície de desempenho dos parâmetros $\alpha$, $\beta$ e $\gamma$ para o eixo de azimute.}
+    \caption*{Fonte: Autor (2026)}
+    \label{fig:antena_peso}
+\end{figure}
+
+O cobre foi inserido no suporte helicoidal com um comprimento de sobra para ajustes futuros. Além disso, foi mantida uma região de cobre após o conector SMA para corrigir a impedância entre a antena helicoidal, com impedância característica por volta de \SI{140}{\ohm} \cite{balanis2016}, e aproximá-la da impedância na linha do amplificador (de \SI{50}{\ohm}). Isso será feito aproximando a primeira espira da antena ao plano terra, fazendo com que a componente capacitiva se torne mais presente na impedância da antena, fazendo com que a impedância vista no conector se aproxime de \SI{50}{\ohm}.
+O casamento de impedância é importante para permitir a máxima transferência de potência do sinal recebido pela antena \cite{balanis2016}.
+
+\section[Filtro Alfa Beta Gama]{Levantamento dos Parâmetros do Filtro $\alpha$-$\beta$-$\gamma$}
+
+Conforme apresentado na Seção \ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO). 
 Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $0,1$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
-O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido. 
+O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido. 
 Essa representação permitiu identificar uma região operacional ótima, na qual o filtro $\alpha-\beta-\gamma$ apresenta convergência satisfatória para a maioria das trajetórias orbitais analisadas.
+A região em questão se encontra na região de valores $\gamma$ baixos, possuindo os menores erros entre os valores preditos e os reais.
+A partir dos valores obtidos, é possível verificar a região com menor erro RMS para cada elemento. Os valores para azimute foram de $\alpha = 0{,}9333$, $\beta = 0{,}0333$, e $\gamma = 0$, enquanto os valores para a elevação foram $\alpha = 0{,}9333$, $\beta = 0{,}2$, e $\gamma = 0$.
 
 \begin{figure}[htbp]
     \centering
@@ -48,8 +76,18 @@ Essa representação permitiu identificar uma região operacional ótima, na qua
     \label{fig:param_el}
 \end{figure}
 
-A partir dessa análise, definiram-se os parâmetros do filtro embarcado como $\alpha = 1{,}00$, $\beta = 0{,}05$ e $\gamma = 0{,}00$. Observa-se claramente a existência de uma região onde valores reduzidos de $\beta$ minimizam o erro de estimação. 
-Esse comportamento evidencia que a informação orbital fornecida pelo software permite manter a precisão do rastreamento da posição do satélite ao longo da trajetória, sem a introdução de ruídos perceptíveis.
+Como a aproximação anterior ocorreu de forma grosseira, dividindo os valores dentro de determinados quadrantes, foi desenvolvido um algoritmo para rastrear o melhor ponto a partir da melhor estimativa dada pelo método anterior.
+Esse segundo algoritmo funciona iniciando a sua pesquisa a partir do melhor ponto predito, alternando os parâmetros do filtro a partir de um determinado passo estimado como metade do passo que gerou os quadrantes anteriores.
+O código então alterna cada filtro entre o melhor parâmetro, o melhor parâmetro somado com o passo, e o melhor parâmetro subtraindo o passo.
+Com os filtros configurados, todas as amostras de passagem são novamente calculadas e o erro RMS é calculado para cada uma.
+O programa seleciona o filtro com o menor erro e repete o processo novamente. Quando o algoritmo não encontra um parâmetro menor que o parâmetro inicial, ele divide o passo utilizado pela metade e reinicia o cálculo.
+Quando o algoritmo repete os mesmos parâmetros de filtro um determinado número de vezes (para o caso do projeto, 15 vezes), o programa é encerrado e os valores calculados são determinados como os valores ótimos para o filtro.
 
-Consequentemente, uma vez estabelecida a estimativa inicial de velocidade do alvo pelo sistema, esta sofrerá apenas variações marginais durante o rastreio. 
-Essa característica confere robustez ao pedestal, permitindo que ele continue acompanhando a trajetória do satélite por um período prolongado, mesmo na ocorrência de eventuais interrupções temporárias na comunicação com o software de controle.
+Os valores obtidos continham 16 casas decimais, porém, nesse nível de precisão, erros de arredondamento em ponto flutuante acabam interferindo no resultado. Além disso, os parãmetros do filtro serão arredondados para baixo a fim de evitar instabilidades no sistema.
+Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}937$, $\beta = 0{,}298$, e $\gamma = 0.120$ para o azimute, e $\alpha = 1{,}071$, $\beta = 0{,}253$, e $\gamma = 0.122$ para a elevação
+
+% A partir dessa análise, definiram-se os parâmetros do filtro embarcado como $\alpha = 1{,}00$, $\beta = 0{,}05$ e $\gamma = 0{,}00$. Observa-se claramente a existência de uma região onde valores reduzidos de $\beta$ minimizam o erro de estimação. 
+% Esse comportamento evidencia que a informação orbital fornecida pelo software permite manter a precisão do rastreamento da posição do satélite ao longo da trajetória, sem a introdução de ruídos perceptíveis.
+
+% Consequentemente, uma vez estabelecida a estimativa inicial de velocidade do alvo pelo sistema, esta sofrerá apenas variações marginais durante o rastreio. 
+% Essa característica confere robustez ao pedestal, permitindo que ele continue acompanhando a trajetória do satélite por um período prolongado, mesmo na ocorrência de eventuais interrupções temporárias na comunicação com o software de controle.
