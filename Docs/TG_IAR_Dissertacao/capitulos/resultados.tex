@@ -87,6 +87,26 @@ Os valores obtidos continham 16 casas decimais, porém, nesse nível de precisã
 Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}937$, $\beta = 0{,}298$, e $\gamma = 0.120$ para o azimute, e $\alpha = 1{,}071$, $\beta = 0{,}253$, e $\gamma = 0.122$ para a elevação.
 É importante ressaltar que o $\alpha$ para a elevação está selecionado como sendo maior que 1. Esse valor não é usual, já que india uma estimação de predição que estima um valor maior que a da amplitude do erro. Porém, como o algoritmo convergiu a este valor, os parâmetros embarcados serão os indicados anteriormente.
 
+\begin{figure*}[t!]
+        \subfloat[Passagem com pequena variação no azimute e na elevação]{%
+            \includegraphics[width=.48\linewidth]{figs/passagem_1.png}%
+            \label{subfig:passagem_baixa}%
+        }\hfill
+        \subfloat[Passagem com grande variação no azimute e na elevação]{%
+            \includegraphics[width=.48\linewidth]{figs/passagem_2_alta.png}%
+            \label{subfig:passagem_alta}%
+        }\\
+        \subfloat[Passagem com rastreio de dois satélites seguidos]{%
+            \includegraphics[width=.48\linewidth]{figs/passagem_3_dupla.png}%
+            \label{subfig:passagem_dupla}%
+        }\hfill
+        \subfloat[Passagem próxima ao zênite]{%
+            \includegraphics[width=.48\linewidth]{figs/passagem_4_zenite.png}%
+            \label{subfig:passagem_zenite}%
+        }
+        \caption{Passagem }
+        \label{fig:passagens_diversas}
+    \end{figure*}
 % A partir dessa análise, definiram-se os parâmetros do filtro embarcado como $\alpha = 1{,}00$, $\beta = 0{,}05$ e $\gamma = 0{,}00$. Observa-se claramente a existência de uma região onde valores reduzidos de $\beta$ minimizam o erro de estimação. 
 % Esse comportamento evidencia que a informação orbital fornecida pelo software permite manter a precisão do rastreamento da posição do satélite ao longo da trajetória, sem a introdução de ruídos perceptíveis.
 
