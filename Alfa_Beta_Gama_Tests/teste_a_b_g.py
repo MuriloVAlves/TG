@@ -69,7 +69,15 @@ class filter():
         
         # Prediz a posição extrapolando no tempo atual da tela
         x_n = self.pos + (self.vel * delta) + (0.5 * self.accel * (delta ** 2))
+        if delta > 10:
+            self.reset_filter_parameters()
         return now, x_n
+
+    def reset_filter_parameters(self):
+        self.pos = 0.0
+        self.vel = 0.0
+        self.accel = 0.0
+        self.first_run = True
 
 # Interface Gráfica Tkinter
 root = tk.Tk()
@@ -100,8 +108,8 @@ canvas = FigureCanvasTkAgg(fig, master=root)
 canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
 # Ganhos do filtro
-az_filter = filter(0.9333, 0.2, 0.01)
-el_filter = filter(0.9333, 0.2, 0.01)
+az_filter = filter(0.937, 0.298, 0.12)
+el_filter = filter(1.0, 0.253, 0.122)
 
 # Histórico de dados
 real_tm, real_az, real_el = [], [], []
@@ -125,6 +133,7 @@ def handle_thread():
             real_tm.append(az_filter.last_updt)
             real_az.append(az_value)
             real_el.append(el_value)
+            timeout_counter = 0
     except queue.Empty:
         # Se não há dados novos na fila, gera a predição atualizada
         tstmp, az_val = az_filter.get_info()
@@ -133,6 +142,7 @@ def handle_thread():
         pred_tm.append(tstmp)
         pred_az.append(az_val)
         pred_el.append(el_val)
+
 
 def update_plot():
     handle_thread()

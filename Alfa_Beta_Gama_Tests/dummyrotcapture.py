@@ -2,9 +2,14 @@
 import socket, argparse
 from time import time, sleep
 from datetime import datetime
+import os
+from pathlib import Path
 
 TIMEOUT = 1
 MAX_RETRIES = 100
+
+file_path = os.path.realpath(__file__)
+script_dir = Path(file_path).parent # Get the script path
 
 def threading_handle(handle):
     pass
@@ -61,7 +66,7 @@ def main(queue_handle=""):
                             threading_handle((az,el))
                             capture_timeout = 0
                             if capture_name == "":
-                                capture_name = f"./tracks_test/capture-{str(datetime.now()).replace(' ','_').replace(':','-').replace('.','_')}.txt"
+                                capture_name = script_dir/f"tracks_test/capture-{str(datetime.now()).replace(' ','_').replace(':','-').replace('.','_')}.txt"
                             log_capture(capture_name,cmd)
                         elif cmd[0].upper() == 'S':
                             resp = "S0"

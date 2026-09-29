@@ -7,7 +7,7 @@ import random
 ALPHA_AZ = 0.937
 BETA_AZ = 0.298
 GAMMA_AZ = 0.12
-ALPHA_EL = 1.0
+ALPHA_EL = 1.017
 BETA_EL = 0.253
 GAMMA_EL = 0.122
 
@@ -119,7 +119,7 @@ def read_capture():
                 x_p = x_pred
         yield (np.array(filename),np.array(tst),np.array(az_unwrapped),np.array(el))
 if __name__ == "__main__":
-    k = 1
+    capture = 1
     for filename,timestamp,az_data,el_data in read_capture():
         real_tst = []
         tst_change = 0
@@ -157,7 +157,6 @@ if __name__ == "__main__":
             ax.plot(pred_t_el,pred_val_el,'.',color="tab:cyan")
             ax.plot(real_tst[~filter_arr],az_data[~filter_arr],'x',color='r')
             ax.plot(real_tst[~filter_arr],el_data[~filter_arr],'x',color='r')
-        # plt.title(f"{k}/{len(os.listdir(dir_path))} {filename} - rmse: {rmse_az:.2f} {rmse_el:.2f}")
         props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
         # Bottom Left
         # ax.text(0.05,0.05,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='bottom',transform = ax.transAxes)
@@ -167,10 +166,11 @@ if __name__ == "__main__":
         ax.text(0.05,0.90,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='left',verticalalignment='top',transform = ax.transAxes)
         # Top Right
         # ax.text(0.95,0.90,f"RMS AZ: {rmse_az:.2f}\nRMS EL:{rmse_el:.2f}",bbox=props, horizontalalignment='right',verticalalignment='top',transform = ax.transAxes)
+        # ax.set_title(f"{capture}/{len(os.listdir(dir_path))} {filename} - rmse: {rmse_az:.2f} {rmse_el:.2f}")
         ax.set_title("Ângulo do Satélite X Tempo")
         ax.set_xlabel("Tempo [s]")
         ax.set_ylabel("Ângulo [º]")
         ax.grid(True,'both')
         ax.legend(["Real AZ", "Real EL", "Pred AZ", "Pred EL"])
         plt.show()
-        k += 1
+        capture += 1

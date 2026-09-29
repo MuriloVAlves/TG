@@ -107,9 +107,12 @@ Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos 
         \caption{Comportamento do filtro quando exposto a rastreios reais de satélite}
         \caption*{Fonte: Autor (2026)}
         \label{fig:passagens_diversas}
-    \end{figure*}
-% A partir dessa análise, definiram-se os parâmetros do filtro embarcado como $\alpha = 1{,}00$, $\beta = 0{,}05$ e $\gamma = 0{,}00$. Observa-se claramente a existência de uma região onde valores reduzidos de $\beta$ minimizam o erro de estimação. 
-% Esse comportamento evidencia que a informação orbital fornecida pelo software permite manter a precisão do rastreamento da posição do satélite ao longo da trajetória, sem a introdução de ruídos perceptíveis.
+\end{figure*}
 
-% Consequentemente, uma vez estabelecida a estimativa inicial de velocidade do alvo pelo sistema, esta sofrerá apenas variações marginais durante o rastreio. 
-% Essa característica confere robustez ao pedestal, permitindo que ele continue acompanhando a trajetória do satélite por um período prolongado, mesmo na ocorrência de eventuais interrupções temporárias na comunicação com o software de controle.
+Com os testes exemplificados nas figuras \ref{subfig:passagem_baixa}, \ref{subfig:passagem_alta}, \ref{subfig:passagem_dupla} e \ref{subfig:passagem_zenite}, foi possível observar algumas características do fitro ao sistema.
+Tanto em passagens de baixa elevação (abaixo de 60 graus, figura \ref{subfig:passagem_baixa}) e alta (acima de 60 e abaixo de 80 graus, figura \ref{subfig:passagem_alta}), o sistema demonstrou uma grande estabilidade, mantendo o erro RMS em décimos de graus.
+O filtro também foi testado para dois casos extremos, que seria o rastreio de satélites seguidos (figura \ref{subfig:passagem_dupla}) e o rastreio próximo do zênite (elevação entre 80 e 90 graus, figura \ref{subfig:passagem_zenite}).
+
+Para o caso do rastreio de satélites duplos é possível perceber que, na transição entre os alvos que estão sendo rastreados, há uma certa instabilidade no sistema, marcada por grandes sobressinais e um período de oscilação tanto no filtro de azimute quanto no filtro de elevação. Isso mostra que o sitema é subamortecido.
+O mesmo fenômeno é observado para uma passagem próxima de zênite, na qual o azimute sofre uma variação brusca, fazendo ocorrer uma oscilação quando há uma diminuição na taixa de crescimento do ângulo.
+Uma solução para esse fenômeno seria alterar os parâmetros do filtro, fazendo com que esse tenha uma banda passante menor, aumentando o amortecimento do sistema para altas frequências.
