@@ -17,6 +17,15 @@ Portables/*
 */az_dict.json
 */el_dict.json
 
+# MuJoCo
+MuJoCo/bin/
+MuJoCo/include/
+MuJoCo/model/
+MuJoCo/sample/
+MuJoCo/simulate/
+MuJoCo/LICENSE
+MuJoCo/THIRD_PARTY_NOTICES.txt
+
 # Logs
 *.pcapng
 *.log
@@ -104,6 +113,8 @@ target/
 # IPython
 profile_default/
 ipython_config.py
+
+
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
@@ -222,7 +233,7 @@ cython_debug/
 #   that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
 #   and can be added to the global gitignore or merged into this file. However, if you prefer, 
 #   you could uncomment the following to ignore the entire vscode folder
-# .vscode/
+.vscode/
 
 # Ruff stuff:
 .ruff_cache/

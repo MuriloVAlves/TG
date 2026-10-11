@@ -1,0 +1,13 @@
+{
+    "configuration": "default",
+    "documentId": "5ecb8bbd2c20cf562112987a",
+    "documentMicroversion": "703392e3cf3cb99c899a1c52",
+    "elementId": "bbb3e7abae39d98ede2db593",
+    "fullConfiguration": "default",
+    "id": "MtfCXgo6wZS1QWmph",
+    "isStandardContent": false,
+    "name": "Base_Plate <1>",
+    "partId": "JHD",
+    "suppressed": false,
+    "type": "Part"
+}
