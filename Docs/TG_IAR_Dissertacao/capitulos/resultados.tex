@@ -1,16 +1,7 @@
 \chapter{Resultados e Discussão}\label{cap:resultados}
-
+Nesta seção, serão apresentados os dados obtidos durante a etapa empírica de testes para a confecção do protótipo.
+Os principais pontos abordados na seção a seguir serão o da montagem da antena e a calibração do filtro $\alpha-\beta-\gamma$.
 \section{Estrutura do Pedestal}\label{sec:estrutura}
-% O protótipo físico será baseado no mecanismo observado na figura \ref{fig:pedestal}. As peças utilizadas no modelo em 3D do pedestal são baseadas em materiais COTS (Commercial off-the-shelf, ou hardware comercial pronto para uso). Então, toda a geometria e os elementos são projetados para serem facilmente encontrados em lojas de materiais de construção.
-% As polias utilizadas são GT2 de 20 e 40 dentes, com comprimento de cinto de \SI{10}{\milli\meter}. O cinto utilizado tem \SI{200}{\milli\meter} de comprimento, o que faz com que as distâncias entre centros das polias seja conhecida. Esses elementos são muito utilizados na confecção de impressoras 3D.
-% Além das polias, os motores NEMA 17 são costumeiramentes utilizados em impressoas. Os drivers DRV8825 são altamente utilizados para controle de motores de passo, sendo facilmente encontrados em lojas de eletrônicos. O microcontrolador ESP 32 e o display de LCD podem ser encontrados tão facilmente quanto o restante dos componentes eletrônicos.
-% O poste no qual o pedestal é dimensionado para utilizar uma viga de madeira de \SI{7,5}{\centi\meter} por \SI{7,5}{\centi\meter}, enquanto as dimensões da base são feitas para utilizar tábuas de \SI{0,9}{\centi\meter} por \SI{9,5}{\centi\meter}. O fio de cobre macisso utilizado para a confecção da antena foi obtido a partir de um cabo para aterramento de 7 fios, no qual cada fio individual possui o padrão \SI{10}{AWG}.
-% Enquanto a tela de alumínio para o plano Terra foi obtida de uma tela mosquiteira de alumínio de \SI{1}{\meter\squared}. A chapa de alumínio que compõe o plano Terra é feita a partir de um rufo metálico para telhado. Dessa forma, os materiais são facilmente encontrados em lojas de materiais.
-
-% A estrutura da antena foi confeccionada com o auxílio de uma impressora 3D, feita com PLA (ácido polilático). O resultado pode ser visto na figura \ref{fig:pecas_antena}. A baixa densidade do plástico unida com a densidade de material interna à peça (de 20\%) faz com que toda a estrutura da antena pese \SI{233}{\gram}.
-% Unida com aproximadamente \SI{82}{\gram} de cobre para construir a antena, \SI{60}{\gram} da chapa de plano Terra, e \SI{225}{\gram} da tela para fazer o cone, o peso final total da estrutura é de aproximadame \SI{600}{\gram}. Dessa forma, essa antena é ideal para operar com os motores descritos na seção \ref{sec:motor_passo}.
-% Esse refinamento da antena faz com que haja uma grande compatibilidade com o restante do sistema.
-
 O protótipo físico será baseado no mecanismo apresentado na Figura~\ref{fig:pedestal}. As peças utilizadas no modelo 3D do pedestal empregam componentes COTS (\textit{Commercial Off-The-Shelf}, ou seja, hardware comercial pronto para uso). Dessa forma, a geometria e os elementos foram projetados para utilizar materiais de fácil acesso no comércio local e em lojas de construção.
 
 As polias utilizadas são do tipo GT2, de 20 e 40 dentes, associadas a uma correia dentada de \SI{10}{\milli\meter} de largura e \SI{200}{\milli\meter} de comprimento perimetral, o que estabelece uma distância entre centros conhecida. Esses elementos, assim como os motores de passo NEMA 17, são amplamente empregados na fabricação de impressoras 3D.
@@ -19,7 +10,7 @@ Para o acionamento dos motores, foram adotados os drivers DRV8825, comumente enc
 
 A estrutura do poste foi dimensionada para utilizar um pontalete de madeira de \SI{7,5}{\centi\meter} $\times$ \SI{7,5}{\centi\meter}, enquanto a base foi projetada para tábuas de \SI{0,9}{\centi\meter} $\times$ \SI{9,5}{\centi\meter}. O fio de cobre maciço usado para a confecção da antena foi obtido a partir do desmembramento de um cabo de aterramento de 7 vias, no qual cada condutor individual possui bitola \SI{10}{AWG}.
 
-A tela de alumínio empregada no plano de terra foi adaptada de uma tela mosquiteira de alumínio de \SI{1}{\square\meter}. Já a chapa metálica complementar do plano de terra foi produzida a partir de um rufo para telhado.
+A tela de alumínio utilizada como plano de terra foi adaptada de uma tela mosquiteira de alumínio de \SI{1}{\square\meter}. Já a chapa metálica complementar do plano de terra foi produzida a partir de um rufo para telhado.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/antena_frontal.jpeg}
@@ -52,7 +43,8 @@ O casamento de impedância é importante para permitir a máxima transferência 
 
 \section[Filtro Alfa Beta Gama]{Levantamento dos Parâmetros do Filtro $\alpha$-$\beta$-$\gamma$}
 
-Conforme apresentado na Seção \ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO). 
+Conforme apresentado na Seção \ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO) utilizando um servidor ligado ao aplicativo SatDump.
+(TODO: Explicar melhor a questão do servidor)
 Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $0,1$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
 O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido. 
@@ -116,3 +108,9 @@ O filtro também foi testado para dois casos extremos, que seria o rastreio de s
 Para o caso do rastreio de satélites duplos é possível perceber que, na transição entre os alvos que estão sendo rastreados, há uma certa instabilidade no sistema, marcada por grandes sobressinais e um período de oscilação tanto no filtro de azimute quanto no filtro de elevação. Isso mostra que o sitema é subamortecido.
 O mesmo fenômeno é observado para uma passagem próxima de zênite, na qual o azimute sofre uma variação brusca, fazendo ocorrer uma oscilação quando há uma diminuição na taixa de crescimento do ângulo.
 Uma solução para esse fenômeno seria alterar os parâmetros do filtro, fazendo com que esse tenha uma banda passante menor, aumentando o amortecimento do sistema para altas frequências.
+Outra solução pode ser incluir no algoritmo uma forma de detectar a diferença entre a posição predita e a posição real, reiniciando os parâmetros de predição do filtro quando essa diferença ultrapassar determinado valor.
+
+\section{Simulação do Mecanismo}\label{sec:MuJoCo}
+
+
+

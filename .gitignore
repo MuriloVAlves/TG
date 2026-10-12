@@ -13,6 +13,7 @@ Docs/TG_IAR_Dissertacao/**/*.lof
 Docs/TG_IAR_Dissertacao/**/*.lot
 Docs/TG_IAR_Dissertacao/**/*.xml
 Docs/TG_IAR_Dissertacao/**/*.toc
+Docs/TG_IAR_Dissertacao/**/*-SAVE-ERROR
 Portables/*
 */az_dict.json
 */el_dict.json
