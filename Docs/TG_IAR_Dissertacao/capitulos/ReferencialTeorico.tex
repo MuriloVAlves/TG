@@ -13,7 +13,7 @@ Pode-se obter a longitude $\lambda_S$ na qual o vetor $\vec{r}$ intercepta a sup
 \cos(AB) = \cos(CA)\cos(CB)\label{eq:lei_cossenos_esferica} \\
 d = r[1+(R/r)^2-2(R/r)\cos\gamma] \label{eq:d_sat_solo}
 \end{align}
-\begin{figure}[ht]
+\begin{figure}[htbp]
     \centering
     \caption{Modelagem matemática do ângulo de visada}
     \includegraphics[width=0.8\textwidth]{figs/Interpretacao_geodesica.png}
@@ -34,7 +34,7 @@ Pode-se descrever o mecanismo de apontamento da antena do pedestal a partir de d
 O espaço de trabalho necessário para o acompanhamento contínuo de passagens de satélites corresponde ao hemisfério superior delimitado pelo horizonte local do plano tangente à estação de solo encontrado a 0$^\circ$ de elevação.
 Para cobrir integralmente essa semiesfera, o mecanismo deve ser capaz de efetuar uma rotação completa de $0$ até $2\pi$ (0$^\circ$ até 360$^\circ$) em azimute (referenciado pelo ângulo $\theta$) e uma articulação de $0$ até $\frac{\pi}{2}$ (0$^\circ$ até 90$^\circ$) na elevação (referenciado pelo ângulo $\phi$), como é possível ver na Figura \ref{fig:horizonte_local}.
 Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtado, já que em baixas elevações há a obstrução de relevo, estruturas ou atmosfera, o mecanismo desenvolvido nesse trabalho garantirá a varredura de toda região angular teórica.
-\begin{figure}[ht]
+\begin{figure}[htbp]
     \centering
     \caption{Ilustração de horizonte local visto pela estação de solo}
     \includegraphics[width=0.8\textwidth]{figs/horizonte_local.png}
@@ -46,7 +46,7 @@ Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtad
 \section{Modelagem do Pedestal}\label{sec:modelagem_pedestal}
 Segundo \cite{Ford2008}, o sistema do pedestal que irá direcionar a antena pode ser modelado utilizando como base um manipulador esférico de dois graus de liberdade.
 Utilizando o modelo pela figura \ref{fig:pedestal}, e utilizando como referência a modelagem de \cite{Bien2021}, o ponto fixo que dará a referência do mecanismo com o solo será o da base, dado pelo referencial de coordenadas $O_0$, com versores $[x_0,y_0,z_0]$.
-\begin{figure}[ht]
+\begin{figure}[htbp]
     \centering
     \caption{Modelo de pedestal com controle em azimute e elevação}
     \includegraphics[width=0.8\textwidth]{figs/pedestal_3D_motores.png}
@@ -58,7 +58,7 @@ Um motor é ligado por uma polia à base da antena, permitindo a rotação em to
 O segundo motor está localizado na região na qual a antena se encaixa ao poste do pedestal e é ligado ao eixo da elevação também através do mecanismo de polia. A junção da polia movida com o eixo da elevação tem coordenadas dadas pela origem $O_1$ ($[x_1,y_1,z_1]$) e distância da base dada pelo valor "h".
 Além dos referenciais motorizados, será utilizando mais um referencial para descrever a excentricidade da antena, dado por $O_2$ ($[x_2,y_2,z_2]$) e distância de excentricidade "d"; e a região mais extrema que representa a ponta da antena, encontrada em  $O_3$ ($[x_3,y_3,z_3]$) e distância de braço "l".
 O modelo da cinemática direta do sistema pode ser obtido a partir dos parâmetros de Denavit-Hatemberg (D-H). Utilizando como referenciais $O_i$ descrita pelos versores de referencial $[x_i,y_i,z_i]$ obtendo a tabela \ref{tab:params_d_h}
-\begin{table}[ht]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{rrrrr}
     \hline
@@ -163,15 +163,81 @@ a_s(k) = a_p(k)+\frac{\gamma}{2T^2}(x_o(k)-x_p(k))\label{eq:a_s}
 Para o filtro $\alpha-\beta$, é considerado que o fator $\gamma$ equivale a 0.
 
 
-Como \cite{tenne2000} propõe, é possível fazer a transformada Z das equações \eqref{eq:x_p} até \eqref{eq:a_s} e respolvê-la para $\frac{x_p}{x_o}$, obtendo a razão de polinômios evidenciada na equação \eqref{eq:g(z)_alpha_beta_gamma_pols}.
+Como \cite{tenne2000} e \cite{sighencea2022} propõem, é possível fazer a transformada Z a partir das equações em tempo discreto \eqref{eq:x_p} até \eqref{eq:a_s} considerando as relações \eqref{eq:igualdade_a_p} e \eqref{eq:transform_z_a_s_k-1}, resultando nas fórmulas \eqref{eq:x_p_k_to_z} a \eqref{eq:a_s_z}.
+\begin{align}
+a_p(k) = a_s(k-1) \label{eq:igualdade_a_p} \\
+\mathcal{Z}[a_s(k-1)] = z^{-1}A_s(z) = \frac{1}{z}A_s(z) \label{eq:transform_z_a_s_k-1} \\
+zX_p(z) - zx_p(0) =X_s(z)+TV_s(z)+\frac{1}{2}T^2A_s(z)\label{eq:x_p_k_to_z} \\
+zV_p(z) - zv_p(0) = V_s(z)+TA_s(z)\label{eq:v_p_k_to_z} \\
+X_s(z) = X_p(z)+\alpha[X_o(z)-X_p(z)]\label{eq:x_s_z} \\
+V_s(z) = V_p(z)+\frac{\beta}{T}[X_o(z)-X_p(z)]\label{eq:v_s_z} \\
+A_s(z) = \frac{1}{z}A_s(z)+\frac{\gamma}{2T^2}[X_o(z)-X_p(z)]\label{eq:a_s_z}
+\end{align}
+
+A partir das equações, é possível respolvê-las para $\frac{x_p}{x_o}$, obtendo a razão de polinômios evidenciada na equação \eqref{eq:g(z)_alpha_beta_gamma_pols}.
+
 \begin{equation}
-G(z) = \frac{x_p}{x_o} = \frac{\alpha+(-2\alpha-\beta+\frac{1}{4}\gamma)z+(\alpha+\beta+\frac{1}{4}\gamma)z^2}{z^3+(\alpha+\beta+\frac{1}{4}\gamma-3)z^2+(-2\alpha-\beta+\frac{1}{4}\gamma+3)z+\alpha-1} \label{eq:g(z)_alpha_beta_gamma_pols}
+G(z) = \frac{X_p(z)}{X_o(z)} = \frac{\alpha+(-2\alpha-\beta+\frac{1}{4}\gamma)z+(\alpha+\beta+\frac{1}{4}\gamma)z^2}{z^3+(\alpha+\beta+\frac{1}{4}\gamma-3)z^2+(-2\alpha-\beta+\frac{1}{4}\gamma+3)z+\alpha-1} \label{eq:g(z)_alpha_beta_gamma_pols}
 \end{equation}
 Além disso, é possível obter a função de transferência, utilizando a dedução de \cite{ekstrand2012}. A função de transferência em tempo discreto tem a forma apresentada na equação \eqref{eq:g(z)_alpha_beta_gamma}.
 \begin{equation}
-G(z) = \frac{x_p}{x_o} = \frac{\alpha z^2+(\beta - \alpha)z}{z^2+(\alpha+\beta-2)z+1- \alpha} \label{eq:g(z)_alpha_beta_gamma}
+G(z) = \frac{\alpha z^2+(\beta - \alpha)z}{z^2+(\alpha+\beta-2)z+1- \alpha} \label{eq:g(z)_alpha_beta_gamma}
 \end{equation}
-Utilizando o polinômio característico do denominador de \eqref{eq:g(z)_alpha_beta_gamma}, \cite{tenne2000} utiliza o Teste da Estabilidade de Jury. Esse teste é efetuado utilizando os coeficientes do denominador da função de transferência e é capaz de garantir que os polos se encontrem dentro do círculo unitário do plano Z. Utilizando variáveis genéricas para o critério de Jury, é possível obter as equações \eqref{eq:alpha_lim}, \eqref{eq:beta_lim} e \eqref{eq:gamma_lim} para que os coeficientes do filtro $\alpha-\beta-\gamma$ estejam dentro da região de estabilidade.
+Utilizando o polinômio característico do denominador de \eqref{eq:g(z)_alpha_beta_gamma}, \cite{tenne2000} utiliza o Teste da Estabilidade de Jury.
+Esse teste é efetuado utilizando os coeficientes do denominador da função de transferência e é capaz de garantir que os polos se encontrem dentro do círculo unitário do plano Z.
+Considerando uma função de transferência com denominador de ordem $n$ na forma da equação \eqref{eq:denominador_polinomio},
+\begin{equation}
+P(z) = a_nz^n + a_{n-1}z^{n-1} + ... + a_1z + a_0 \label{eq:denominador_polinomio}
+\end{equation}
+
+Segundo \cite{sighencea2022}, o critério de Jury é facilmente encontrado utilizando uma tabela de auxílio para determinar as condições de establilidade.
+Um sistema de segunda ordem, de acordo com \cite{sighencea2022}, possui somente uma linha para determinar o critério de estabilidade.
+Para cada ordem adicional, serão necessárias duas linhas a mais na tabela.
+Sendo assim, um  sistema de ordem $n$ como visto na equação \eqref{eq:denominador_polinomio}, possui um critério de estabilidade como o visto na tabela \ref{tab:criterio_Jury}.
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ccccc}
+    \hline
+    $z^0$ & $z^1$ & $...$ & $z^{n-1}$ & $z^n$ \\
+    \hline
+    $a_0$ & $a_1$ & $...$ & $a_{n-1}$ & $a_n$ \\
+    $a_n$ & $a_{n-1}$ & $...$ & $a_1$ & $a_0$ \\
+    $b_0$ & $b_1$ & $...$ & $b_{n-1}$ &  \\
+    $b_{n-1}$ & $b_{n-2}$ & $...$ & $b_0$ &  \\
+    $c_0$ & $c_1$ & $...$ &  &  \\
+    $c_{n-2}$ & $c_{n-1}$ & $...$ &  &  \\
+    $...$ & $...$ & $...$ & $...$ & $...$ \\
+    $m_0$ & $m_1$ & $m_2$ &  &
+\end{tabular}
+\caption{Critério de estabilidade de Jury para um sistema de ordem $n$}
+\label{tab:criterio_Jury}
+\end{table}
+
+Os coeficientes das linhas seguintes no critério de estabilidade de Jury é calculado utilizando as equações \eqref{eq:coef_bk}, \eqref{eq:coef_ck} e as demais até resultar em três coeficientes no final da tabela.
+\begin{align}
+b_k = \begin{vmatrix}
+a_0 & a_{n-k} \\
+a_n & a_k
+\end{vmatrix} \label{eq:coef_bk} \\
+c_k = \begin{vmatrix}
+b_0 & b_{n-1-k} \\
+b_{n-1} & b_k
+\end{vmatrix} \label{eq:coef_ck}
+\end{align}
+
+A partir dos resultados obtidos, é possível garantir que o polinômio é estável, ou seja, não possui raízes fora do círculo unitário.
+Segundo \cite{sighencea2022}, um polinômio de ordem $n$ precisa satisfazer $n-1$ condições.
+As equações \eqref{eq:valor_positivo_Jury} e \eqref{eq:valor_negativo_Jury} são conhecidas como condições necessárias para a estabilidade,
+enquanto as equações \eqref{eq:satisfazer_Jury_ini} a \eqref{eq:satisfazer_Jury_fim} são condições suficientes para a estabilidade.
+\begin{align}
+    G(1) > 0 \label{eq:valor_positivo_Jury} \\
+    (-1)^n G(-1) > 0 \label{eq:valor_negativo_Jury} \\
+    \left|a_0\right| < \left|a_n\right| \label{eq:satisfazer_Jury_ini} \\
+    \left|b_0\right| > \left|b_{n-1}\right| \\
+    \left|c_0\right| > \left|c_{n-2}\right| ... \left|m_0\right| > \left|m_2\right| \label{eq:satisfazer_Jury_fim} \\
+\end{align}
+
+Utilizando variáveis genéricas para o denominador em \eqref{eq:g(z)_alpha_beta_gamma} e usando o critério de estabilidade de Jury, é possível obter as equações \eqref{eq:alpha_lim}, \eqref{eq:beta_lim} e \eqref{eq:gamma_lim} para que os coeficientes do filtro $\alpha-\beta-\gamma$ estejam dentro da região de estabilidade.
 \begin{align}
 0<\alpha<2,                             \label{eq:alpha_lim} \\
 0<\beta<4-2\alpha,                      \label{eq:beta_lim}  \\

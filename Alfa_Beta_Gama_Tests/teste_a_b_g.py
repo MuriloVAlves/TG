@@ -20,7 +20,7 @@ dummy_rot_thread = threading.Thread(
 )
 dummy_rot_thread.start()
 
-# Classe de Filtro Alpha-Beta-Gamma corrigida
+# Classe de Filtro Alpha-Beta-Gamma
 class filter():
     def __init__(self, alfa, beta, gamma):
         self.alfa = alfa

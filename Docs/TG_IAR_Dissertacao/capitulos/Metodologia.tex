@@ -2,7 +2,7 @@
 Após o estudo da teoria por trás do projeto, serão discutidos os componentes e equipamentos necessários para criar um protótipo funcional do projeto.
 Nas seções seguintes, será explicado o porquê da seleção de determinado software, peça mecânica, componente eletrônico, ou ações tomadas para a criação do protótipo.
 \section{Software de Rastreio e Decodificação}\label{sec:software}
-\begin{figure}[h]
+\begin{figure}[htbp]
     \caption{Interface do software SatDump}
     \centering
     \includegraphics[width=0.8\textwidth]{figs/satdump_example.png}
@@ -20,7 +20,7 @@ A linha amarela representa todo o arco que o satélite faz durante essa passagem
 Mais abaixo há um texto com a informação de tempo estimado até ocorrer a LOS (Loss of signal, ou perda de sinal) do satélite quando este se encontrar abaixo do horizonte.
 Na seção de nome "Rotator Configuration" (configuração de rotor), esta área está destinada à conexão do programa com o rotor. Os números de azimute e elevação da linha superior é a posição teórica onde o satélite está, calculada com base nas informações de órbita e a posição da estação de solo.
 A linha inferior indica a posição real de apontamento da antena indicada pelo rotor. Abaixo disso, há a configuração do servidor de controle dos rotores, na qual estão configurados o endereço de IP e a porta para a comunicação. Além disso, existem as opções de "Engage" (engajar), que inicia a conexão com servidor, e "Track" (rastrear), que envia posições atualizadas ao mecanismo de apontamento.
-\begin{figure}[h]
+\begin{figure}[htbp]
     \caption{Interface de Rastreio do SatDump}
     \centering
     \includegraphics[width=0.5\textwidth]{figs/satdump_track_screen.png}
@@ -48,7 +48,7 @@ será dado por uma meia-esfera superior. Essa geometria é considerada suficient
 
 Os motores de passo utilizados no trabalho são de classe NEMA (National Electrical Manufacturers Association, Associação Nacional de Fabricantes de Equipamentos Elétricos), que padroniza as dimensões e as características de motores em geral. O modelo selecionado é o motor de passo 17HS4401, da classe NEMA 17.
 Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{kgf}\cdot\text{cm}$, e corrente por fase de $1,5A$.
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/motores_drivers.jpeg}
     \caption{Motores 17HS4401 e drivers DRV8825}
@@ -56,7 +56,7 @@ Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{kgf}\cdo
     \label{fig:motores_drivers}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/polias_cinto.jpeg}
     \caption{Polias GT2 com 20 e 40 dentes, além de cinto de 200mm}
@@ -78,7 +78,7 @@ O conjunto apresenta frequência central em aproximadamente \SI{1688}{\mega\hert
 
 Todo o sistema será montado dentro do cabo da antena e haverá um cabo extensor USB de \SI{2}{\meter} para realizar a conexão com o computador. O sistema de recepção está representado na figura \ref{fig:sistema_coms}.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/sistema_comunicacao.jpeg}
     \caption{Sistema de comunicação com ponto de alimentação da antena (dourado) à esquerda, filtro Nooelec (azul) ao centro e SDR (preto) à direita}
@@ -88,7 +88,7 @@ Todo o sistema será montado dentro do cabo da antena e haverá um cabo extensor
 
 \section{Antena}\label{sec:antena}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/antena_peças.jpeg}
     \caption{Peças que formam a estrutura da antena, feitas com o auxílio de uma impressora 3D}
@@ -114,7 +114,7 @@ Com o diâmetro da hélice do projeto fixado em torno de $56\text{ mm}$, a circu
 \section{Sistema Embarcado}\label{sec:sistema_embarcado}
 Com o intuito de manter o servidor de controle do rotor embarcado no pedestal, será utilizado um microcontrolador de modelo de desenvolvimento ESP32 WROOM-32.
 Além disso, para manter uma interface gráfica disponível para fácil entendimento de seu operador, o sistema contará com um display de LCD (Liquid Crystal Display, ou tela de cristal líquido) para mostrar telemetria de apontamento e informações de conexão.
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/embarcados_peças.jpeg}
     \caption{Componentes parte do sistema embarcado, sendo o ESP32 (esquerda), display de LCD (centro), e adaptador de fonte 24 pinos de computador (direita).}
@@ -127,7 +127,7 @@ Esse sistema operacional em tempo real e de código aberto permite a divisão do
 A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado.
 Dessa forma, essa arquitetura garante que um processador esteja exclusivamente destinado ao controle das malhas do motor, evitando que interferências ou latências de comunicação afetem a estabilidade e a precisão do rotor.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/divisao_tarefas_nucleos_esp.png}
     \caption{Diagrama de divisão de tarefas entre os núcleos do microcontrolador.}
@@ -148,6 +148,5 @@ Deste modo, esses parâmetros calibrados serão embarcados na arquitetura do sis
 A posição da estrutura é determinada de forma incremental a partir da posição inicial do motor, da relação de transmissão do sistema e da contagem dos pulsos emitidos pelo driver.
 Embora o driver DRV8825 suporte frequências de pulso elevadas (de até aproximadamente 250 kHz), a resposta dinâmica dos motores de passo NEMA é mais restrita, limitando sua operação contínua a frequências na faixa de 1000 Hz.
 Portanto, o controlador deve gerar sinal em uma frequência compatível com o motor, aproveitando a capacidade de micropasso (microstepping) do driver para aumentar a resolução e suavizar o deslocamento.
-A partir dos valores de posição, velocidade e aceleração estimados pelo filtro $\alpha-\beta-\gamma$, o sistema calcula posições intermediárias preditas e determina as frequências de passo necessárias para realizar tal ação.
+A partir dos valores de posição, velocidade e aceleração estimados pelo filtro $\alpha-\beta-\gamma$, o sistema calcula posições intermediárias preditas e determina as tensões necessárias em cada bobina do motor para realizar tal ação.
 Essa interpolação reduz trancos na estrutura e garante um alinhamento mais estável e contínuo com o satélite.
-

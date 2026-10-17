@@ -44,10 +44,14 @@ O casamento de impedância é importante para permitir a máxima transferência 
 \section[Filtro Alfa Beta Gama]{Levantamento dos Parâmetros do Filtro $\alpha$-$\beta$-$\gamma$}
 
 Conforme apresentado na Seção \ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO) utilizando um servidor ligado ao aplicativo SatDump.
-(TODO: Explicar melhor a questão do servidor)
+O método escolhido para a captura de amostras foi o de programar o software de rastreio para obter diversas passagens de constelações de satélites de órbita baixa, em diversas altitudes e condições reais nas quais o mecanismo irá operar.
+As constelações utilizadas foram a Meteor (satélites meteorológicos), OneWeb (internet banda larga), Capella (radares de arbetura sintética, conhecidos como Synthetic-aperture radar ou SAR), ICEYE (SAR), Black Kite (internet das coisas, Internet of Things ou IoT), e Sentinel (monitoramento de desastres).
+
+Após a seleção dos satélites de interesse, foi feito um script em Python capaz de simular a conexão entre o SatDump e o rotor, recebendo e enviando dados para o programa.
+Esse script recebia os parâmetros e os salvava em um arquivo de extensão ".txt" para uma pasta com as demais capturas. O programa foi executado durante diferentes horários ao longo de dois meses, acumulando um total de 330 amostras.
 Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $0,1$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
-O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido. 
+O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido.
 Essa representação permitiu identificar uma região operacional ótima, na qual o filtro $\alpha-\beta-\gamma$ apresenta convergência satisfatória para a maioria das trajetórias orbitais analisadas.
 A região em questão se encontra na região de valores $\gamma$ baixos, possuindo os menores erros entre os valores preditos e os reais.
 A partir dos valores obtidos, é possível verificar a região com menor erro RMS para cada elemento. Os valores para azimute foram de $\alpha = 0{,}9333$, $\beta = 0{,}0333$, e $\gamma = 0$, enquanto os valores para a elevação foram $\alpha = 0{,}9333$, $\beta = 0{,}2$, e $\gamma = 0$.
@@ -110,7 +114,89 @@ O mesmo fenômeno é observado para uma passagem próxima de zênite, na qual o 
 Uma solução para esse fenômeno seria alterar os parâmetros do filtro, fazendo com que esse tenha uma banda passante menor, aumentando o amortecimento do sistema para altas frequências.
 Outra solução pode ser incluir no algoritmo uma forma de detectar a diferença entre a posição predita e a posição real, reiniciando os parâmetros de predição do filtro quando essa diferença ultrapassar determinado valor.
 
+\section{Eletrônica do Protótipo}\label{sec:eletronica_prototipo}
+Para o controle da eletrônica do mecanismo, foi programado o ESP32 de acordo com a arquitetura escpecificada na figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (figura \ref{fig:telas_conectado}) e conectado (figura \ref{fig:telas_conectado}).
+A conexão, nesse caso, se refere a uma comunicação da placa do mecanismo com o servidor de controle dos rotores de antena do SatDump.
+Então, caso o ESP32 demonstre estar em uma tela do tipo "sem conexão", isso indica que o sistema conseguiu se conectar ao Wi-Fi e abrir uma porta com um IP local, mas o SatDump não iniciou uma conexão com o aparelho.
+Caso a placa esteja em seu modo "conectado", significa que ela está recebendo as informações do software de rastreio.
+\begin{figure*}[h!]
+        \subfloat[Tela indicando o azimute e a elevação do mecanismo]{%
+            \includegraphics[width=.30\linewidth]{figs/tela_az_el.png}%
+            \label{subfig:conec_az_el}%
+        }\hfill
+        \subfloat[Tela indicando a diferença entre o valor desejado e o valor real]{%
+            \includegraphics[width=.30\linewidth]{figs/tela_dif_az_el.png}%
+            \label{subfig:conec_dif_az_el}%
+        }\hfill
+        \subfloat[Tela de passo do motor e bytes comunicados com o SatDump]{%
+            \includegraphics[width=.30\linewidth]{figs/tela_vel_az_vel_el_telemetria.png}%
+            \label{subfig:conec_telemetria}%
+        }\\
+        \caption{Imagem das telas para o estado conectado}
+        \caption*{Fonte: Autor (2026)}
+        \label{fig:telas_conectado}
+\end{figure*}
+
+Começando pelas informações nas telas do modo conectado, essas indicam informações sobre o posicionamento do mecanismo e o funcionamento da placa.
+A primeira tela é a mostrada na figura \ref{subfig:conec_az_el}, que indica a posição do azimute e da elevação do sistema em determinado momento.
+A segunda tela é a encontrada na figura \ref{subfig:conec_dif_az_el}, que indica a diferença entre a posição atual da antena e a posição desejada do mecanismo.
+E a última tela é em relação à telemetria e às seleções internas do algoritmo do sistema, indicado pela figura \ref{subfig:conec_telemetria}.
+
+Os valores após "V AZ" e "V EL" se referem ao valor do micro passo que o sistema está utilizando em determinado momento. Esse valor equivale à potência de dois pela qual o sistema está subdividindo o passo.
+O passo do motor, definido no capítulo \ref{cap:metod}, é de $\approx 0,9^{\circ}$ ($1,8^{\circ}$ dividido pela relação $2:1$ das polias) e o driver DRV8825, consegue gerar passos de até $\frac{1}{32}$ do passo total.
+Como $32 = 2^5$, a indicação na tela seria de valor "5". De mesmo modo, um passo inteiro seria indicado pelo número "0" ($2^0 = 1$). Os demais valores $N$ indicados na tela equivalem a um fator de divisão de $2^N$ no passo.
+Na segunda linha da última tela, há uma indicação de "RX" e "TX", cujos valores seguintes indicam o número de bytes recebidos e enviados, respectivamente, pelo sistema embarcado para o SatDump.
+As telas alternam entre si a cada \SI{5}{\second} e têm suas informações atualizadas a cada \SI{250}{\milli\second}
+
+\begin{figure*}[h!]
+        \subfloat[Tela indicando que o ESP32 não está conectado com o SatDump]{%
+            \includegraphics[width=.48\linewidth]{figs/tela_no_connection.png}%
+            \label{subfig:not_con_erro}%
+        }\hfill
+        \subfloat[Tela indicando o IP local que o ESP32 se encontra]{%
+            \includegraphics[width=.48\linewidth]{figs/tela_ip_local.png}%
+            \label{subfig:not_con_ip}%
+        }\\
+        \caption{Imagem das telas para o estado sem conexão}
+        \caption*{Fonte: Autor (2026)}
+        \label{fig:telas_desconectado}
+\end{figure*}
+
+Para as telas do modo sem conexão, existem somente dois modelos. O primeiro, visível na figura \ref{subfig:not_con_erro}, indica que a conexão com o SatDump foi perdida e que o sistema tentará conectar novamente.
+A segunda tela, exemplificada na figura \ref{subfig:not_con_ip}, indica o endereço de IP no qual o sistema está conectado para que o usuário tente iniciar a conexão pelo software de rastreio.
+Essas telas são estáticas e alternam entre si a cada \SI{1}{\second}.
+
+Os drivers dos motores de passo DRV8825 foram emprestados pela UFABC e eles demonstraram estar defeituosos. Isso impediu o avanço do protótipo físico.
+Além disso, os contratempos encontrados no recebimento dos materiais e a decisão em atribuir os esforços à monografia fizeram com que o desenvolvimento da parte eletrônica fosse finalizado com o projeto funcionando na ESP32, mas não integrado aos motores nem montado fisicamente.
+
+Em contrapartida, como a simulação em software é mais simples de iterar do que o projeto real, será desenvolvido um modelo discutido na seção \ref{sec:MuJoCo}.
+
 \section{Simulação do Mecanismo}\label{sec:MuJoCo}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/simulador_mujoco.png}
+    \caption{Modelo do protótipo simulado no software MuJoCo}
+    \caption*{Fonte: Autor (2026)}
+    \label{fig:modelo_mujoco}
+\end{figure}
 
+O MuJoCo (Multi-Joint dynamics with Contact) é um dos simuladores de física de corpo rígido desenvolvido pela empresa Roboti LLC e disponibilizado gratuitamente pela Google Deep Mind.
+Esse simulador tem o intuito de simular de forma fidedigna a interação entre os mecanismmos desenvolvidos e o ambiente.
 
+O software em questão será utilizado para simular o protótipo. Para isso, foi utilizada a ferramenta de nome onshape-to-robot \cite{onshapetorobot2020} para auxiliar à tradução do modelo CAD desenvolvido para o modelo na plataforma MuJoCo.
+Após a conversão, o resultado foi um modelo capaz de ser simulado fisicamente no MuJoCo, conforme visto na figura \ref{fig:modelo_mujoco}.
+
+Com o modelo do projeto convertido, é possível utilizar a biblioteca do MuJoCo para Python a fim de controlar os graus de liberdade do modelo (sendo esses, azimute e elevação).
+O filtro $\alpha-\beta-\gamma$ foi adaptado do programa escrito em C do ESP32 para o Python e seu resultado era enviado ao MuJoCo.
+O resultado do filtro pode ser visto na figura \ref{fig:simul_abg}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/simul_abg.png}
+    \caption{Filtro $\alpha-\beta-\gamma$ calculado em Python e enviado ao simulador}
+    \caption*{Fonte: Autor (2026)}
+    \label{fig:simul_abg}
+\end{figure}
+
+Esse resultado mostrou válida a metodologia do trabalho até então, sendo possível transferir o funcionamento do simulador para o mundo real sem grandes complicações.

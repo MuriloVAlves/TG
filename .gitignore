@@ -26,6 +26,7 @@ MuJoCo/sample/
 MuJoCo/simulate/
 MuJoCo/LICENSE
 MuJoCo/THIRD_PARTY_NOTICES.txt
+**/MUJOCO_LOG.txt
 
 # Logs
 *.pcapng
