@@ -186,7 +186,6 @@ server_connected = False
 
 def handle_thread():
     if not dummy_rot_thread.is_alive():
-        print("MATANDO THREAD")
         import sys
         sys.exit(0)
     

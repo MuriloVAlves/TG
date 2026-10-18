@@ -3,10 +3,18 @@ Nesta seção, serão apresentados os dados obtidos durante a etapa empírica de
 Os principais pontos abordados na seção a seguir serão o da montagem da antena e a calibração do filtro $\alpha-\beta-\gamma$.
 \section{Estrutura do Pedestal}\label{sec:estrutura}
 O protótipo físico será baseado no mecanismo apresentado na Figura~\ref{fig:pedestal}. As peças utilizadas no modelo 3D do pedestal empregam componentes COTS (\textit{Commercial Off-The-Shelf}, ou seja, hardware comercial pronto para uso). Dessa forma, a geometria e os elementos foram projetados para utilizar materiais de fácil acesso no comércio local e em lojas de construção.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/polias_cinto.jpeg}
+    \caption{Polias GT2 com 20 e 40 dentes, além de cinto de 200mm}
+    \legend{Fonte: Autor(2026)}
+    \label{fig:polias_cinto}
+\end{figure}
+As polias utilizadas são do tipo GT2, de 20 e 40 dentes (vide Figura \ref{fig:polias_cinto}), associadas a uma correia dentada de \SI{10}{\milli\meter} de largura e \SI{200}{\milli\meter} de comprimento perimetral, o que estabelece uma distância entre centros conhecida.
+Esses elementos, assim como os motores de passo NEMA 17, são amplamente empregados na fabricação de impressoras 3D.
 
-As polias utilizadas são do tipo GT2, de 20 e 40 dentes, associadas a uma correia dentada de \SI{10}{\milli\meter} de largura e \SI{200}{\milli\meter} de comprimento perimetral, o que estabelece uma distância entre centros conhecida. Esses elementos, assim como os motores de passo NEMA 17, são amplamente empregados na fabricação de impressoras 3D.
-
-Para o acionamento dos motores, foram adotados os drivers DRV8825, comumente encontrados em lojas de eletrônica. O microcontrolador ESP32 e o display LCD seguem a mesma facilidade de aquisição do restante dos componentes eletrônicos.
+Para o acionamento dos motores, foram adotados os drivers DRV8825, comumente encontrados em lojas de eletrônica. 
+O microcontrolador ESP32 e o display LCD seguem a mesma facilidade de aquisição do restante dos componentes eletrônicos.
 
 A estrutura do poste foi dimensionada para utilizar um pontalete de madeira de \SI{7,5}{\centi\meter} $\times$ \SI{7,5}{\centi\meter}, enquanto a base foi projetada para tábuas de \SI{0,9}{\centi\meter} $\times$ \SI{9,5}{\centi\meter}. O fio de cobre maciço usado para a confecção da antena foi obtido a partir do desmembramento de um cabo de aterramento de 7 vias, no qual cada condutor individual possui bitola \SI{10}{AWG}.
 
@@ -15,7 +23,7 @@ A tela de alumínio utilizada como plano de terra foi adaptada de uma tela mosqu
     \centering
     \includegraphics[width=0.8\textwidth]{figs/antena_frontal.jpeg}
     \caption{Visão frontal da antena utilizada no projeto.}
-    \caption*{Fonte: Autor (2026)}
+    \legend{Fonte: Autor (2026)}
     \label{fig:antena_frontal}
 \end{figure}
 A estrutura de suporte da antena foi confeccionada via impressão 3D em PLA (ácido polilático), conforme ilustrado na Figura~\ref{fig:pecas_antena}. A baixa densidade do polímero somada ao preenchimento interno (\textit{infill}) de \SI{20}{\percent} resultou em uma massa de \SI{233}{\gram} para a estrutura plástica da antena.
@@ -24,7 +32,7 @@ A estrutura de suporte da antena foi confeccionada via impressão 3D em PLA (ác
     \centering
     \includegraphics[width=0.8\textwidth]{figs/antena_traseira.jpeg}
     \caption{Visão traseira da antena utilizada no projeto.}
-    \caption*{Fonte: Autor (2026)}
+    \legend{Fonte: Autor (2026)}
     \label{fig:antena_traseira}
 \end{figure}
 
@@ -34,7 +42,7 @@ Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gra
     \centering
     \includegraphics[width=0.8\textwidth]{figs/antena_peso.jpeg}
     \caption{Superfície de desempenho dos parâmetros $\alpha$, $\beta$ e $\gamma$ para o eixo de azimute.}
-    \caption*{Fonte: Autor (2026)}
+    \legend{Fonte: Autor (2026)}
     \label{fig:antena_peso}
 \end{figure}
 
@@ -60,7 +68,7 @@ A partir dos valores obtidos, é possível verificar a região com menor erro RM
     \centering
     \includegraphics[width=0.8\textwidth]{figs/Plot_alfa_beta_gamma_az.png}
     \caption{Superfície de desempenho dos parâmetros $\alpha$, $\beta$ e $\gamma$ para o eixo de azimute.}
-    \caption*{Fonte: Autor (2026)}
+    \legend{Fonte: Autor (2026)}
     \label{fig:param_az}
 \end{figure}
 
@@ -68,7 +76,7 @@ A partir dos valores obtidos, é possível verificar a região com menor erro RM
     \centering
     \includegraphics[width=0.8\textwidth]{figs/Plot_alfa_beta_gamma_el.png}
     \caption{Superfície de desempenho dos parâmetros $\alpha$, $\beta$ e $\gamma$ para o eixo de elevação.}
-    \caption*{Fonte: Autor (2026)}
+    \legend{Fonte: Autor (2026)}
     \label{fig:param_el}
 \end{figure}
 
@@ -101,13 +109,13 @@ Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos 
             \label{subfig:passagem_zenite}%
         }
         \caption{Comportamento do filtro quando exposto a rastreios reais de satélite}
-        \caption*{Fonte: Autor (2026)}
+        \legend{Fonte: Autor (2026)}
         \label{fig:passagens_diversas}
 \end{figure*}
 
 Com os testes exemplificados nas figuras \ref{subfig:passagem_baixa}, \ref{subfig:passagem_alta}, \ref{subfig:passagem_dupla} e \ref{subfig:passagem_zenite}, foi possível observar algumas características do fitro ao sistema.
-Tanto em passagens de baixa elevação (abaixo de 60 graus, figura \ref{subfig:passagem_baixa}) e alta (acima de 60 e abaixo de 80 graus, figura \ref{subfig:passagem_alta}), o sistema demonstrou uma grande estabilidade, mantendo o erro RMS em décimos de graus.
-O filtro também foi testado para dois casos extremos, que seria o rastreio de satélites seguidos (figura \ref{subfig:passagem_dupla}) e o rastreio próximo do zênite (elevação entre 80 e 90 graus, figura \ref{subfig:passagem_zenite}).
+Tanto em passagens de baixa elevação (abaixo de 60 graus, Figura \ref{subfig:passagem_baixa}) e alta (acima de 60 e abaixo de 80 graus, Figura \ref{subfig:passagem_alta}), o sistema demonstrou uma grande estabilidade, mantendo o erro RMS em décimos de graus.
+O filtro também foi testado para dois casos extremos, que seria o rastreio de satélites seguidos (Figura \ref{subfig:passagem_dupla}) e o rastreio próximo do zênite (elevação entre 80 e 90 graus, Figura \ref{subfig:passagem_zenite}).
 
 Para o caso do rastreio de satélites duplos é possível perceber que, na transição entre os alvos que estão sendo rastreados, há uma certa instabilidade no sistema, marcada por grandes sobressinais e um período de oscilação tanto no filtro de azimute quanto no filtro de elevação. Isso mostra que o sitema é subamortecido.
 O mesmo fenômeno é observado para uma passagem próxima de zênite, na qual o azimute sofre uma variação brusca, fazendo ocorrer uma oscilação quando há uma diminuição na taixa de crescimento do ângulo.
@@ -115,7 +123,7 @@ Uma solução para esse fenômeno seria alterar os parâmetros do filtro, fazend
 Outra solução pode ser incluir no algoritmo uma forma de detectar a diferença entre a posição predita e a posição real, reiniciando os parâmetros de predição do filtro quando essa diferença ultrapassar determinado valor.
 
 \section{Eletrônica do Protótipo}\label{sec:eletronica_prototipo}
-Para o controle da eletrônica do mecanismo, foi programado o ESP32 de acordo com a arquitetura escpecificada na figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (figura \ref{fig:telas_conectado}) e conectado (figura \ref{fig:telas_conectado}).
+Para o controle da eletrônica do mecanismo, foi programado o ESP32 de acordo com a arquitetura escpecificada na Figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (Figura \ref{fig:telas_conectado}) e conectado (Figura \ref{fig:telas_conectado}).
 A conexão, nesse caso, se refere a uma comunicação da placa do mecanismo com o servidor de controle dos rotores de antena do SatDump.
 Então, caso o ESP32 demonstre estar em uma tela do tipo "sem conexão", isso indica que o sistema conseguiu se conectar ao Wi-Fi e abrir uma porta com um IP local, mas o SatDump não iniciou uma conexão com o aparelho.
 Caso a placa esteja em seu modo "conectado", significa que ela está recebendo as informações do software de rastreio.
@@ -133,14 +141,14 @@ Caso a placa esteja em seu modo "conectado", significa que ela está recebendo a
             \label{subfig:conec_telemetria}%
         }\\
         \caption{Imagem das telas para o estado conectado}
-        \caption*{Fonte: Autor (2026)}
+        \legend{Fonte: Autor (2026)}
         \label{fig:telas_conectado}
 \end{figure*}
 
 Começando pelas informações nas telas do modo conectado, essas indicam informações sobre o posicionamento do mecanismo e o funcionamento da placa.
-A primeira tela é a mostrada na figura \ref{subfig:conec_az_el}, que indica a posição do azimute e da elevação do sistema em determinado momento.
-A segunda tela é a encontrada na figura \ref{subfig:conec_dif_az_el}, que indica a diferença entre a posição atual da antena e a posição desejada do mecanismo.
-E a última tela é em relação à telemetria e às seleções internas do algoritmo do sistema, indicado pela figura \ref{subfig:conec_telemetria}.
+A primeira tela é a mostrada na Figura \ref{subfig:conec_az_el}, que indica a posição do azimute e da elevação do sistema em determinado momento.
+A segunda tela é a encontrada na Figura \ref{subfig:conec_dif_az_el}, que indica a diferença entre a posição atual da antena e a posição desejada do mecanismo.
+E a última tela é em relação à telemetria e às seleções internas do algoritmo do sistema, indicado pela Figura \ref{subfig:conec_telemetria}.
 
 Os valores após "V AZ" e "V EL" se referem ao valor do micro passo que o sistema está utilizando em determinado momento. Esse valor equivale à potência de dois pela qual o sistema está subdividindo o passo.
 O passo do motor, definido no capítulo \ref{cap:metod}, é de $\approx 0,9^{\circ}$ ($1,8^{\circ}$ dividido pela relação $2:1$ das polias) e o driver DRV8825, consegue gerar passos de até $\frac{1}{32}$ do passo total.
@@ -158,12 +166,12 @@ As telas alternam entre si a cada \SI{5}{\second} e têm suas informações atua
             \label{subfig:not_con_ip}%
         }\\
         \caption{Imagem das telas para o estado sem conexão}
-        \caption*{Fonte: Autor (2026)}
+        \legend{Fonte: Autor (2026)}
         \label{fig:telas_desconectado}
 \end{figure*}
 
-Para as telas do modo sem conexão, existem somente dois modelos. O primeiro, visível na figura \ref{subfig:not_con_erro}, indica que a conexão com o SatDump foi perdida e que o sistema tentará conectar novamente.
-A segunda tela, exemplificada na figura \ref{subfig:not_con_ip}, indica o endereço de IP no qual o sistema está conectado para que o usuário tente iniciar a conexão pelo software de rastreio.
+Para as telas do modo sem conexão, existem somente dois modelos. O primeiro, visível na Figura \ref{subfig:not_con_erro}, indica que a conexão com o SatDump foi perdida e que o sistema tentará conectar novamente.
+A segunda tela, exemplificada na Figura \ref{subfig:not_con_ip}, indica o endereço de IP no qual o sistema está conectado para que o usuário tente iniciar a conexão pelo software de rastreio.
 Essas telas são estáticas e alternam entre si a cada \SI{1}{\second}.
 
 Os drivers dos motores de passo DRV8825 foram emprestados pela UFABC e eles demonstraram estar defeituosos. Isso impediu o avanço do protótipo físico.
@@ -177,7 +185,7 @@ Em contrapartida, como a simulação em software é mais simples de iterar do qu
     \centering
     \includegraphics[width=0.8\textwidth]{figs/simulador_mujoco.png}
     \caption{Modelo do protótipo simulado no software MuJoCo}
-    \caption*{Fonte: Autor (2026)}
+    \legend{Fonte: Autor (2026)}
     \label{fig:modelo_mujoco}
 \end{figure}
 
@@ -185,44 +193,48 @@ O MuJoCo (Multi-Joint dynamics with Contact) é um dos simuladores de física de
 Esse simulador tem o intuito de simular de forma fidedigna a interação entre os mecanismos desenvolvidos e o ambiente.
 
 O software foi utilizado para simular o protótipo. Para isso, a ferramenta de nome onshape-to-robot \cite{onshapetorobot2020} foi aplicada para auxiliar à tradução do modelo CAD desenvolvido para o modelo na plataforma.
-Após a conversão, o resultado foi um modelo capaz de ser simulado fisicamente no MuJoCo, conforme visto na figura \ref{fig:modelo_mujoco}.
+Após a conversão, o resultado foi um modelo capaz de ser simulado fisicamente no MuJoCo, conforme visto na Figura \ref{fig:modelo_mujoco}.
 
 Com o modelo do projeto convertido, é possível utilizar a biblioteca do MuJoCo para Python a fim de controlar os graus de liberdade do modelo (sendo esses, azimute e elevação).
 Esse simulador possui uma conexão com o software de rastreio SatDump, recebendo os dados de posição e inserindo-os ao filtro $\alpha-\beta-\gamma$.
 O filtro foi diretamente adaptado do programa escrito em C do ESP32 para o Python e seu resultado foi enviado ao MuJoCo.
 A posição predita pelo filtro é enviada ao simulador, que representa a posição do sistema a cada determinado momento.
-O resultado indicando a posição do satélite e a posição predita pelo filtro pode ser visto na figura \ref{fig:simul_abg}.
+A fim de verificar o funcionamento do filtro, foi desenvolvido um gráfico que mostra o funcionamento do sistema em tempo real. Esse gráfico possui uma linha indicando a posição do satélite e a posição predita pelo filtro, e pode ser visto na Figura \ref{fig:simul_abg}.
+A linha vermelha indica a posição real do satélite enviada pelo SatDump, enquanto a linha azul indica a posição das juntas do mecanismo simulado. Para a finalidade de otimização do desenho do gráfico, foram mantidos somente os últimos 300 pontos dos dois desenhos.
+Como o filtro gera uma grande quantidade de pontos intermediários, a linha azul possui uma maior densidade de pontos e um comprimento menor. O tempo que compõe o eixo X é a quantidade de segundos desde o início da captura. 
+No gráfico, é possível perceber a correção dos parâmetros do filtro marcadas pelos "dentes de serra" na curva azul, mostrando que o sistema está estimando a trajetória do satélite em tempo real e corrigindo as estimativas de posição, velocidade e aceleração.
+As últimas amostras do filtro demonstram que o sistema conseguiu estabelecer o rastreio corretamente, necessitando de poucas correções para se manter na trajetória correta.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/simul_abg.png}
     \caption{Filtro $\alpha-\beta-\gamma$ calculado em Python e enviado ao simulador}
-    \caption*{Fonte: Autor (2026)}
+    \legend{Fonte: Autor (2026)}
     \label{fig:simul_abg}
 \end{figure}
 
-O resultado da simulação pode ser visto no apêndice \ref{cap:apendice_a}.
-Foi possível perceber que o sistema se comportou de maneira esperada, se mantendo sob controle durante todo o rastreio.
+O resultado da simulação pode ser visto nos Apêndices \ref{cap:apendice_umbra} e \ref{cap:apendice_troca_sat}.
+Foi possível perceber que o sistema se comportou de maneira esperada, se mantendo sob controle durante todo o rastreio (demonstrado na totalidade do vídeo do Apêndice \ref{cap:apendice_umbra}).
 O filtro também conseguiu se estabilizar após uma troca de satélite alvo, independentemente de sua posição, órbita, ou velocidade.
 
 Entretanto, alguns comportamentos inesperados ocorreram com a simulação do sistema.
 O primeiro e mais crítico é o que, na rotina de retorno à posição inicial, o sistema acaba acelerando demasiadamente.
 No sistema físico, esse comportamento poderá causar um grande estresse no sistema, causando dano estrutural ao protótipo.
-O retorno à posição inicial ocorre sempre que o sistema para de receber informação por um período maior que 30 segundos ou no final de um rastreio, permitindo o sistema desenrolar os cabos e se preparar para uma nova captura.
+O retorno à posição inicial ocorre sempre que o sistema para de receber informação por um período maior que 30 segundos (6:55 do Apêndice \ref{cap:apendice_troca_sat}) ou no final de um rastreio (10:56 do Apêndice \ref{cap:apendice_troca_sat}), permitindo o sistema desenrolar os cabos e se preparar para uma nova captura.
 Uma solução que poderá ser implementada ao sistema final é possuir uma velocidade máxima dos motores para se movimentar entre alvos.
 Isso garantirá que o sistema não virá a sofrer danos estruturais durante sua operação.
 
 Uma segunda questão que acabou auxiliando o sistema simulado é que, como visto nas figuras \ref{fig:passagens_diversas} e \ref{subfig:passagem_zenite}, o filtro possui grandes sobressinais quando o sistema muda seu alvo abruptamente.
-Entretanto, como visto principalmente no vídeo de troca de alvos do apêndice \ref{cap:apendice_a}, a inércia do sistema impede o desalinhamento da antena, fazendo com que o sobressinal não seja realmente aplicado ao modelo.
-Apesar desse efeito, a oscilação ainda se mantém, fazendo com que o sistema divirja da posição desejada. Após um determinado período de tempo, o sistema retorna a se estabilizar e seguir a posição do satélite.
+Entretanto, como visto principalmente no vídeo de troca de alvos do Apêndice \ref{cap:apendice_troca_sat}, a inércia do sistema impede o desalinhamento da antena, fazendo com que o sobressinal não seja realmente aplicado ao modelo.
+Apesar desse efeito, a oscilação ainda se mantém, fazendo com que o sistema divirja da posição desejada (como pode ser visto aos 1:55, 5:18, e 5:52 minutos do vídeo). Após um determinado período de tempo, o sistema retorna a se estabilizar e seguir a posição do satélite.
 Esse problema parece ser causado pela característica do sistema de tentar manter a predição anterior. Então, até todos os fatores se corrigirem para a nova trajetória, ocorre uma oscilação claramente visível na posição da antena.
 A solução para esse caso pode ser uma forma do sistema perceber que há uma grande diferença de trajetórias e reniciar os coeficientes do filtro para que esse nunca se torne oscilante.
 
 O terceiro ponto mais notável que exigirá uma atenção na implementação é a questão de que, exatamente pela oscilação gerada na troca busca de trajetória, o sistema acaba se desestabilizando quando este recebe uma nova trajetória e logo após para de receber novas informações.
-Neste caso, o sistema parece entrar em um estado de instabilidade e acaba ficando completamente incontrolável, efetuando diversas rotações até entrar no estado de retorno à posição inicial ou receber novas informações de posição sobre algum alvo.
-Em ambos casos, o sistema retorna completamente à estabilidade.
+Neste caso, o sistema parece entrar em um estado de instabilidade e acaba ficando completamente incontrolável, efetuando diversas rotações até entrar no estado de retorno à posição inicial ou receber novas informações de posição sobre algum alvo (exemplificada aos minutos 6:24 do Apêndice \ref{cap:apendice_troca_sat}).
+Em ambos casos, o sistema retorna completamente à estabilidade ao reiniciar os parâmetros do filtro.
 Uma alternativa para esse caso seria a de verificar a diferença de posição exigida pelo filtro. Caso essa seja maior que um determinado delta, o sistema entra na rotina de retorno a zero.
 É importante salientar que um sistema de verificação já é implementado para a elevação, que não pode atingir valores muito negativos nem muito acima de 90 graus, causando a limpeza dos parâmetros do filtro.
 Entretanto, a implementação dessa solução para o azimute se mostra desafiadora, pois a distinção entre um rastreio correto no qual há uma grande aceleração em azimute (como um rastreio próximo do zênite) e uma instabilidade pode ser difícil de prever até o sistema se tornar muito instável e danificar sua estrutura.
 
-No geral, o simulador demonstrou ser uma boa ferramenta para transicionar de um sistema completamente teórico para um sistema físico, permitindo o software embarcado no protótipo ser rapidamente iterado e corrigido.
+No geral, o simulador demonstrou ser uma boa ferramenta para transicionar de um sistema completamente teórico para um sistema físico, permitindo verificar o funcionamento do software embarcado no protótipo e rapidamente iterar e corrigir o código.

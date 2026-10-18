@@ -6,7 +6,7 @@ Por fim, serão investigados filtros de estimação e predição para permitir o
 
 \section{Referencial e Rastreio de Satélites}\label{sec:ground_tracking}
 Para modelar o sistema, é necessário descrever o referencial e entender como a estação de solo e o satélite se localizam no espaço.
-Segundo \cite{soler1994}, utilizando um modelo esférico aproximado da Terra, conforme a figura \ref{fig:modelagem_ang_visada}, e sabendo a localização de latitude $\phi_S$ e longitude $\lambda_S$ da antena na estação, é possível estipular a direção em azimute e elevação para o apontamento da antena.
+Segundo \cite{soler1994}, utilizando um modelo esférico aproximado da Terra, conforme a Figura \ref{fig:modelagem_ang_visada}, e sabendo a localização de latitude $\phi_S$ e longitude $\lambda_S$ da antena na estação, é possível estipular a direção em azimute e elevação para o apontamento da antena.
 O raio da Terra para o modelo esférico será considerado de $R=6371 km$ e a distância do satélite em relação ao centro do modelo será considerada como $r = R+h$, com $h$ sendo a altitude de sua órbita.
 Pode-se obter a longitude $\lambda_S$ na qual o vetor $\vec{r}$ intercepta a superfície da Terra, sendo possível traçar um triângulo reto esférico e utilizar a lei dos cossenos para triângulos esféricos \eqref{eq:lei_cossenos_esferica} e obter a relação $\cos\gamma=\cos\phi_S\cos(\lambda_S-\lambda)$ \cite{soler1994}. A distância entre o satélite e a estação de solo é dada pela equação \eqref{eq:d_sat_solo} \cite{soler1994}.
 \begin{align}
@@ -15,8 +15,8 @@ d = r[1+(R/r)^2-2(R/r)\cos\gamma] \label{eq:d_sat_solo}
 \end{align}
 \begin{figure}[htbp]
     \centering
-    \caption{Modelagem matemática do ângulo de visada}
     \includegraphics[width=0.8\textwidth]{figs/Interpretacao_geodesica.png}
+    \caption{Modelagem matemática do ângulo de visada}
     \legend{Fonte: \cite{soler1994}.}
     \label{fig:modelagem_ang_visada}
 \end{figure}
@@ -36,8 +36,8 @@ Para cobrir integralmente essa semiesfera, o mecanismo deve ser capaz de efetuar
 Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtado, já que em baixas elevações há a obstrução de relevo, estruturas ou atmosfera, o mecanismo desenvolvido nesse trabalho garantirá a varredura de toda região angular teórica.
 \begin{figure}[htbp]
     \centering
-    \caption{Ilustração de horizonte local visto pela estação de solo}
     \includegraphics[width=0.8\textwidth]{figs/horizonte_local.png}
+    \caption{Ilustração de horizonte local visto pela estação de solo}
     \legend{Fonte: \cite{Spiridonov2020}.}
     \label{fig:horizonte_local}
 \end{figure}
@@ -45,11 +45,11 @@ Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtad
 
 \section{Modelagem do Pedestal}\label{sec:modelagem_pedestal}
 Segundo \cite{Ford2008}, o sistema do pedestal que irá direcionar a antena pode ser modelado utilizando como base um manipulador esférico de dois graus de liberdade.
-Utilizando o modelo pela figura \ref{fig:pedestal}, e utilizando como referência a modelagem de \cite{Bien2021}, o ponto fixo que dará a referência do mecanismo com o solo será o da base, dado pelo referencial de coordenadas $O_0$, com versores $[x_0,y_0,z_0]$.
+Utilizando o modelo pela Figura \ref{fig:pedestal}, e utilizando como referência a modelagem de \cite{Bien2021}, o ponto fixo que dará a referência do mecanismo com o solo será o da base, dado pelo referencial de coordenadas $O_0$, com versores $[x_0,y_0,z_0]$.
 \begin{figure}[htbp]
     \centering
-    \caption{Modelo de pedestal com controle em azimute e elevação}
     \includegraphics[width=0.8\textwidth]{figs/pedestal_3D_motores.png}
+    \caption{Modelo de pedestal com controle em azimute e elevação}
     \legend{Fonte: Elaborado pelo autor (2026).}
     \label{fig:pedestal}
 \end{figure}
@@ -57,9 +57,10 @@ Utilizando o modelo pela figura \ref{fig:pedestal}, e utilizando como referênci
 Um motor é ligado por uma polia à base da antena, permitindo a rotação em torno do eixo Z. O ângulo de rotação do azimute é dado por $\theta$.
 O segundo motor está localizado na região na qual a antena se encaixa ao poste do pedestal e é ligado ao eixo da elevação também através do mecanismo de polia. A junção da polia movida com o eixo da elevação tem coordenadas dadas pela origem $O_1$ ($[x_1,y_1,z_1]$) e distância da base dada pelo valor "h".
 Além dos referenciais motorizados, será utilizando mais um referencial para descrever a excentricidade da antena, dado por $O_2$ ($[x_2,y_2,z_2]$) e distância de excentricidade "d"; e a região mais extrema que representa a ponta da antena, encontrada em  $O_3$ ($[x_3,y_3,z_3]$) e distância de braço "l".
-O modelo da cinemática direta do sistema pode ser obtido a partir dos parâmetros de Denavit-Hatemberg (D-H). Utilizando como referenciais $O_i$ descrita pelos versores de referencial $[x_i,y_i,z_i]$ obtendo a tabela \ref{tab:params_d_h}
+O modelo da cinemática direta do sistema pode ser obtido a partir dos parâmetros de Denavit-Hatemberg (D-H). Utilizando como referenciais $O_i$ descrita pelos versores de referencial $[x_i,y_i,z_i]$ obtendo a Tabela \ref{tab:params_d_h}
 \begin{table}[htbp]
 \centering
+\caption{Tabela de parâmetros D-H para o sistema}
 \begin{tabular}{rrrrr}
     \hline
     Parâmetro & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
@@ -68,11 +69,10 @@ O modelo da cinemática direta do sistema pode ser obtido a partir dos parâmetr
     $O_1O_2$ & $\phi$ & -d & 0 & 0 \\
     $O_2O_3$ & 0 & 0 & l & 0 \\
 \end{tabular}
-\caption{Tabela de parâmetros D-H para o sistema}
 \label{tab:params_d_h}
 \end{table}
 
-A partir da tabela D-H \ref{tab:params_d_h}, a cinemática do sistema está completamente descrita.
+A partir da Tabela D-H \ref{tab:params_d_h}, a cinemática do sistema está completamente descrita.
 É possível determinar as matrizes de transformação homogênea de cada ponto utilizando o parâmetro de cada junta modelada através da equação \ref{eq:matriz_rotacao} \cite{Siciliano2008}.
 \begin{equation}
 A^{i-1}_{i} = \begin{bmatrix}
@@ -190,12 +190,13 @@ Considerando uma função de transferência com denominador de ordem $n$ na form
 P(z) = a_nz^n + a_{n-1}z^{n-1} + ... + a_1z + a_0 \label{eq:denominador_polinomio}
 \end{equation}
 
-Segundo \cite{sighencea2022}, o critério de Jury é facilmente encontrado utilizando uma tabela de auxílio para determinar as condições de establilidade.
+Segundo \cite{sighencea2022}, o critério de Jury é facilmente encontrado utilizando uma Tabela de auxílio para determinar as condições de establilidade.
 Um sistema de segunda ordem, de acordo com \cite{sighencea2022}, possui somente uma linha para determinar o critério de estabilidade.
-Para cada ordem adicional, serão necessárias duas linhas a mais na tabela.
-Sendo assim, um  sistema de ordem $n$ como visto na equação \eqref{eq:denominador_polinomio}, possui um critério de estabilidade como o visto na tabela \ref{tab:criterio_Jury}.
+Para cada ordem adicional, serão necessárias duas linhas a mais na Tabela.
+Sendo assim, um  sistema de ordem $n$ como visto na equação \eqref{eq:denominador_polinomio}, possui um critério de estabilidade como o visto na Tabela \ref{tab:criterio_Jury}.
 \begin{table}[htbp]
 \centering
+\caption{Critério de estabilidade de Jury para um sistema de ordem $n$}
 \begin{tabular}{ccccc}
     \hline
     $z^0$ & $z^1$ & $...$ & $z^{n-1}$ & $z^n$ \\
@@ -209,11 +210,10 @@ Sendo assim, um  sistema de ordem $n$ como visto na equação \eqref{eq:denomina
     $...$ & $...$ & $...$ & $...$ & $...$ \\
     $m_0$ & $m_1$ & $m_2$ &  &
 \end{tabular}
-\caption{Critério de estabilidade de Jury para um sistema de ordem $n$}
 \label{tab:criterio_Jury}
 \end{table}
 
-Os coeficientes das linhas seguintes no critério de estabilidade de Jury é calculado utilizando as equações \eqref{eq:coef_bk}, \eqref{eq:coef_ck} e as demais até resultar em três coeficientes no final da tabela.
+Os coeficientes das linhas seguintes no critério de estabilidade de Jury é calculado utilizando as equações \eqref{eq:coef_bk}, \eqref{eq:coef_ck} e as demais até resultar em três coeficientes no final da Tabela.
 \begin{align}
 b_k = \begin{vmatrix}
 a_0 & a_{n-k} \\
