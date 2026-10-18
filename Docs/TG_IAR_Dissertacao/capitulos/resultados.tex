@@ -182,14 +182,16 @@ Em contrapartida, como a simulação em software é mais simples de iterar do qu
 \end{figure}
 
 O MuJoCo (Multi-Joint dynamics with Contact) é um dos simuladores de física de corpo rígido desenvolvido pela empresa Roboti LLC e disponibilizado gratuitamente pela Google Deep Mind.
-Esse simulador tem o intuito de simular de forma fidedigna a interação entre os mecanismmos desenvolvidos e o ambiente.
+Esse simulador tem o intuito de simular de forma fidedigna a interação entre os mecanismos desenvolvidos e o ambiente.
 
-O software em questão será utilizado para simular o protótipo. Para isso, foi utilizada a ferramenta de nome onshape-to-robot \cite{onshapetorobot2020} para auxiliar à tradução do modelo CAD desenvolvido para o modelo na plataforma MuJoCo.
+O software foi utilizado para simular o protótipo. Para isso, a ferramenta de nome onshape-to-robot \cite{onshapetorobot2020} foi aplicada para auxiliar à tradução do modelo CAD desenvolvido para o modelo na plataforma.
 Após a conversão, o resultado foi um modelo capaz de ser simulado fisicamente no MuJoCo, conforme visto na figura \ref{fig:modelo_mujoco}.
 
 Com o modelo do projeto convertido, é possível utilizar a biblioteca do MuJoCo para Python a fim de controlar os graus de liberdade do modelo (sendo esses, azimute e elevação).
-O filtro $\alpha-\beta-\gamma$ foi adaptado do programa escrito em C do ESP32 para o Python e seu resultado era enviado ao MuJoCo.
-O resultado do filtro pode ser visto na figura \ref{fig:simul_abg}.
+Esse simulador possui uma conexão com o software de rastreio SatDump, recebendo os dados de posição e inserindo-os ao filtro $\alpha-\beta-\gamma$.
+O filtro foi diretamente adaptado do programa escrito em C do ESP32 para o Python e seu resultado foi enviado ao MuJoCo.
+A posição predita pelo filtro é enviada ao simulador, que representa a posição do sistema a cada determinado momento.
+O resultado indicando a posição do satélite e a posição predita pelo filtro pode ser visto na figura \ref{fig:simul_abg}.
 
 \begin{figure}[htbp]
     \centering
@@ -199,4 +201,28 @@ O resultado do filtro pode ser visto na figura \ref{fig:simul_abg}.
     \label{fig:simul_abg}
 \end{figure}
 
-Esse resultado mostrou válida a metodologia do trabalho até então, sendo possível transferir o funcionamento do simulador para o mundo real sem grandes complicações.
+O resultado da simulação pode ser visto no apêndice \ref{cap:apendice_a}.
+Foi possível perceber que o sistema se comportou de maneira esperada, se mantendo sob controle durante todo o rastreio.
+O filtro também conseguiu se estabilizar após uma troca de satélite alvo, independentemente de sua posição, órbita, ou velocidade.
+
+Entretanto, alguns comportamentos inesperados ocorreram com a simulação do sistema.
+O primeiro e mais crítico é o que, na rotina de retorno à posição inicial, o sistema acaba acelerando demasiadamente.
+No sistema físico, esse comportamento poderá causar um grande estresse no sistema, causando dano estrutural ao protótipo.
+O retorno à posição inicial ocorre sempre que o sistema para de receber informação por um período maior que 30 segundos ou no final de um rastreio, permitindo o sistema desenrolar os cabos e se preparar para uma nova captura.
+Uma solução que poderá ser implementada ao sistema final é possuir uma velocidade máxima dos motores para se movimentar entre alvos.
+Isso garantirá que o sistema não virá a sofrer danos estruturais durante sua operação.
+
+Uma segunda questão que acabou auxiliando o sistema simulado é que, como visto nas figuras \ref{fig:passagens_diversas} e \ref{subfig:passagem_zenite}, o filtro possui grandes sobressinais quando o sistema muda seu alvo abruptamente.
+Entretanto, como visto principalmente no vídeo de troca de alvos do apêndice \ref{cap:apendice_a}, a inércia do sistema impede o desalinhamento da antena, fazendo com que o sobressinal não seja realmente aplicado ao modelo.
+Apesar desse efeito, a oscilação ainda se mantém, fazendo com que o sistema divirja da posição desejada. Após um determinado período de tempo, o sistema retorna a se estabilizar e seguir a posição do satélite.
+Esse problema parece ser causado pela característica do sistema de tentar manter a predição anterior. Então, até todos os fatores se corrigirem para a nova trajetória, ocorre uma oscilação claramente visível na posição da antena.
+A solução para esse caso pode ser uma forma do sistema perceber que há uma grande diferença de trajetórias e reniciar os coeficientes do filtro para que esse nunca se torne oscilante.
+
+O terceiro ponto mais notável que exigirá uma atenção na implementação é a questão de que, exatamente pela oscilação gerada na troca busca de trajetória, o sistema acaba se desestabilizando quando este recebe uma nova trajetória e logo após para de receber novas informações.
+Neste caso, o sistema parece entrar em um estado de instabilidade e acaba ficando completamente incontrolável, efetuando diversas rotações até entrar no estado de retorno à posição inicial ou receber novas informações de posição sobre algum alvo.
+Em ambos casos, o sistema retorna completamente à estabilidade.
+Uma alternativa para esse caso seria a de verificar a diferença de posição exigida pelo filtro. Caso essa seja maior que um determinado delta, o sistema entra na rotina de retorno a zero.
+É importante salientar que um sistema de verificação já é implementado para a elevação, que não pode atingir valores muito negativos nem muito acima de 90 graus, causando a limpeza dos parâmetros do filtro.
+Entretanto, a implementação dessa solução para o azimute se mostra desafiadora, pois a distinção entre um rastreio correto no qual há uma grande aceleração em azimute (como um rastreio próximo do zênite) e uma instabilidade pode ser difícil de prever até o sistema se tornar muito instável e danificar sua estrutura.
+
+No geral, o simulador demonstrou ser uma boa ferramenta para transicionar de um sistema completamente teórico para um sistema físico, permitindo o software embarcado no protótipo ser rapidamente iterado e corrigido.
