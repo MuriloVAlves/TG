@@ -1,31 +1,44 @@
 \chapter{Conclusão e Trabalhos Futuros}\label{cap:Conclusão}
 
-O presente trabalho apresentou o projeto, a modelagem, a implementação e a validação experimental de um protótipo automatizado de pedestal bi-axial (azimute e elevação) integrado a uma antena helicone para o rastreio automático de satélites em órbita terrestre baixa (LEO) e recepção de sinais meteorológicos no padrão HRPT na faixa de 1,7~GHz.
+O presente trabalho apresentou o projeto, a modelagem, a implementação e a validação em simulador de um protótipo automatizado de pedestal bi-axial ortogonal (em azimute e elevação), integrado a uma antena helicoidal para o rastreio automático de satélites em órbita terrestre baixa (LEO).
 
-A modelagem cinemática direta do mecanismo bi-axial, formulada rigorosamente por meio da convenção dos parâmetros de Denavit-Hartenberg (D-H), forneceu a base geométrica para o cálculo das matrizes de transformação homogênea, assegurando o correto apontamento angular da antena ao longo de toda a semiesfera do horizonte local.
+No tópico da modelagem cinemática e estrutural (Subseções \ref{sec:ground_tracking} e \ref{sec:modelagem_pedestal}), a cinemática direta do mecanismo foi completamente formulada e os parâmetros D-H foram levantados. A modelagem do protótipo garante que este irá operar cobrindo a cobertura angular completa do horizonte local ($360^\circ$ em azimute e $90^\circ$ em elevação).
+A estrutura mecânica da antena foi projetada utilizando peças impressas em 3D, resultando em um peso total reduzido, adequado para o controle pelos motores de passo NEMA 17.
+As peças utilizadas foram compradas comercialmente e as peças que compõem o pedestal foram feitas a partir de componentes encontrados em lojas de construção para garantir a fácil produção por usuários comuns.
 
-No âmbito dos sistemas embarcados e de controle, a arquitetura dual-core do microcontrolador ESP32 sob a gerência do sistema operacional em tempo real FreeRTOS demonstrou elevada eficiência. A segregação estruturada do processamento — alocando o servidor de comunicação TCP e a interface de telemetria LCD no Núcleo 0, enquanto o Núcleo 1 executou exclusivamente as malhas de controle dos motores de passo NEMA 17 (via drivers DRV8825 em micropasso) e o algoritmo do filtro preditivo $\alpha-\beta-\gamma$ — eliminou latências de comunicação e preveniu flutuações no tempo de amostragem do controle.
+O filtro preditivo $\alpha-\beta-\gamma$ calibrado com 300 passagens reais demonstrou que o método de varredura sistemática obteve uma boa seleção de parâmetros para novas passagens.
+O filtro demonstrou um baixo erro quadrático médio em relação ao valor real e o valor predito.
 
-Para garantir a suavidade e a continuidade da trajetória sem comprometer a capacidade computacional do sistema embarcado, implementou-se o filtro preditivo de terceira ordem $\alpha-\beta-\gamma$. A sintonia otimizada dos coeficientes via varredura sistemática (\textit{grid search}), balizada pelos limites do Critério de Estabilidade de Jury e avaliada pelo Erro Quadrático Médio (EQM), resultou no conjunto de parâmetros calibrados $\alpha = 1{,}00$, $\beta = 0{,}05$ e $\gamma = 0{,}00$.
+A arquitetura de hardware e sistema embarcado se baseou no microcontrolador de dois núcleos ESP32 utilizando o sistema operacional em tempo real FreeRTOS.
+A carga de processamento foi dividida entre o núcleo 0, que ficou encarregado com a comunicação TCP e pela interface LCD, e o núcleo 1, que faz o processamento em tempo real do filtro preditor e do controle dos motores.
 
-A convergência observada do ganho de velocidade $\beta$ para um patamar estritamente reduzido ($\beta \approx 0{,}05$) e do ganho de aceleração $\gamma$ para zero justifica-se teórica e empiricamente por três fatores determinantes:
-\begin{enumerate}
-    \item \textbf{Atenuação da Propagação de Ruído:} A atualização do estado de velocidade no filtro $\alpha-\beta-\gamma$ envolve a divisão pelo período de amostragem ($\frac{\beta}{T}$). Valorações mais elevadas de $\beta$ provocam a amplificação do ruído de medição proveniente das estimativas angulares, introduzindo derivadas espúrias que desestabilizam o acionamento dos motores.
-    \item \textbf{Consistência e Previsibilidade Orbital:} Uma vez que as posições orbitais fornecidas pelo software de rastreio (SatDump via TLE/Keplerianos) apresentam elevada acurácia determinística ao longo do tempo, a dinâmica de variação de velocidade é adequadamente sustentada pela equação de propagação do modelo preditivo, reduzindo a necessidade de correções derivativas agressivas baseadas no termo de inovação.
-    \item \textbf{Estabilidade e Alocação de Polos:} A análise de estabilidade em tempo discreto via teste de Jury confirma que o aumento simultâneo dos ganhos $\beta$ e $\gamma$ desloca os autovalores da matriz de transição do filtro em malha fechada para fora do círculo unitário no plano $z$, resultando em instabilidade e divergência do erro de estimativa.
-\end{enumerate}
+Em relação ao subsistema de radiofrequência, foi possível desenvolver uma antena helicoidal e com polarização circular à direita.
+O filtro SAW e o SDR utilizados são de baixo custo e podem ser encontrados nos meios de radioamadorismo e em laboratórios universitários.
+Apesar disso, o sistema não pôde ser testado pelo protótipo não ser finalizado a tempo.
 
-No subsistema de radiofrequência, a antena helicone desenvolvida em estrutura impressa em PLA e malha de alumínio (com massa total de aproximadamente 600~g) operou em regime de modo axial compatível com a polarização circular à direita (RHCP). Associada ao estágio pré-amplificador e filtro SAW (Nooelec SAWBird+ GOES) e ao receptor SDR (RTL-SDR V4), a estação em solo comprovou viabilidade técnica ao estabelecer enlaces estáveis de RF e viabilizar a recepção de telemetria sem perdas de desalinhamento angular.
+O uso do simulador demonstrou ser um passo útil para a depuração do sistema.
+A partir dele, foi possível validar o funcionamento do filtro $\alpha-\beta-\gamma$ durante um rastreio real, além de testar o sistema embarcado para casos de uso real que demonstraram alguns problemas na implementação do código que deverão ser tratados futuramente.
+O processo da simulação demonstrou ser uma ferramenta poderosa para a rápida iteração de algoritmos capazes de diminuir os erros catastróficos aplicados ao protótipo.
 
-Em suma, os objetivos propostos foram plenamente alcançados, resultando em um sistema de alinhamento e rastreio de baixo custo, estruturalmente leve, estável e computacionalmente eficiente.
+Em geral, os objetivos foram plenamente alcançados, comprovando que é possível construir um sistema de alinhamento e rastreio orbital de baixo custo, estruturalmente leve, computacionalmente eficiente e de fácil replicação para uso acadêmico e de radioamadorismo.
 
 \section*{Trabalhos Futuros}
 
-Como continuidade deste trabalho e visando o aprimoramento do protótipo, sugerem-se as seguintes linhas de pesquisa e desenvolvimento:
+O trabalho atual desenvolveu e validou pontos importantes para a implementação de partes do mecanismo do protótipo, porem, alguns pontos acabaram se mantendo em aberto.
+Os trabalhos futuros de curto prazo serão voltados à completude do protótipo, finalizando os testes físicos e disponibilizando o projeto ao público geral.
+O protótipo deverá ser capaz de realizar uma captura da transmissão de um satélite de forma completamente autônoma, com o software SatDump decodificando o sinal em tempo real.
+Nesse momento, a primeira fase do projeto será considerada concluída.
 
-\begin{itemize}
-    \item \textbf{Filtro Adaptativo de Ganhos:} Implementar uma estrutura de filtragem $\alpha-\beta-\gamma$ adaptativa, capaz de ajustar os coeficientes $\beta$ e $\gamma$ em tempo real apenas durante a detecção de manobras com elevada aceleração angular (como no momento de culminação do satélite próximo ao Zênite), mantendo os ganhos atenuados durante o regime permanente.
-    \item \textbf{Feedback de Posição em Malha Fechada:} Incorporar encoders absolutos de alta resolução nos eixos de azimute e elevação para proporcionar malha fechada de posição direta na estrutura mecânica, mitigando eventuais perdas de passos dos motores sob torque de carga externa ou ventos.
-    \item \textbf{Rastreio Autônomo por Sinal de RF (\textit{Closed-loop Autotrack}):} Desenvolver um algoritmo de alinhamento fino baseado no indicador de intensidade do sinal recebido (RSSI) ou técnica monopulso, permitindo que a antena corrija pequenos desvios de apontamento de forma autônoma a partir da máxima potência de RF capturada pelo receptor SDR.
-    \item \textbf{Aprimoramento Mecânico e Proteção Ambiental:} Evoluir a estrutura do pedestal para ligas metálicas leves (ou polímeros de grau engenharia) com cúpula de proteção (\textit{radome}), permitindo a operação contínua do sistema em ambientes externos sujeitos a intempéries atmosféricas.
-\end{itemize}
+Após a conclusão do sistema, o projeto poderá seguir para um viés mais voltado para a trajetografia, ou seja, o rastreio da trajetória de objetos.
+Através de uma realimentação do sinal de rádio e algoritmos de rastreio cônico (do inglês, \textit{conical scanning}), o sistema poderá ser capaz de fazer uma captura sem o conhecimento prévio da trajetória do satélite.
+Este sistema, então, poderá ser utilizado para rastreio e determinação de órbita de satélites, utilizando a trajetória capturada para determinar o satélite observado.
+Como uma via alternativa de pesquisa, o sistema poderá ser responsável pela identificação dos chamados satélites "zumbis", que são satélites defeituosos que continuam navegando e transmitindo sinais de forma indesejada.
+Isso seria de grande utilizade para determinar e catalogar a trajetória de lixos espaciais presentes na órbita terrestre.
+
+Por fim, um trabalho que possa vir a ser aperfeiçoado, mas é esperado que a comunidade acadêmica ou civil o desenvolva organicamente, é o de utilizar o sistema como uma plataforma de rastreio e adaptar outros sensores ao acervo de ferramentas compatíveis com o encaixe da antena.
+Isso permitiria o sistema ser atualizado e otimizado, podendo ser capaz de operar em diversas frequências ao trocar a antena utilizada em determinado momento. Existem satélites com sinais descriptografados e disponíveis para uso civil, porém operando em frequências maiores (ou menores).
+Um exemplo desses casos é a da recepção de sinais de SSTV, que são facilmente recebidos pelo rádio utilizado no projeto, mas é necessário utilizar uma antena que opere na faixa de 437 MHz.
+Outra vertente um pouco mais ousada poderia ser a insersão de uma câmera para a observação de corpos celestes. Essa aplicação é dita mais ousada porque o sistema atual espera que haja uma grande largura de feixe na antena utilizada para suplantar as imprecisões do motor de passo e da construção simples do mecanismo.
+A aplicação óptica é com certeza factível, mas talvez será necessário adaptar mais partes do sistema caso seja utilizado um sistema com grande ampliação.
+
+Dessa forma, é possível dizer com segurança que há diversas áreas para a expansão do trabalho atual, sendo possível dizer que a finalização do protótipo atual apenas indicaria o início de uma plataforma confiável para a captura de dados de satélites.
