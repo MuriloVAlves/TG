@@ -11,7 +11,7 @@ Atualmente, o cenário aeroespacial é marcado pela expansão massiva de constel
 
 Em aplicações de radiofrequência (RF) envolvendo satélites LEO, a maximização da razão sinal-ruído ($SNR$) e a mitigação de atenuações atmosféricas dependem diretamente do ganho e da diretividade da antena utilizada na estação de solo \cite{hubregt2014}.
 Entretanto, antenas de alta diretividade (como arranjos helicoidais ou refletores parabólicos) concentram a energia irradiada em feixes estreitos, entretanto, elas impõem o desafio do alinhamento angular rigoroso e contínuo com a espaçonave em movimento \cite{Ford2008}.
-Isso ocorre porque o tempo de passagem de um satélite LEO pelo horizonte local é restrito a poucos minutos e qualquer desalinhamento no feixe principal ocasiona a perda de sincronismo e a degradação do enlace.
+Isso ocorre porque o tempo de passagem de um satélite LEO pelo horizonte local é restrito a poucos minutos e qualquer desalinhamento no feixe principal ocasiona a perda de sincronismo e a degradação na qualidade do sinal recebido.
 
 Para viabilizar o acompanhamento contínuo da trajetória orbital, empregam-se pedestais de rastreio automático.
 Trata-se de mecanismos contendo de juntas motorizadas comumente dispostas em uma configuração bi-axial ortogonal de azimute e elevação.
@@ -20,7 +20,7 @@ A precisão desse sistema depende da modelagem cinemática do mecanismo, do cont
 
 Em particular, a comunicação com satélites meteorológicos para recepção de dados no padrão HRPT (\textit{High Resolution Picture Transmission}) na faixa de $1,7\text{ GHz}$ demanda uma infraestrutura de recepção estável,
 combinando antenas de polarização circular com sistemas de rastreio de baixo ruído e resposta rápida às mudanças de direção, necessários para garantir uma boa recepção do sinal.
-Embora existam soluções comerciais de apontamento, o custo elevado e a rigidez arquitetural limitam sua aplicação em estações acadêmicas e de radioamadorismo, justificando o desenvolvimento de protótipos embarcados customizados e de baixo custo.
+Embora existam soluções comerciais de apontamento de antena, o custo elevado e a rigidez arquitetural limitam sua aplicação em estações acadêmicas e de radioamadorismo iniciante, justificando o desenvolvimento de protótipos embarcados customizados e de baixo custo.
 
 Diante desse contexto, o objetivo deste trabalho é projetar, modelar e construir um protótipo funcional de um sistema de pedestal bi-axial com antena de geometria helicoidal para o rastreio automático de satélites LEO.
 O projeto abrange a modelagem cinemática via parâmetros de Denavit-Hartenberg (D-H), a implementação embarcada de um filtro preditivo $\alpha-\beta-\gamma$ para suavização de trajetórias em microcontrolador dual-core (ESP32 via FreeRTOS), e a validação do sistema em um simulador para representar o comportamento real do mecanismo.

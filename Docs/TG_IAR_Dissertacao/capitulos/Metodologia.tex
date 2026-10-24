@@ -1,7 +1,12 @@
 \chapter{Metodologia}\label{cap:metod}
 Após a apresentação do referencial teórico utilizado neste projeto, serão discutidos os componentes e equipamentos necessários para criar um protótipo funcional.
 Nas seções seguintes, será explicado como se deu a seleção de determinados softwares de rastreio, softwares de simulação, peça mecânica, componente eletrônico, ou ações tomadas para a criação do protótipo.
+
 \section{Software de Rastreio e Decodificação}\label{sec:software}
+O aplicativo de rastreio de satélites principal selecionado para o trabalho será o SatDump.
+Esse programa será utilizado porque ele possui um conglomerado de ferramentas para permitir o rastreio de satélites e a decodificação dos sinais recebidos pela antena da estação de solo.
+Na Figura \ref{fig:satdump}, é possível observar a interface do Software. O software está dividido em duas partes principais: o painel de controle/rastreio (à esquerda) e o analisador de espectro/cachoeira RF (à direita).
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/satdump_example.png}
@@ -9,9 +14,6 @@ Nas seções seguintes, será explicado como se deu a seleção de determinados 
     \legend{Fonte: Autor(2026)}
     \label{fig:satdump}
 \end{figure}
-O aplicativo de rastreio de satélites principal selecionado para o trabalho será o SatDump.
-Esse programa será utilizado porque ele possui um conglomerado de ferramentas para permitir o rastreio de satélites e a decodificação dos sinais recebidos pela antena da estação de solo.
-Na Figura \ref{fig:satdump}, é possível observar a interface do Software. O software está dividido em duas partes principais: o painel de controle/rastreio (à esquerda) e o analisador de espectro/cachoeira RF (à direita).
 
 Na região esquerda, detalhada na Figura \ref{fig:satdump_track_ui}, existe uma roda polar no topo, que indica algumas informações sobre o satélite rasteado. O texto acima da roda indica o satélite que está sendo rastreado (no caso, o CAPELLA-18), além de suas informações de azimute e elevação.
 Abaixo do texto, está a roda polar de fato. A roda polar é uma representação bidimensional de 360° de toda a abóbada celeste visível a partir da localização da estação em solo. O centro do círculo, onde há a intersecção dos eixos, representa o Zênite (elevação de $90^{\circ}$), enquanto os círculos concêntricos indicam as elevações intermediárias de $0^{\circ}$, $30^{\circ}$ e $60^{\circ}$ (do mais externo para o mais interno).
@@ -46,7 +48,7 @@ os ângulos mencionados anteriormente. Como discutido na seção \ref{sec:ground
 mecanismo de elevação atuará somente em 90 graus. Desta maneira, o ângulo de visada total do mecanismo
 será dado por uma meia-esfera superior. Essa geometria é considerada suficiente para a detecção e o rastreio de qualquer satélite necessário pela estação de solo.
 
-Os motores de passo utilizados no trabalho são de classe NEMA (National Electrical Manufacturers Association, Associação Nacional de Fabricantes de Equipamentos Elétricos), que padroniza as dimensões e as características de motores em geral. O modelo selecionado é o motor de passo 17HS4401, da classe NEMA 17.
+Os motores de passo utilizados no trabalho são de classe NEMA (National Electrical Manufacturers Association, Associação Nacional de Fabricantes de Equipamentos Elétricos), que padroniza as dimensões e as características de motores em geral. O modelo selecionado é o motor de passo 17HS4401, da classe NEMA 17 (vistos na Figura \ref{fig:motores_drivers}).
 Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{kgf}\cdot\text{cm}$, e corrente por fase de $1,5A$.
 \begin{figure}[htbp]
     \centering
@@ -91,7 +93,7 @@ Todo o sistema será montado dentro do cabo da antena e haverá um cabo extensor
 A antena utilizada foi apresentada inicialmente no projeto de \cite{tonito2024}. Esta é uma Antena Helicone projetada especificamente para a recepção de sinais de alta resolução de satélites meteorológicos na faixa de 1,7 GHz, desenvolvida para a captura de imagens enviadas no modo HRPT (High Resolution Picture Transmission).
 Este modelo combina a simplicidade construtiva com características eletromagnéticas de alto ganho e alta diretividade, sendo ideal tanto para uso  montado no sistema de rastreio automatizado desenvolvido nesse trabalho.
 A antena helicone é uma variação da antena helicoidal no modo axial combinada com um plano Terra (ground plane) levemente cônico.
-Como as peças desenvolvidas por \cite{tonito2024} foram feitas para serem manufaturadas com o auxílio de uma impressora 3D (vide Figura \ref{fig:pecas_antena}), é possível iterar rapidamente no design das peças, permitindo a fabricação rápida de novos componentes caso um venha a quebrar.
+Como as peças desenvolvidas por \cite{tonito2024} foram feitas para serem manufaturadas com o auxílio de uma impressora 3D, vide Figura \ref{fig:pecas_antena}, é possível iterar rapidamente no design das peças, permitindo a fabricação rápida de novos componentes caso um venha a quebrar.
 Além disso, como as peças serão fabricadas em plástico, é esperado que elas tenham um peso menor que o equivalente em metal.
 
 A seleção de uma antena de geometria helicoidal foi feita para garantir uma melhor recepção do sinal, já que satélites que transmitem em HRPT operam majoritariamente com Polarização Circular (normalmente RHCP — Right-Hand Circular Polarization).
@@ -116,7 +118,7 @@ Além disso, para manter uma interface gráfica disponível para fácil entendim
 
 A arquitetura do sistema foi desenvolvida aproveitando a estrutura dual-core do ESP32, permitindo o processamento paralelo de tarefas por meio do FreeRTOS (Real-Time Operating System).
 Esse sistema operacional em tempo real e de código aberto permite a divisão do programa em tarefas independentes, alocadas em cada um dos núcleos do microcontrolador.
-A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado.
+A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado (exemplificado no diagrama da Figura \ref{fig:divisao_tarefas_esp}).
 Dessa forma, essa arquitetura garante que um processador esteja exclusivamente destinado ao controle das malhas do motor, evitando que interferências ou latências de comunicação afetem a estabilidade e a precisão do rotor.
 
 \begin{figure}[htbp]

@@ -2,7 +2,7 @@
 Nesta seção, serão apresentados os dados obtidos durante a etapa empírica de testes para a confecção do protótipo.
 Os principais pontos abordados na seção a seguir serão o da montagem da antena e a calibração do filtro $\alpha-\beta-\gamma$.
 \section{Estrutura do Pedestal}\label{sec:estrutura}
-O protótipo físico será baseado no mecanismo apresentado na Figura~\ref{fig:pedestal}. As peças utilizadas no modelo 3D do pedestal empregam componentes COTS (\textit{Commercial Off-The-Shelf}, ou seja, hardware comercial pronto para uso). Dessa forma, a geometria e os elementos foram projetados para utilizar materiais de fácil acesso no comércio local e em lojas de construção.
+O protótipo físico será baseado no mecanismo apresentado na Figura~\ref{fig:pedestal}. As peças utilizadas no modelo 3D do pedestal empregam componentes COTS (\textit{Commercial Off-The-Shelf}, ou seja, hardware comercial pronto para uso). Dessa forma, a geometria e os elementos foram projetados para utilizar materiais de fácil acesso no comércio local e em lojas de materiais de construção.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/polias_cinto.jpeg}
@@ -10,15 +10,18 @@ O protótipo físico será baseado no mecanismo apresentado na Figura~\ref{fig:p
     \legend{Fonte: Autor(2026)}
     \label{fig:polias_cinto}
 \end{figure}
-As polias utilizadas são do tipo GT2, de 20 e 40 dentes (vide Figura \ref{fig:polias_cinto}), associadas a uma correia dentada de \SI{10}{\milli\meter} de largura e \SI{200}{\milli\meter} de comprimento perimetral, o que estabelece uma distância entre centros conhecida.
+
+As polias utilizadas são do tipo GT2, de 20 e 40 dentes, vide Figura \ref{fig:polias_cinto}, associadas a uma correia dentada de \SI{10}{\milli\meter} de largura e \SI{200}{\milli\meter} de comprimento perimetral, o que estabelece uma distância entre centros conhecida.
 Esses elementos, assim como os motores de passo NEMA 17, são amplamente empregados na fabricação de impressoras 3D.
 
-Para o acionamento dos motores, foram adotados os drivers DRV8825, comumente encontrados em lojas de eletrônica. 
+Para o acionamento dos motores, foram adotados os drivers DRV8825, comumente encontrados em lojas de componentes eletrônicos. 
 O microcontrolador ESP32 e o display LCD seguem a mesma facilidade de aquisição do restante dos componentes eletrônicos.
 
 A estrutura do poste foi dimensionada para utilizar um pontalete de madeira de \SI{7,5}{\centi\meter} $\times$ \SI{7,5}{\centi\meter}, enquanto a base foi projetada para tábuas de \SI{0,9}{\centi\meter} $\times$ \SI{9,5}{\centi\meter}. O fio de cobre maciço usado para a confecção da antena foi obtido a partir do desmembramento de um cabo de aterramento de 7 vias, no qual cada condutor individual possui bitola \SI{10}{AWG}.
 
 A tela de alumínio utilizada como plano de terra foi adaptada de uma tela mosquiteira de alumínio de \SI{1}{\square\meter}. Já a chapa metálica complementar do plano de terra foi produzida a partir de um rufo para telhado.
+
+O resultado final pode ser visto nas Figuras \ref{fig:antena_frontal} e \ref{fig:antena_traseira}, nas quais a primeira mostra o posicionamento do disco do plano terra, a malha de metal, a antena e os parafusos que fixam toda a estrutura, enquanto na segunda figura, é possível observar os dois parafusos maiores que possibilitam a união do plano terra à antena helicoidal e ao cabo de sustentação.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/antena_frontal.jpeg}
@@ -26,7 +29,6 @@ A tela de alumínio utilizada como plano de terra foi adaptada de uma tela mosqu
     \legend{Fonte: Autor (2026)}
     \label{fig:antena_frontal}
 \end{figure}
-A estrutura de suporte da antena foi confeccionada via impressão 3D em PLA (ácido polilático), conforme ilustrado na Figura~\ref{fig:pecas_antena}. A baixa densidade do polímero somada ao preenchimento interno (\textit{infill}) de \SI{20}{\percent} resultou em uma massa de \SI{233}{\gram} para a estrutura plástica da antena.
 
 \begin{figure}[H]
     \centering
@@ -36,7 +38,9 @@ A estrutura de suporte da antena foi confeccionada via impressão 3D em PLA (ác
     \label{fig:antena_traseira}
 \end{figure}
 
-Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gram} da chapa e \SI{225}{\gram} da tela de alumínio, a estrutura completa da antena apresenta uma massa total de aproximadamente \SI{600}{\gram}. Além disso, existem alguns parafusos utilizados para a fixação dos componentes que não foram considerados na conta, porém, seu peso não fará o protótipo distoar do peso calculado. Essa massa reduzida torna o conjunto adequado para a operação com os motores especificados na Seção~\ref{sec:motor_passo}, garantindo a compatibilidade mecânica do sistema.
+A estrutura de suporte da antena foi confeccionada via impressão 3D em PLA (ácido polilático), conforme ilustrado na Figura~\ref{fig:pecas_antena}. A baixa densidade do polímero somada ao preenchimento interno (\textit{infill}) de \SI{20}{\percent} resultou em uma massa de \SI{233}{\gram} para a estrutura plástica da antena.
+
+Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gram} da chapa e \SI{225}{\gram} da tela de alumínio, a estrutura completa da antena apresenta uma massa total de aproximadamente \SI{600}{\gram}. Além disso, existem alguns parafusos utilizados para a fixação dos componentes que não foram considerados na conta, porém, seu peso não fará o protótipo distoar do peso calculado, vide, Figura \ref{fig:antena_peso}. Essa massa reduzida torna o conjunto adequado para a operação com os motores especificados na Seção~\ref{sec:motor_passo}, garantindo a compatibilidade mecânica do sistema.
 
 \begin{figure}[H]
     \centering
@@ -46,7 +50,7 @@ Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gra
     \label{fig:antena_peso}
 \end{figure}
 
-O cobre foi inserido no suporte helicoidal com um comprimento de sobra para ajustes futuros. Além disso, foi mantida uma região de cobre após o conector SMA para corrigir a impedância entre a antena helicoidal, com impedância característica por volta de \SI{140}{\ohm} \cite{balanis2016}, e aproximá-la da impedância na linha do amplificador (de \SI{50}{\ohm}). Isso será feito aproximando a primeira espira da antena ao plano terra, fazendo com que a componente capacitiva se torne mais presente na impedância da antena, fazendo com que a impedância vista no conector se aproxime de \SI{50}{\ohm}.
+O fio de cobre foi inserido no suporte helicoidal com um comprimento de sobra para ajustes futuros. Além disso, foi mantida uma região de cobre após o conector SMA para corrigir a impedância entre a antena helicoidal, com impedância característica por volta de \SI{140}{\ohm} \cite{balanis2016}, e aproximá-la da impedância na linha do amplificador (de \SI{50}{\ohm}). Isso será feito aproximando a primeira espira da antena ao plano terra, fazendo com que a componente capacitiva se torne mais presente na impedância da antena, fazendo com que a impedância vista no conector se aproxime de \SI{50}{\ohm}.
 O casamento de impedância é importante para permitir a máxima transferência de potência do sinal recebido pela antena \cite{balanis2016}.
 
 \section[Filtro Alfa Beta Gama]{Levantamento dos Parâmetros do Filtro $\alpha$-$\beta$-$\gamma$}
@@ -55,11 +59,15 @@ Conforme apresentado na Seção \ref{sec:implementacao_filtro}, os parâmetros i
 O método escolhido para a captura de amostras foi o de programar o software de rastreio para obter diversas passagens de constelações de satélites de órbita baixa, em diversas altitudes e condições reais nas quais o mecanismo irá operar.
 As constelações utilizadas foram a Meteor (satélites meteorológicos), OneWeb (internet banda larga), Capella (radares de arbetura sintética, conhecidos como Synthetic-aperture radar ou SAR), ICEYE (SAR), Black Kite (internet das coisas, Internet of Things ou IoT), e Sentinel (monitoramento de desastres).
 
-Após a seleção dos satélites de interesse, foi feito um script em Python capaz de simular a conexão entre o SatDump e o rotor, recebendo e enviando dados para o programa.
+Após a seleção dos satélites de interesse, foi feito um programa utilizando a linguagem de programação Python capaz de simular a conexão entre o SatDump e o rotor, recebendo e enviando dados para o programa.
 Esse script recebia os parâmetros e os salvava em um arquivo de extensão ".txt" para uma pasta com as demais capturas. O programa foi executado durante diferentes horários ao longo de dois meses, acumulando um total de 330 amostras.
 Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $0,1$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
-O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido.
+O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido (podendo ser conferidas nas Figuras \ref{fig:param_az} e \ref{fig:param_el}).
+Essas superfícies foram obtidas mapeando os resultados dos erros em uma região tridimensional, com $\alpha$ no eixo Y, $\beta$ no eixo X, e $\gamma$ no eixo Z. Os pontos com um menor erro RMS são representados com uma cor mais escura, enquanto os erros maiores possuem uma coloração mais clara.
+A partir dessas figuras, é possível perceber que o parâmetro $\gamma$ do filtro é muito sensível, com valores altos desse parâmetro gerando grandes erros.
+Os parâmetros $\alpha$ e $\beta$ (com $\gamma = 0$) são mais estáveis, com o erro médio aumentando quando esses valores se encontram acima de 1 para $\alpha$ e 0,5 para $\beta$.
+
 Essa representação permitiu identificar uma região operacional ótima, na qual o filtro $\alpha-\beta-\gamma$ apresenta convergência satisfatória para a maioria das trajetórias orbitais analisadas.
 A região em questão se encontra na região de valores $\gamma$ baixos, possuindo os menores erros entre os valores preditos e os reais.
 A partir dos valores obtidos, é possível verificar a região com menor erro RMS para cada elemento. Os valores para azimute foram de $\alpha = 0{,}9333$, $\beta = 0{,}0333$, e $\gamma = 0$, enquanto os valores para a elevação foram $\alpha = 0{,}9333$, $\beta = 0{,}2$, e $\gamma = 0$.
@@ -89,7 +97,7 @@ Quando o algoritmo repete os mesmos parâmetros de filtro um determinado número
 
 Os valores obtidos continham 16 casas decimais, porém, nesse nível de precisão, erros de arredondamento em ponto flutuante acabam interferindo no resultado. Além disso, os parãmetros do filtro serão arredondados para baixo a fim de evitar instabilidades no sistema.
 Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}937$, $\beta = 0{,}298$, e $\gamma = 0.120$ para o azimute, e $\alpha = 1{,}071$, $\beta = 0{,}253$, e $\gamma = 0.122$ para a elevação.
-É importante ressaltar que o $\alpha$ para a elevação está selecionado como sendo maior que 1. Esse valor não é usual, já que india uma estimação de predição que estima um valor maior que a da amplitude do erro. Porém, como o algoritmo convergiu a este valor, os parâmetros embarcados serão os indicados anteriormente.
+É importante ressaltar que o $\alpha$ para a elevação está selecionado como sendo maior que 1. Esse valor não é usual, já que indica uma estimação de predição que estima um valor maior que a da amplitude do erro. Porém, como o algoritmo convergiu a este valor, os parâmetros embarcados serão os indicados anteriormente.
 
 \begin{figure*}[t!]
         \subfloat[Passagem com pequena variação no azimute e na elevação]{%
@@ -114,16 +122,18 @@ Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos 
 \end{figure*}
 
 Com os testes exemplificados nas figuras \ref{subfig:passagem_baixa}, \ref{subfig:passagem_alta}, \ref{subfig:passagem_dupla} e \ref{subfig:passagem_zenite}, foi possível observar algumas características do fitro ao sistema.
+Os gráficos gerados indicam as movimentações de passagens diversas de satélites em função do tempo. O eixo das abscissas representa o período de tempo decorrido desde a recepção do primeiro dado, enquanto o eixo das ordenadas indica o ângulo em graus que os mecanismos de azimute e elevação se encontram.
+O ângulo de zero graus para o azimute possui como referência o Norte geográfico, enquanto para a elevação, o ângulo zero equivale a uma linha horizontal ao solo.
 Tanto em passagens de baixa elevação (abaixo de 60 graus, Figura \ref{subfig:passagem_baixa}) e alta (acima de 60 e abaixo de 80 graus, Figura \ref{subfig:passagem_alta}), o sistema demonstrou uma grande estabilidade, mantendo o erro RMS em décimos de graus.
 O filtro também foi testado para dois casos extremos, que seria o rastreio de satélites seguidos (Figura \ref{subfig:passagem_dupla}) e o rastreio próximo do zênite (elevação entre 80 e 90 graus, Figura \ref{subfig:passagem_zenite}).
 
-Para o caso do rastreio de satélites duplos é possível perceber que, na transição entre os alvos que estão sendo rastreados, há uma certa instabilidade no sistema, marcada por grandes sobressinais e um período de oscilação tanto no filtro de azimute quanto no filtro de elevação. Isso mostra que o sitema é subamortecido.
+Para o caso do rastreio de satélites seguidos é possível perceber que, na transição entre os alvos que estão sendo rastreados, há uma certa instabilidade no sistema, marcada por grandes sobressinais e um período de oscilação tanto no filtro de azimute quanto no filtro de elevação. Isso mostra que o sitema é subamortecido.
 O mesmo fenômeno é observado para uma passagem próxima de zênite, na qual o azimute sofre uma variação brusca, fazendo ocorrer uma oscilação quando há uma diminuição na taixa de crescimento do ângulo.
 Uma solução para esse fenômeno seria alterar os parâmetros do filtro, fazendo com que esse tenha uma banda passante menor, aumentando o amortecimento do sistema para altas frequências.
 Outra solução pode ser incluir no algoritmo uma forma de detectar a diferença entre a posição predita e a posição real, reiniciando os parâmetros de predição do filtro quando essa diferença ultrapassar determinado valor.
 
 \section{Eletrônica do Protótipo}\label{sec:eletronica_prototipo}
-Para o controle da eletrônica do mecanismo, foi programado o ESP32 de acordo com a arquitetura escpecificada na Figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (Figura \ref{fig:telas_conectado}) e conectado (Figura \ref{fig:telas_conectado}).
+Para o controle da eletrônica do mecanismo, foi programado o ESP32 de acordo com a arquitetura escpecificada no fluxograma da Figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (Figura \ref{subfig:not_con_erro}) e conectado (Figura \ref{subfig:not_con_ip}).
 A conexão, nesse caso, se refere a uma comunicação da placa do mecanismo com o servidor de controle dos rotores de antena do SatDump.
 Então, caso o ESP32 demonstre estar em uma tela do tipo "sem conexão", isso indica que o sistema conseguiu se conectar ao Wi-Fi e abrir uma porta com um IP local, mas o SatDump não iniciou uma conexão com o aparelho.
 Caso a placa esteja em seu modo "conectado", significa que ela está recebendo as informações do software de rastreio.
@@ -151,7 +161,7 @@ A segunda tela é a encontrada na Figura \ref{subfig:conec_dif_az_el}, que indic
 E a última tela é em relação à telemetria e às seleções internas do algoritmo do sistema, indicado pela Figura \ref{subfig:conec_telemetria}.
 
 Os valores após "V AZ" e "V EL" se referem ao valor do micro passo que o sistema está utilizando em determinado momento. Esse valor equivale à potência de dois pela qual o sistema está subdividindo o passo.
-O passo do motor, definido no capítulo \ref{cap:metod}, é de $\approx 0,9^{\circ}$ ($1,8^{\circ}$ dividido pela relação $2:1$ das polias) e o driver DRV8825, consegue gerar passos de até $\frac{1}{32}$ do passo total.
+O passo do mecanismo é de $\approx 0,9^{\circ}$, dado pelo passo do motor de $1,8^{\circ}$ dividido pela relação $2:1$ das polias, e o driver DRV8825 consegue gerar passos de até $\frac{1}{32}$ do passo total.
 Como $32 = 2^5$, a indicação na tela seria de valor "5". De mesmo modo, um passo inteiro seria indicado pelo número "0" ($2^0 = 1$). Os demais valores $N$ indicados na tela equivalem a um fator de divisão de $2^N$ no passo.
 Na segunda linha da última tela, há uma indicação de "RX" e "TX", cujos valores seguintes indicam o número de bytes recebidos e enviados, respectivamente, pelo sistema embarcado para o SatDump.
 As telas alternam entre si a cada \SI{5}{\second} e têm suas informações atualizadas a cada \SI{250}{\milli\second}
@@ -195,10 +205,11 @@ Esse simulador tem o intuito de simular de forma fidedigna a interação entre o
 O software foi utilizado para simular o protótipo. Para isso, a ferramenta de nome onshape-to-robot \cite{onshapetorobot2020} foi aplicada para auxiliar à tradução do modelo CAD desenvolvido para o modelo na plataforma.
 Após a conversão, o resultado foi um modelo capaz de ser simulado fisicamente no MuJoCo, conforme visto na Figura \ref{fig:modelo_mujoco}.
 
-Com o modelo do projeto convertido, é possível utilizar a biblioteca do MuJoCo para Python a fim de controlar os graus de liberdade do modelo (sendo esses, azimute e elevação).
+Com o modelo do projeto convertido para um formato lido pelo simulador, é possível utilizar a biblioteca do MuJoCo para Python a fim de controlar os graus de liberdade do modelo (sendo esses, azimute e elevação).
 Esse simulador possui uma conexão com o software de rastreio SatDump, recebendo os dados de posição e inserindo-os ao filtro $\alpha-\beta-\gamma$.
 O filtro foi diretamente adaptado do programa escrito em C do ESP32 para o Python e seu resultado foi enviado ao MuJoCo.
 A posição predita pelo filtro é enviada ao simulador, que representa a posição do sistema a cada determinado momento.
+
 A fim de verificar o funcionamento do filtro, foi desenvolvido um gráfico que mostra o funcionamento do sistema em tempo real. Esse gráfico possui uma linha indicando a posição do satélite e a posição predita pelo filtro, e pode ser visto na Figura \ref{fig:simul_abg}.
 A linha vermelha indica a posição real do satélite enviada pelo SatDump, enquanto a linha azul indica a posição das juntas do mecanismo simulado. Para a finalidade de otimização do desenho do gráfico, foram mantidos somente os últimos 300 pontos dos dois desenhos.
 Como o filtro gera uma grande quantidade de pontos intermediários, a linha azul possui uma maior densidade de pontos e um comprimento menor. O tempo que compõe o eixo X é a quantidade de segundos desde o início da captura. 

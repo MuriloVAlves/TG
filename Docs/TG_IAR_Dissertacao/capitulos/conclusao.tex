@@ -1,10 +1,10 @@
 \chapter{Conclusão e Trabalhos Futuros}\label{cap:Conclusão}
 
-O presente trabalho apresentou o projeto, a modelagem, a implementação e a validação em simulador de um protótipo automatizado de pedestal bi-axial ortogonal (em azimute e elevação), integrado a uma antena helicoidal para o rastreio automático de satélites em órbita terrestre baixa (LEO).
+O presente trabalho apresentou o projeto, a modelagem, a implementação e a simulação de um protótipo automatizado de pedestal bi-axial ortogonal (em azimute e elevação), integrado a uma antena helicoidal para o rastreio automático de satélites em órbita terrestre baixa (LEO).
 
 No tópico da modelagem cinemática e estrutural (Subseções \ref{sec:ground_tracking} e \ref{sec:modelagem_pedestal}), a cinemática direta do mecanismo foi completamente formulada e os parâmetros D-H foram levantados. A modelagem do protótipo garante que este irá operar cobrindo a cobertura angular completa do horizonte local ($360^\circ$ em azimute e $90^\circ$ em elevação).
-A estrutura mecânica da antena foi projetada utilizando peças impressas em 3D, resultando em um peso total reduzido, adequado para o controle pelos motores de passo NEMA 17.
-As peças utilizadas foram compradas comercialmente e as peças que compõem o pedestal foram feitas a partir de componentes encontrados em lojas de construção para garantir a fácil produção por usuários comuns.
+A estrutura mecânica da antena foi projetada utilizando peças impressas em 3D, resultando em uma antena leve quando comparada com a carga suportada pelo motor, adequado para o controle pelos motores de passo NEMA 17.
+As peças utilizadas foram compradas comercialmente e as peças que compõem o pedestal foram feitas a partir de componentes encontrados em lojas de materiais de construção para garantir a fácil produção por usuários comuns.
 
 O filtro preditivo $\alpha-\beta-\gamma$ calibrado com 300 passagens reais demonstrou que o método de varredura sistemática obteve uma boa seleção de parâmetros para novas passagens.
 O filtro demonstrou um baixo erro quadrático médio em relação ao valor real e o valor predito.
@@ -17,17 +17,16 @@ O filtro SAW e o SDR utilizados são de baixo custo e podem ser encontrados nos 
 Apesar disso, o sistema não pôde ser testado pelo protótipo não ser finalizado a tempo.
 
 O uso do simulador demonstrou ser um passo útil para a depuração do sistema.
-A partir dele, foi possível validar o funcionamento do filtro $\alpha-\beta-\gamma$ durante um rastreio real, além de testar o sistema embarcado para casos de uso real que demonstraram alguns problemas na implementação do código que deverão ser tratados futuramente.
+A partir dele, foi possível verificar o funcionamento do filtro $\alpha-\beta-\gamma$ durante um rastreio real, além de testar o sistema embarcado para casos de uso real que demonstraram alguns problemas na implementação do código que deverão ser tratados futuramente.
 O processo da simulação demonstrou ser uma ferramenta poderosa para a rápida iteração de algoritmos capazes de diminuir os erros catastróficos aplicados ao protótipo.
 
-Em geral, os objetivos foram plenamente alcançados, comprovando que é possível construir um sistema de alinhamento e rastreio orbital de baixo custo, estruturalmente leve, computacionalmente eficiente e de fácil replicação para uso acadêmico e de radioamadorismo.
+Em geral, os objetivos foram alcançados, comprovando que é possível construir um sistema de alinhamento e rastreio orbital de baixo custo, estruturalmente leve, computacionalmente eficiente e de fácil replicação para uso acadêmico e de radioamadorismo.
 
 \section*{Trabalhos Futuros}
 
 O trabalho atual desenvolveu e validou pontos importantes para a implementação de partes do mecanismo do protótipo, porem, alguns pontos acabaram se mantendo em aberto.
 Os trabalhos futuros de curto prazo serão voltados à completude do protótipo, finalizando os testes físicos e disponibilizando o projeto ao público geral.
 O protótipo deverá ser capaz de realizar uma captura da transmissão de um satélite de forma completamente autônoma, com o software SatDump decodificando o sinal em tempo real.
-Nesse momento, a primeira fase do projeto será considerada concluída.
 
 Após a conclusão do sistema, o projeto poderá seguir para um viés mais voltado para a trajetografia, ou seja, o rastreio da trajetória de objetos.
 Através de uma realimentação do sinal de rádio e algoritmos de rastreio cônico (do inglês, \textit{conical scanning}), o sistema poderá ser capaz de fazer uma captura sem o conhecimento prévio da trajetória do satélite.
@@ -35,10 +34,14 @@ Este sistema, então, poderá ser utilizado para rastreio e determinação de ó
 Como uma via alternativa de pesquisa, o sistema poderá ser responsável pela identificação dos chamados satélites "zumbis", que são satélites defeituosos que continuam navegando e transmitindo sinais de forma indesejada.
 Isso seria de grande utilizade para determinar e catalogar a trajetória de lixos espaciais presentes na órbita terrestre.
 
-Por fim, um trabalho que possa vir a ser aperfeiçoado, mas é esperado que a comunidade acadêmica ou civil o desenvolva organicamente, é o de utilizar o sistema como uma plataforma de rastreio e adaptar outros sensores ao acervo de ferramentas compatíveis com o encaixe da antena.
+Por fim, um trabalho que possa vir a ser aperfeiçoado é o de utilizar o sistema como uma plataforma de rastreio e adaptar outros sensores ao acervo de ferramentas compatíveis com o encaixe da antena.
 Isso permitiria o sistema ser atualizado e otimizado, podendo ser capaz de operar em diversas frequências ao trocar a antena utilizada em determinado momento. Existem satélites com sinais descriptografados e disponíveis para uso civil, porém operando em frequências maiores (ou menores).
-Um exemplo desses casos é a da recepção de sinais de SSTV, que são facilmente recebidos pelo rádio utilizado no projeto, mas é necessário utilizar uma antena que opere na faixa de 437 MHz.
+Um exemplo desses casos é a da recepção de sinais de SSTV (\textit{Slow-Scan Television}, utilizados por radioamadores para transmitir e receber imagens), que são  facilmente recebidos pelo rádio utilizado no projeto, mas é necessário utilizar uma antena que opere na faixa de 437 MHz.
+
+Para frequências mais altas que a antena desenvolvida para o trabalho, existem diversos satélites feitos para missões científicas que operam na Banda S (de \SI{2}{\giga\hertz} a \SI{4}{\giga\hertz}).
+Ao criar uma antena para operar nessa frequência e utilizar um SDR com capacidade para operar nessa banda, entidades científicas de universidades poderiam utilizar o sistema para receber e transmitir dados aos seus satélites.
 Outra vertente um pouco mais ousada poderia ser a insersão de uma câmera para a observação de corpos celestes. Essa aplicação é dita mais ousada porque o sistema atual espera que haja uma grande largura de feixe na antena utilizada para suplantar as imprecisões do motor de passo e da construção simples do mecanismo.
 A aplicação óptica é com certeza factível, mas talvez será necessário adaptar mais partes do sistema caso seja utilizado um sistema com grande ampliação.
+Também seria possível adaptar o pedestal para garantir o apontamento de uma antena destinada a drones, estendendo sua distância de operação da base antes de perder o sinal.
 
-Dessa forma, é possível dizer com segurança que há diversas áreas para a expansão do trabalho atual, sendo possível dizer que a finalização do protótipo atual apenas indicaria o início de uma plataforma confiável para a captura de dados de satélites.
+Em suma, há diversas áreas para a expansão do trabalho atual, sendo possível dizer que a finalização do protótipo atual indicaria o início de uma plataforma confiável para a captura de dados de satélites.

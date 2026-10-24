@@ -13,6 +13,7 @@
   A recepção e filtragem do sinal de radiofrequência foram realizadas por meio de uma antena helicone customizada, aliada a um módulo LNA/filtro SAW e um dispositivo SDR.
   Por fim, o sistema foi testado com o auxílio do software de simulação MuJoCo, criando um modelo digital do protótipo para efetuar experimentos de funcionamento em condições reais de rastreio e troca de alvo.
   Os resultados demonstram a funcionalidade mecânica e eletrônica do protótipo de baixo custo, garantindo cobertura hemisférica completa e suavização satisfatória na estimativa de posições orbitais.
+
   \vspace{\onelineskip}
   \textbf{Palavras-chave}: Rastreio de satélites. Pedestal bi-axial. Cinemática D-H. Filtro $\alpha-\beta-\gamma$. Sistema embarcado. ESP32.
 \end{resumo}
@@ -21,11 +22,12 @@
 \begin{resumo}[Abstract]
  \begin{otherlanguage*}{english}
   The direct kinematics of the mechanism were formulated using Denavit-Hartenberg (D-H) parameters. 
-  To ensure the stability and smoothness of the trajectory in real time with low computational cost, an embedded $\alpha-\beta-\gamma$ predictive filter was implemented, whose smoothing parameters were optimized via systematic search and validated using Jury's stability criterion.
+  To ensure the stability and smoothness of the trajectory in real time with low computational cost, an embedded $\alpha-\beta-\gamma$ predictive filter was implemented, whose smoothing parameters were optimized via systematic search and validated using Jury' s stability criterion.
   The hardware and control architecture was built around a dual-core ESP32 microcontroller running the FreeRTOS operating system, segregating the TCP communication and LCD interface tasks from the filter control loop, which drives the NEMA 17 stepper motors via DRV8825 drivers.
   The radio frequency signal was received and filtered using a custom helicon antenna, combined with an LNA/SAW filter module and an SDR device.
   Finally, the system was tested using MuJoCo simulation software, creating a digital model of the prototype to conduct operational experiments under real-world conditions of tracking and target switching.
   The results demonstrate the mechanical and electronic functionality of the low-cost prototype, ensuring complete hemispheric coverage and satisfactory smoothing in the estimation of orbital positions.
+
   \vspace{\onelineskip}
   \textbf{Keywords}: Satellite tracking. Bi-axial pedestal. D-H kinematics. $\alpha-\beta-\gamma$ filter. Embedded system. ESP32.
  \end{otherlanguage*}

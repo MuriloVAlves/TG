@@ -4,14 +4,28 @@
 
 O objetivo desse trabalho é desenvolver o protótipo de um sistema de alinhamento automático utilizando uma antena antena helicoidal impressa em impressora 3D.
 Esse protótipo contará com um filtro preditivo e um sistema motorizado para o apontamento da antena na direção correta do satélite.
-O foco do trabalho é em criar um protótipo que seja o mais versátil possível, possibilitando que usuários tenham mais acesso a equipamentos de rastreio automático e possam vir a modificar o projeto de acordo com suas necessidades.
+O foco do trabalho é em criar um modelo de baixo custo, utilizando de \textit{hardware} acessível e \textit{software} de código aberto, com o intuito de reduzir o preço para a criação de estações de solo e receber sinais de satélites.
+
+Esses fatores permitirão que entidades acadêmicas repliquem o trabalho e consigam receber a telemetria de diversos satélites como satélites meteorológicos, científicos, ou educacionais sem nenhuma mudança ao projeto.
+Como o sistema desenvolvido será disponibilizado por completo ao público geral, os usuários poderão modificar peças e aprimorar o código para adaptar o mecanismo a suas determinadas necessidades.
+
+Alguns exemplos de modificações que poderão ser feitas ao projeto incluem desenvolver antenas para receber sinais de satélite em outras frequências, alterar o sistema de controle para malha fechada para melhorar sua precisão, programar outro microcontrolador para permitir executar o código de rastreio de forma embarcada, reaproveitar o sistema para a utilização em drones e outros veículos não tripulados, receber sinais de satélites de monitoramento climático para desenvolver estudos no campo das ciências ambientais.
+Assim, esse projeto tem o potencial de ser utilizado como uma plataforma para fomentar o desenvolvimento de novas tecnologias em campos como telecomunicações, ecologia, e robótica.
 
 \section{Objetivos Especificos}\label{sec:esp}
 Apesar do objetivo geral ser o de criar uma plataforma versátil e acessível, um projeto nunca conseguirá ser capaz de se adaptar a todas as condições de rastreio existentes.
-Entretanto, é possível selecionar algumas características de \textit{design} para permitir que este sistema consiga abranger a maior quantidade de casos.
+Entretanto, é possível selecionar algumas características de \textit{design} para permitir que este sistema consiga abranger a maior quantidade de casos de uso sem nenhuma modificação ao projeto principal.
+
 Para isso, o sistema focará em rastrear satélites de órbita LEO, já que as demais órbitas são mais lentas e o sistema conseguirá se adaptar de acordo.
 Outra característica que será restringida é a do sistema possuir uma antena helicoidal desenvolvida para a frequência de \SI{1,7}{\giga\hertz}, já que essa banda é facilmente atingível pelos SDR mais comumente utilizados.
-Desta forma, para atingir esses requisitos, o presente trabalho irá tratar como requisitos os pontos elucidados nas subseções deste capítulo.
+Esses fatores principais permitirão aos usuários conseguirem efetuar captura de telemetria e dados de uma faixa específica de satélites, que são satélites de monitoramento meteorológico, capazes de enviar imagens da Terra em diversos espectros de frequência (como infravermelho, ultravioleta, e luz visível).
+
+A escolha desse tipo de satélite permitirá duas áreas principais se aproveitarem do projeto.
+A primeira é a da área das ciências ambientais de climatologia e oceanografia, que poderá utilizar os dados para conduzir estudos em formações de nuvens, movimentos das correntes oceânicas, entre outros.
+A segunda área é a das engenharias, envolvendo telecomunicações e robótica, pois a partir dos dados recebidos, os usuários poderão ter a oportunidade de decodificar os sinais recebidos e modificar o protótipo para melhorar ainda mais a aquisição dos dados de rastreio.
+
+Assim, a seleção dos satélites meteorológicos foi pensada para englobar a maior quantidade de usos do sistema dentro das limitações de frequência de operação e órbita selecionados.
+As subseções deste capítulo irão entrar em mais detalhes de como cada parte do sistema será desenvolvida com esta mesma metodologia em mente: de restringir o projeto para que ele seja funcional nas condições que o projeto propõe operar, mas criar uma base sólida para que o sistema seja capaz de ser usado para outros propósitos com pouca ou nenhuma modificação ao \textit{design} inicial.
 
 \subsection{Modelagem e Prototipagem}
 A fim de obter êxito no rastreio do sinal enviado pelos satélites, o sistema deverá contar com um movimento irrestrito em azimute e elevação durante uma passagem completa.
@@ -21,12 +35,12 @@ Isso permitirá que o sistema seja capaz de efetuar rastreio em qualquer região
 
 \subsection{Sistema de Controle}
 Após a modelagem do sistema, será necessário calcular a resposta do sistema a estímulos e estabilizar o controle do mecanismo.
-O sistema de controle utilizado será demalha aberta, utilizando motores de passo para realizar o controle do mecanismo do sistema.
+O sistema de controle utilizado será de malha aberta, utilizando motores de passo para realizar o controle do mecanismo do sistema.
 O sistema de controle deve ser estável e responsivo para acompanhar a trajetória do veículo selecionado.
 Além disso, será utilizado um filtro $\alpha-\beta-\gamma$ para permitir um rastreio suave durante toda a passagem do satélite.
 
 \subsection{Características Mecâncias}
-O mecanismo deverá possuir duas características principais: velocidade e precisão.
+O mecanismo deverá possuir duas características principais: alta velocidade em suas respostas e alta precisão.
 O primeiro fator está relacionado com a resposta do sistema à tarefa. Uma passagem de satélites
 de órbita baixa é marcada por momentos de aceleração e desaceleração. O protótipo deverá ser capaz de
 efetuar o apontamento da antena em todas as direções de uma semiesfera e ser sensível o suficiente para ter a precisão de
@@ -39,7 +53,7 @@ sistema irá receber ângulos de azimute e elevação para o apontamento da ante
 receber e enviar parâmetros para realizar a comunicação com aplicativos e programas.
 
 \subsection{Criação de um Modelo Simulado}
-Como forma de testar a eficácia do sistema, será utilizado um modelo do pedestal desenvolvido em um simulador para garantir que o sistema irá funcionar corretamente.
-Esse simulador servirá para garantir que o sistema irá operar de acordo com o esperado em sua operação convencional.
-Este modelo virtual servirá como uma plataforma de testes, capaz de simular os algoritmos de rastreio e troca de alvos para garantir que o software embarcado irá funcionar corretamente.
+Como forma de verificar o funcionamento do sistema, será utilizado um modelo do pedestal desenvolvido em um simulador para garantir que o sistema irá funcionar corretamente.
+Esse simulador servirá para garantir que o sistema irá operar de acordo com o esperado em sua operação convencional, mantendo o apontamento da antena em direção durante todos os momentos de uma passagem de satélite real, sem entrar em instabilidades ou perder o rastreio.
+Este modelo virtual servirá como uma plataforma de testes, capaz de simular os algoritmos de rastreio e troca de alvos para garantir que o \textit{software} embarcado irá funcionar corretamente.
 Deste modo, será possível garantir uma iteração rápida para simular, depurar e corrigir problemas encontrados no protótipo físico antes do teste no mundo real.
