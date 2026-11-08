@@ -2,7 +2,7 @@
 
 O presente trabalho apresentou o projeto, a modelagem, a implementação e a simulação de um protótipo automatizado de pedestal bi-axial ortogonal (em azimute e elevação), integrado a uma antena helicoidal para o rastreio automático de satélites em órbita terrestre baixa (LEO).
 
-No tópico da modelagem cinemática e estrutural (Subseções \ref{sec:ground_tracking} e \ref{sec:modelagem_pedestal}), a cinemática direta do mecanismo foi completamente formulada e os parâmetros D-H foram levantados. A modelagem do protótipo garante que este irá operar cobrindo a cobertura angular completa do horizonte local ($360^\circ$ em azimute e $90^\circ$ em elevação).
+No tópico da modelagem cinemática e estrutural (Subseções \ref{sec:ground_tracking} e \ref{sec:modelagem_pedestal}), a cinemática direta do mecanismo foi completamente formulada e os parâmetros D-H foram levantados. A modelagem do protótipo garante que este opera cobrindo a cobertura angular completa do horizonte local ($360^\circ$ em azimute e $90^\circ$ em elevação).
 A estrutura mecânica da antena foi projetada utilizando peças impressas em 3D, resultando em uma antena leve quando comparada com a carga suportada pelo motor, adequado para o controle pelos motores de passo NEMA 17.
 As peças utilizadas foram compradas comercialmente e as peças que compõem o pedestal foram feitas a partir de componentes encontrados em lojas de materiais de construção para garantir a fácil produção por usuários comuns.
 
@@ -32,7 +32,7 @@ Após a conclusão do sistema, o projeto poderá seguir para um viés mais volta
 Através de uma realimentação do sinal de rádio e algoritmos de rastreio cônico (do inglês, \textit{conical scanning}), o sistema poderá ser capaz de fazer uma captura sem o conhecimento prévio da trajetória do satélite.
 Este sistema, então, poderá ser utilizado para rastreio e determinação de órbita de satélites, utilizando a trajetória capturada para determinar o satélite observado.
 Como uma via alternativa de pesquisa, o sistema poderá ser responsável pela identificação dos chamados satélites "zumbis", que são satélites defeituosos que continuam navegando e transmitindo sinais de forma indesejada.
-Isso seria de grande utilizade para determinar e catalogar a trajetória de lixos espaciais presentes na órbita terrestre.
+Isso seria de grande utilidade para determinar e catalogar a trajetória de lixos espaciais presentes na órbita terrestre.
 
 Por fim, um trabalho que possa vir a ser aperfeiçoado é o de utilizar o sistema como uma plataforma de rastreio e adaptar outros sensores ao acervo de ferramentas compatíveis com o encaixe da antena.
 Isso permitiria o sistema ser atualizado e otimizado, podendo ser capaz de operar em diversas frequências ao trocar a antena utilizada em determinado momento. Existem satélites com sinais descriptografados e disponíveis para uso civil, porém operando em frequências maiores (ou menores).
@@ -40,7 +40,7 @@ Um exemplo desses casos é a da recepção de sinais de SSTV (\textit{Slow-Scan 
 
 Para frequências mais altas que a antena desenvolvida para o trabalho, existem diversos satélites feitos para missões científicas que operam na Banda S (de \SI{2}{\giga\hertz} a \SI{4}{\giga\hertz}).
 Ao criar uma antena para operar nessa frequência e utilizar um SDR com capacidade para operar nessa banda, entidades científicas de universidades poderiam utilizar o sistema para receber e transmitir dados aos seus satélites.
-Outra vertente um pouco mais ousada poderia ser a insersão de uma câmera para a observação de corpos celestes. Essa aplicação é dita mais ousada porque o sistema atual espera que haja uma grande largura de feixe na antena utilizada para suplantar as imprecisões do motor de passo e da construção simples do mecanismo.
+Outra vertente um pouco mais ousada poderia ser a inserção de uma câmera para a observação de corpos celestes. Essa aplicação é dita mais ousada porque o sistema atual espera que haja uma grande largura de feixe na antena utilizada para suplantar as imprecisões do motor de passo e da construção simples do mecanismo.
 A aplicação óptica é com certeza factível, mas talvez será necessário adaptar mais partes do sistema caso seja utilizado um sistema com grande ampliação.
 Também seria possível adaptar o pedestal para garantir o apontamento de uma antena destinada a drones, estendendo sua distância de operação da base antes de perder o sinal.
 
