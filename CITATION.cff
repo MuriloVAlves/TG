@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+message: "Se você utilizar este trabalho ou software em sua pesquisa, por favor cite-o como abaixo."
+authors:
+  - family-names: "Alves"
+    given-names: "Murilo V."
+title: "TG: Trabalho de Graduação em IAR pela UFABC"
+date-released: 2026-11-08
+url: "https://github.com/MuriloVAlves/TG"

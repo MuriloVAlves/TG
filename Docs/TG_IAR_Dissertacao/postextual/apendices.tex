@@ -15,13 +15,48 @@
 % ----------------------------------------------------------
 
 Para exemplificar o funcionamento do protótipo, foi desenvolvido um modelo simulado no software MuJoCo (discutido no capítulo \ref{sec:MuJoCo}).
-O primeiro vídeo pode ser encontrado na referência \cite{youtube_umbra} e contém uma demonstração do sistema rastreando o satélite Umbra-07.
+O primeiro vídeo pode ser encontrado na referência \cite{youtube_umbra} e na Figura \ref{fig:QR_Umbra} e contém uma demonstração do sistema rastreando o satélite Umbra-07.
 
-% ----------------------------------------------------------
-\chapter{Vídeos demonstrando a troca de alvos pelo sistema simulado no software MuJoCo}\label{cap:apendice_troca_sat}
-% ----------------------------------------------------------
-Para exemplificar o funcionamento do protótipo, foi desenvolvido um modelo simulado no software MuJoCo (discutido no capítulo \ref{sec:MuJoCo}).
-O segundo vídeo é referente ao filtro lidando com troca de satélites alvo, presente na referência \cite{youtube_troca_satelite}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figs/QRCODE_passagem_umbra.png}
+    \caption{Código QR do vídeo do sistema rastreando o satélite Umbra-07}
+    \legend{Fonte: Autor(2026)}
+    \label{fig:QR_Umbra}
+\end{figure}
+
+Em 3:55, é possível observar o aumento da velocidade da passagem quando o satélite se aproxima de elevações mais altas.
+O Umbra-07 atinge a sua maior elevação em 5:02, quando inicia a reduzir a elevação em relação à antena.
+A passagem é finalizada em 10:57, no qual a elevação do satélite chega a zero e o sistema retorna à sua posição de origem.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figs/QRCODE_troca_satelites.png}
+    \caption{Código QR do vídeo do sistema rastreando o satélite Umbra-07}
+    \legend{Fonte: Autor(2026)}
+    \label{fig:QR_Troca_Sats}
+\end{figure}
+
+O segundo vídeo é referente ao filtro lidando com troca de satélites alvo, presente na referência \cite{youtube_troca_satelite} e no Código QR da Figura \ref{fig:QR_Troca_Sats}.
+O vídeo se inicia com o usuário selecionando o satélite COSMOS 2561 a ser rastreado utilizando o SatDump.
+Em 0:06, o sistema é acionado e a antena é alinhada com o satélite, aproveitando a primera volta do sistema.
+Em 0:34, o satélite KUPIER-00183 é selecionado e a antena inicia o novo rastreio.
+O envio do rastreio é desabilitado em 1:20, e é possível perceber o sistema divergindo da posição real.
+
+Em 1:51, o sistema para de rastrear o ONEWEB-0399 e começa a rastrear o satélite YAOGAN-30 05C, sendo possível verificar o sistema oscilando para se corrigir à nova órbita.
+O sistema se estabiliza por volta de 2:12, conseguindo rastrear a nova trajetória.
+Em 2:46, o algoritmo verifica que não está recebendo mais informações do satélite e retorna à sua posição inicial, mas logo inicia o rastreio do KSM1-C.
+A troca do rastreio do KSM1-C para o 2024-205G em 3:05 provoca uma outra oscilação no sistema enquanto o filtro captura as informações da nova órbita.
+
+A alteração do ONEWEB-0095 para o CE-SAT-IE em 3:40 demonstra que o filtro não sofre muitas oscilações quando as trajetórias são próximas.
+Em 4:55, há uma demonstração do filtro quando este recebe duas trajetórias próximas, mas com direções distintas, provocando oscilações em azimute e elevação.
+Em 5:21, o sistema passa por um \textit{wrap} do azimute, quando o algoritmo precisa lidar com uma transição de $360^{\circ}$ para $0^{\circ}$ durante a passagem do KSM1-C.
+
+É possível ver o sistema divergindo quando desengajado durante o rastreio do ASRTU-1 (AO-123) até o momento que este entra em sua rotina para retornar à volta inicial simulando o desenrolar dos fios do sistema em 6:57.
+O satélite STAR ONE C2 é rastreado em 7:00, sendo este um satélite geoestacionário.
+Em 8:28, novamente o \textit{wrap} do azimute é demonstrado ao desengajar um sistema que estava próximo de $0^{\circ}$ (METOP-C) e rastreando um satélite próximo de $360^{\circ}$ (SCD 2).
+Em 8:45, é possível perceber o que ocorre quando há uma interrupção no rastreio em uma região onde a trajetória sofre grande aceleração (por estar próxima ao zênite), mostrando que o sistem diverge rapidamente da rota original, tanto em azimute quanto em elevação.
+O sistema realiza mais um retorno à posição inicial em 9:39 e permanece por mais tempo sem receber dados, posicionado com valores de azimute e elevação igual a zero e em 10:08 o sistema é completamente desligado das informações do aplicativo até o vídeo terminar.
 
 \end{apendicesenv}
 % ---

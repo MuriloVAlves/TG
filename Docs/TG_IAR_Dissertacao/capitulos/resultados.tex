@@ -203,25 +203,25 @@ As últimas amostras do filtro demonstram que o sistema conseguiu estabelecer o 
     \label{fig:simul_abg}
 \end{figure}
 
-O resultado da simulação pode ser visto nos Apêndices \ref{cap:apendice_umbra} e \ref{cap:apendice_troca_sat}.
+O resultado da simulação pode ser visto no Apêndice \ref{cap:apendice_umbra}.
 Foi possível perceber que o sistema se comportou de maneira esperada, se mantendo sob controle durante todo o rastreio (demonstrado na totalidade do vídeo do Apêndice \ref{cap:apendice_umbra}).
 O filtro também conseguiu se estabilizar após uma troca de satélite alvo, independentemente de sua posição, órbita, ou velocidade.
 
 Entretanto, alguns comportamentos inesperados ocorreram com a simulação do sistema.
 O primeiro e mais crítico é o que, na rotina de retorno à posição inicial, o sistema acaba acelerando demasiadamente.
 No sistema físico, esse comportamento poderá causar um grande estresse no sistema, causando dano estrutural ao protótipo.
-O retorno à posição inicial ocorre sempre que o sistema para de receber informação por um período maior que 30 segundos (6:55 do Apêndice \ref{cap:apendice_troca_sat}) ou no final de um rastreio (10:56 do Apêndice \ref{cap:apendice_troca_sat}), permitindo o sistema desenrolar os cabos e se preparar para uma nova captura.
+O retorno à posição inicial ocorre sempre que o sistema para de receber informação por um período maior que 30 segundos (6:55 do segundo vídeo no Apêndice \ref{cap:apendice_umbra}) ou no final de um rastreio (10:56 do segundo vídeo no Apêndice \ref{cap:apendice_umbra}), permitindo o sistema desenrolar os cabos e se preparar para uma nova captura.
 Uma solução que poderá ser implementada ao sistema final é possuir uma velocidade máxima dos motores para se movimentar entre alvos.
 Isso garantirá que o sistema não virá a sofrer danos estruturais durante sua operação.
 
 Uma segunda questão que acabou auxiliando o sistema simulado é que, como visto nas figuras \ref{fig:passagens_diversas} e \ref{subfig:passagem_zenite}, o filtro possui grandes sobressinais quando o sistema muda seu alvo abruptamente.
-Entretanto, como visto principalmente no vídeo de troca de alvos do Apêndice \ref{cap:apendice_troca_sat}, a inércia do sistema impede o desalinhamento da antena, fazendo com que o sobressinal não seja realmente aplicado ao modelo.
+Entretanto, como visto principalmente no vídeo de troca de alvos do Apêndice \ref{cap:apendice_umbra}, a inércia do sistema impede o desalinhamento da antena, fazendo com que o sobressinal não seja realmente aplicado ao modelo.
 Apesar desse efeito, a oscilação ainda se mantém, fazendo com que o sistema divirja da posição desejada (como pode ser visto aos 1:55, 5:18, e 5:52 minutos do vídeo). Após um determinado período de tempo, o sistema retorna a se estabilizar e seguir a posição do satélite.
 Esse problema parece ser causado pela característica do sistema de tentar manter a predição anterior. Então, até todos os fatores se corrigirem para a nova trajetória, ocorre uma oscilação claramente visível na posição da antena.
 A solução para esse caso pode ser uma forma do sistema perceber que há uma grande diferença de trajetórias e reiniciar os coeficientes do filtro para que esse nunca se torne oscilante.
 
 O terceiro ponto mais notável que exigirá uma atenção na implementação é a questão de que, exatamente pela oscilação gerada na troca busca de trajetória, o sistema acaba se desestabilizando quando este recebe uma nova trajetória e logo após para de receber novas informações.
-Neste caso, o sistema parece entrar em um estado de instabilidade e acaba ficando completamente incontrolável, efetuando diversas rotações até entrar no estado de retorno à posição inicial ou receber novas informações de posição sobre algum alvo (exemplificada aos minutos 6:24 do Apêndice \ref{cap:apendice_troca_sat}).
+Neste caso, o sistema parece entrar em um estado de instabilidade e acaba ficando completamente incontrolável, efetuando diversas rotações até entrar no estado de retorno à posição inicial ou receber novas informações de posição sobre algum alvo (exemplificada aos minutos 6:24 do segundo vídeo no Apêndice \ref{cap:apendice_umbra}).
 Em ambos casos, o sistema retorna completamente à estabilidade ao reiniciar os parâmetros do filtro.
 Uma alternativa para esse caso seria a de verificar a diferença de posição exigida pelo filtro. Caso essa seja maior que um determinado delta, o sistema entra na rotina de retorno a zero.
 É importante salientar que um sistema de verificação já é implementado para a elevação, que não pode atingir valores muito negativos nem muito acima de 90 graus, causando a limpeza dos parâmetros do filtro.
