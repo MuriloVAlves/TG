@@ -138,19 +138,41 @@ A região de campo próximo (\textit{near-field}) é definida pela Equação \re
     R_{ff} > 2\frac{D^2}{\lambda} \label{eq:far_field}
 \end{align}
 Em seguida, há a disância da antena onde se encontra a região de Fresnel (Equação \ref{eq:region_Fresnel}), onde a distribuição angular do campo ainda varia com a distância.
-Por último, há a região do campo distante (\textit{far-field}), em que o campo angular da antena independe da distância da antena.
+Por último, há a região do campo distante (\textit{far-field} ou região de Fraunhofer), em que o campo angular da antena independe da distância da antena.
 Para a antena helicoidal, a região de campo próximo é de $R_{nf} \leq 10,26\text{ cm}$, e a região de campo distante é de $R_{ff} > 32,38\text{ cm}$.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.5\textwidth]{figs/fig_setup_antena.jpeg}
+    \includegraphics[width=0.5\textwidth]{figs/setup_antena.jpeg}
     \caption{Configuração do experimento feito para o levantamento do diagrama de radiação.}
     \legend{Fonte: Autor(2026)}
     \label{fig:setup_antena}
 \end{figure}
 
-O diagrama do padrão de radiação deve ser levantado a partir de uma distância maior que o campo distante da antena.
-Esse diagrama pode ser feito de forma experimental com a antena de interesse e outra antena direcional. Para o experimento realizado com a antena do trabalho, foi utilizada uma antena Yagi projetada em uma placa de circuito impresso.
+O diagrama do padrão de radiação deve ser levantado a partir de uma distância maior que o campo distante da antena de interesse a partir de outra antena operando na mesma frequência.
+Esse diagrama pode ser feito de forma experimental com a antena de interesse e outra antena direcional. Para o experimento realizado com a antena do trabalho, foi utilizada uma antena Yagi projetada em uma placa de circuito impresso (como visto na Figura \ref{fig:setup_antena}).
+Foi considerado que a antena helicone possui um padrão simétrico em relação à sua direção axial, como corroborado por outras bibliografias como Balanis \citeyear{balanis2016} e Vallado \citeyear{vallado2013}.
+Portanto, razoável considerar que o sinal levantado no plano polar da antena é uma boa representação do sistema para a aplicação desejada.
+
+Para o experimento, a antena de teste é utilizada como transmissora ligada ao gerador e a Yagi faz o papel de receptora, embora essa ordem possa ser alterada sem comprometimentos ao teste.
+Um gerador de RF configurado para \SI{1,7}{\giga\hertz} é conectado à antena transmissora e sua potência é mantida constante durante o teste. Então, a antena auxiliar é deslocada ao redor da antena em passos angulares pequenos (a cada $5^{\circ}$) para obter uma boa resolução do padrão de radiação da antena.
+A antena receptora é ligada a um analisador de espectro (que calcula a potência recebida para cada frequência) e, para cada novo ângulo, é feita a medida da potência na frequência do gerador.
+Por fim, o sinal é normalizado para retirar perdas no enlace de transmissão, nos cabos, e nos conectores. O resultado é uma série de potências e ângulos que relacionam a distribuição angular do sinal da antena.
+
+A partir do padrão de radiação da antena, é possível determinar algumas regiões da geometria que são importantes para a transmissão e recepção de sinal.
+A primeira é o que é chamado de lóbulo, existindo o lóbulo principal e os secundários. Essas seções são definidas como porções do padrão de radiação limitadas por regiões de relativamente baixa intensidade de radiação \cite{balanis2016}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figs/helical_antenna_rad_pttrn.png}
+    \caption{Diagrama de radiação 3D de uma antena helicoidal funcionando no modo axial.}
+    \legend{Fonte: COMSOL}
+    \label{fig:helical_rad_pttrn}
+\end{figure}
+O lóbulo principal é definido por conter a região com maior concentração de energia e maior ganho. Os demais lóbulos são definidos como secundários por não possuirem um grande ganho igual ao principal, mas ainda estar compreendido por uma região de baixa radiação.
+A Figura \ref{fig:helical_rad_pttrn} é o exêmplo de uma antena helicoidal com plano terra, similar à antena utilizada no projeto. É esperado que o diagrama de radiação se assemelhe ao observado na figura, apesar de ser apenas em duas dimensões.
+
+Uma outra região de interesse é nomeada como o feixe de meia potência, que é a região onde o lóbulo principal consegue irradiar apenas metade da potência máxima normalizada. Na escala logarítmica, essa região equivale ao valor de $-3\text{ dB}$.
+O feixe de meia potência determina a posição angular na qual a antena pode ser utilizada com o apontamento direcionado ao seu ganho ótimo \cite{balanis2016}. Para o trabalho em questão, é necessário manter o satélite rastreado dentro da região do feixe da antena para manter uma boa recepção de sinal.
 
 
 \section{Sistema Embarcado}\label{sec:sistema_embarcado}
