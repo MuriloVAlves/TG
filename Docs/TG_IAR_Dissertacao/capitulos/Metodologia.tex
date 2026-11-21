@@ -67,7 +67,8 @@ O modelo em questão é capaz de operar em frequências de \SI{500}{\kilo\hertz}
 
 Devido à extrema atenuação sofrida pelos sinais emitidos pelos satélites ao se propagarem através da atmosfera até a antena de recepção, foi utilizado um módulo pré-amplificador e filtro Nooelec SAWBird+ GOES.
 O módulo é composto por dois estágios de amplificação de baixo ruído (LNA) em cascata com um filtro de Onda Acústica de Superfície (SAW) intercalado. Esses componentes são responsáveis por tratar, filtrar e amplificar os sinais recebidos pela antena.
-O conjunto apresenta frequência central em aproximadamente \SI{1688}{\mega\hertz}, com banda passante ajustada para a recepção de \SI{1694,1}{\mega\hertz} e ganho típico de 35 dB, reduzindo interferências de sinais fora da faixa de interesse e compensando as perdas de transmissão.
+O conjunto apresenta frequência central em aproximadamente \SI{1694,1}{\mega\hertz} \cite{nooelec_sawbird_goes}, com banda passante ajustada para \SI{70}{\mega\hertz} e ganho típico de 35 dB, reduzindo interferências de sinais fora da faixa de interesse e compensando as perdas de transmissão.
+A seleção desse filtro ocorreu por suas características de banda, permitindo a recepção de sinais dos satélites GOES, com frequência central de \SI{1694,1}{\mega\hertz} e largura de banda de \SI{1210}{\kilo\hertz} \cite{wmo_oscar_goes_3rd_gen}, até satélites LEO, como os da série Meteor M3 (frequência central de \SI{1700}{\mega\hertz} e banda de \SI{3000}{\kilo\hertz}) \cite{wmo_oscar_meteor_m3} e EUMETSAT (frequência central de \SI{1707}{\mega\hertz} e banda de \SI{4500}{\kilo\hertz}) \cite{wmo_oscar_eps}.
 
 Todo o sistema foi montado dentro do cabo da antena, com um cabo extensor USB de \SI{2}{\meter} para realizar a conexão com o computador. O sistema de recepção está representado na Figura \ref{fig:sistema_coms}.
 
@@ -99,10 +100,58 @@ A seleção de uma antena de geometria helicoidal foi feita para garantir uma me
 Uma antena em formato de hélice garante o casamento de polarização correto com a onda incidente, evitando perdas severas de sinal por descasamento de polarização (Polarization Mismatch Loss), comuns em antenas de polarização linear em movimento.
 Quando a circunferência de cada volta da hélice é próxima ao comprimento de onda da frequência central ($\mathbf{C \approx \lambda}$), a antena passa a emitir e receber no modo axial.
 Nesse regime, o feixe de radiação principal fica concentrado na direção do eixo da hélice. O comprimento de onda da onda eletromagnética pode ser calculado utilizando a velocidade da luz no vácuo e a frequência de operação da antena, conforme exemplificado na equação \eqref{eq:calculo_lambda} para os parâmetros usados na antena do projeto.
-\begin{equation}
-    \lambda = \frac{c}{f} = \frac{3 \times 10^8\text{ m/s}}{1,7 \times 10^9\text{ Hz}} \approx 176,4\text{ mm}\label{eq:calculo_lambda}
-\end{equation}
+\begin{align}
+    \lambda = \frac{c}{f} = \frac{3 \times 10^8\text{ m/s}}{1,7 \times 10^9\text{ Hz}} \approx 176,4\text{ mm}\label{eq:calculo_lambda} \\
+    g_{dBi} = 10,25 + 1,22\frac{L}{\lambda} - 0,0726(\frac{L}{\lambda})^2
+\end{align}
 Com o diâmetro da hélice do projeto fixado em torno de $56\text{ mm}$, a circunferência $C = \pi \cdot d = \pi \cdot 56\text{ mm} \approx 175,9\text{ mm}$, o que corresponde ao regime do modo axial da antena.
+A antena produzida possui $7\frac{3}{4}$ voltas, sendo suficiente para caracterizar uma antena helicoidal em operação axial \cite{djordjevic2006optimization}, com seu comprimento total sendo de $16,7\text{ cm}$.
+
+Embora o dimensionamento analítico clássico para antenas helicoidais em modo axial sugira um espaçamento entre espiras de $S = 0,25\lambda$ ($44,1\text{ mm}$ na frequência de operação), a topologia da antena helicone utilizada neste trabalho não é dimensionada de acordo com as características de uma helicoidal teórica.
+Segundo Djordjević \citeyear{djordjevic2006optimization}, o passo angular experimental de antenas helicoidais operando em modo axial tende a possuir um passo angular compreendido em uma faixa entre $3^{\circ}$ e $16^{\circ}$.
+No caso da antena utilizada, o passo em milímetros entre as espiras é de $\rho=25,41\text{ mm}$. Sendo assim, é possível obter o passo angular $\epsilon=\arctan(\frac{\rho}{C})$ \cite{djordjevic2006optimization} de $\approx 8,22\text{ mm}$.
+
+Para verificar a faixa de operação da antena, será utilizado um Analisador de Redes Vetorial (\textit{Vector Network Analyzer} ou VNA), utilizado para caracterizar circuitos de alta frequência.
+Esse equipamento funciona enviando um sinal gerado em diversas frequências e analisa o sinal retornado (ou transmitido) em magnitude e fase. A partir do sinal retornado, o VNA consegue calcular a impedância característica daquele equipamento visto pela linha de transmissão para cada frequência determinada.
+VNAs normalmente possuem entre duas e quatro portas capazes de transmitir sinais gerados. A nomenclatura para denotar o fluxo do sinal entre as portas é dada por $S_{xy}$, onde $x$ indica a porta que gerou o sinal, e $y$ indica a porta onde o sinal foi recebido.
+
+Para a caracterização de uma antena, o sinal de interesse é conhecido como $S_{11}$, ou seja, o sinal que retorna pela porta 1 a partir do sinal enviado da porta 1 \cite{fusco2006}.
+Essa configuração permite verificar a potência que está sendo refletida na carga, sendo que na frequência de ressonância da antena, esta transmite a potência recebida e faz a potência retornada ao VNA ser menor.
+Então, para a caracterização da antena, é utilizada a Equação \ref{eq:return_loss}, que indica a perda de retorno de uma antena.
+É importante ressaltar que o termo pode causar estranheza por sua terminologia causar confusão em relação a seu uso.
+Segundo Bird \citeyear{bird2009}, a perda de retorno mede a eficiência de uma linha de transmissão em conduzir potência a uma carga, ou seja, uma maior perda de retorno indica um melhor casamento de impedância entre a linha e a antena.
+\begin{align}
+    RL_{dB} = 10\log{\frac{Pi}{Pr}} \label{eq:return_loss} \\
+    RL_{dB} = 20\log{\frac{ROE+1}{ROE-1}} \label{eq:return_loss_ROE} \\
+    ROE = \frac{(10^{\frac{RL}{20}})+1}{(10^{\frac{RL}{20}})-1} \label{eq:ROE}
+\end{align}
+Segundo Bird \citeyear{bird2009}, é possível calcular a relação de onda estacionária (ROE, ou \textit{VSWR} em inglês) a partir da Equação \ref{eq:return_loss_ROE}, obtendo a Equação \ref{eq:ROE}.
+Uma $ROE$ de 1,5 seria considerada suficiente para definir a largura de banda da antena \cite{balanis2016} e a perda de retorno é diretamente obtida a partir da medição feita com o VNA com $RL_{dB} = -S_{11}$.
+
+Outro parâmetro importante para a caracterização da antena é seu padrão de radiação.
+Segundo Balanis \citeyear{balanis2016}, o padrão de radiação é definido pela representação gráfica (ou função matemática) das propriedades de irradiação de uma antena em função do espaço.
+Uma antena tem três diferentes regiões de campo \cite{balanis2016}. Normalmente essa região é definida a partir da maior dimensão da antena (representado por $D$). No caso da antena utilizada no trabalho, $D \approx 16,9 \text{ cm}$.
+A região de campo próximo (\textit{near-field}) é definida pela Equação \ref{eq:near_field} e tem a característica de ser o campo mais próximo à antena onde o campo reativo (que não se propaga) se encontra.
+\begin{align}
+    R_{nf} \leq 0,62\sqrt{\frac{D^3}{\lambda}} \label{eq:near_field}\\
+    R_{Fr} \geq 0,62\sqrt{\frac{D^3}{\lambda}} \label{eq:region_Fresnel} \\
+    R_{ff} > 2\frac{D^2}{\lambda} \label{eq:far_field}
+\end{align}
+Em seguida, há a disância da antena onde se encontra a região de Fresnel (Equação \ref{eq:region_Fresnel}), onde a distribuição angular do campo ainda varia com a distância.
+Por último, há a região do campo distante (\textit{far-field}), em que o campo angular da antena independe da distância da antena.
+Para a antena helicoidal, a região de campo próximo é de $R_{nf} \leq 10,26\text{ cm}$, e a região de campo distante é de $R_{ff} > 32,38\text{ cm}$.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figs/fig_setup_antena.jpeg}
+    \caption{Configuração do experimento feito para o levantamento do diagrama de radiação.}
+    \legend{Fonte: Autor(2026)}
+    \label{fig:setup_antena}
+\end{figure}
+
+O diagrama do padrão de radiação deve ser levantado a partir de uma distância maior que o campo distante da antena.
+Esse diagrama pode ser feito de forma experimental com a antena de interesse e outra antena direcional. Para o experimento realizado com a antena do trabalho, foi utilizada uma antena Yagi projetada em uma placa de circuito impresso.
+
 
 \section{Sistema Embarcado}\label{sec:sistema_embarcado}
 Com o intuito de manter o servidor de controle do rotor embarcado no pedestal, foi utilizado um microcontrolador de modelo de desenvolvimento ESP32 WROOM-32, observado no lado esquerdo da Figura \ref{fig:embarcados_pecas}, e com seu manual técnico disponível na referência \cite{espressif2026esp32tech}.

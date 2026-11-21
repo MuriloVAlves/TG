@@ -53,6 +53,12 @@ Somando-se aproximadamente \SI{82}{\gram} de cobre para a fiação, \SI{60}{\gra
 O fio de cobre foi inserido no suporte helicoidal com um comprimento de sobra para ajustes futuros. Além disso, foi mantida uma região de cobre após o conector SMA para corrigir a impedância entre a antena helicoidal, com impedância característica por volta de \SI{140}{\ohm} \cite{balanis2016}, e aproximá-la da impedância na linha do amplificador (de \SI{50}{\ohm}). Isso foi feito aproximando a primeira espira da antena ao plano terra, fazendo com que a componente capacitiva se torne mais presente na impedância da antena, aproximando a impedância vista no conector de \SI{50}{\ohm}.
 O casamento de impedância é importante para permitir a máxima transferência de potência do sinal recebido pela antena \cite{balanis2016}.
 
+\section{Caracterização da Antena e do Filtro}\label{sec:carac_antena}
+
+Após a montagem da antena feita na Seção \r{sec:estrutura}, é de grande importância realizar a caracterização da antena para garantir que ela está funcionando corretamente.
+Para isso, foram utilizados dois equipamentos para a determinação: um Anali
+
+
 \section{Levantamento dos Parâmetros do Filtro $\alpha$-$\beta$-$\gamma$}
 
 Conforme apresentado na Seção \ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO) utilizando um servidor ligado ao aplicativo SatDump.
@@ -61,7 +67,7 @@ As constelações utilizadas foram a Meteor (satélites meteorológicos), OneWeb
 
 Após a seleção dos satélites de interesse, foi feito um programa utilizando a linguagem de programação Python capaz de simular a conexão entre o SatDump e o rotor, recebendo e enviando dados para o programa.
 Esse script recebia os parâmetros e os salvava em um arquivo de extensão ".txt" para uma pasta com as demais capturas. O programa foi executado durante diferentes horários ao longo de dois meses, acumulando um total de 330 amostras.
-Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $0,1$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
+Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $frac{1}{30}$ avos para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
 O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido (podendo ser conferidas nas Figuras \ref{fig:param_az} e \ref{fig:param_el}).
 Essas superfícies foram obtidas mapeando os resultados dos erros em uma região tridimensional, com $\alpha$ no eixo Y, $\beta$ no eixo X, e $\gamma$ no eixo Z. Os pontos com um menor erro RMS são representados com uma cor mais escura, enquanto os erros maiores possuem uma coloração mais clara.
