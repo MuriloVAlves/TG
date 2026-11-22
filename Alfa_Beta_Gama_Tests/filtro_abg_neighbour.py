@@ -7,7 +7,7 @@ from numba import njit
 import ast
 import gc
 
-STEP = 0.1
+STEP = 0.01
 RETRY_TRIES = 15
 
 print("Carregando dados de azimute...")
@@ -152,7 +152,7 @@ for file_path in track_dir_path.iterdir():
         el_data.append(el)
 
 
-print("Procurando melhores valores para o Azimute...")
+print("Procurando melhores valores para o Azimute..."+" "*50)
 searching = True
 retry = 0
 alpha_min, beta_min, gamma_min = ast.literal_eval(az_min_key)
@@ -191,7 +191,7 @@ while searching:
 
 alpha_min_az, beta_min_az, gamma_min_az = alpha_min, beta_min, gamma_min
 
-print("Procurando melhores valores para a Elevação...")
+print("Procurando melhores valores para a Elevação..."+" "*50)
 searching = True
 retry = 0
 alpha_min, beta_min, gamma_min = ast.literal_eval(el_min_key)

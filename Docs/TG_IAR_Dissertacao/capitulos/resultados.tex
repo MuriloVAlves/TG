@@ -87,7 +87,7 @@ Em trabalhos futuros, é necessário revisitar o teste para o parâmetro $S_{11}
     \label{fig:diag_rad_antena}
 \end{figure}
 
-Para o experimento do padrão de radiação, o experimento foi realizado de acordo com o Apêndice \ref{cap:apendice_teste_diagrama radiação}.
+Para o experimento do padrão de radiação, o experimento foi realizado conforme o Apêndice \ref{cap:apendice_teste_diagrama radiação}.
 Ao normalizar os dados da Tabela \ref{tab:dados_diag_rad} em relação aos seus valores para $0^{\circ}$, é possível obter o diagrama de radiação para a antena, como visto na Figura \ref{fig:diag_rad_antena}.
 O feixe de meia potência para a antena é de $40,04^{\circ}$, o que é mais do que suficiente para a necessidade do trabalho atual.
 
@@ -105,13 +105,13 @@ Assim, é possível observar que a caracterização da antena ocorreu de forma s
 
 Conforme apresentado na Seção \ref{sec:implementacao_filtro}, os parâmetros iniciais do filtro foram obtidos a partir de dados de rastreamento de diversos satélites de órbita baixa (LEO) utilizando um servidor ligado ao aplicativo SatDump.
 O método escolhido para a captura de amostras foi o de programar o software de rastreio para obter diversas passagens de constelações de satélites de órbita baixa, em diversas altitudes e condições reais nas quais o mecanismo irá operar.
-As constelações utilizadas foram a Meteor (satélites meteorológicos), OneWeb (internet banda larga), Capella (radares de abetura sintética, conhecidos como Synthetic-aperture radar ou SAR), ICEYE (SAR), Black Kite (internet das coisas, Internet of Things ou IoT), e Sentinel (monitoramento de desastres).
+As constelações utilizadas foram a Meteor (satélites meteorológicos), OneWeb (internet banda larga), Capella (radares de abertura sintética, conhecidos como Synthetic-aperture radar ou SAR), ICEYE (SAR), Black Kite (internet das coisas, Internet of Things ou IoT), e Sentinel (monitoramento de desastres).
 
 Após a seleção dos satélites de interesse, foi feito um programa utilizando a linguagem de programação Python capaz de simular a conexão entre o SatDump e o rotor, recebendo e enviando dados para o programa.
-Esse script recebia os parâmetros e os salvava em um arquivo de extensão ".txt" para uma pasta com as demais capturas. O programa foi executado durante diferentes horários ao longo de dois meses, acumulando um total de 330 amostras.
-Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $frac{1}{30}$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
+Esse script recebia os parâmetros e os salvava em um arquivo de extensão ".txt" para uma pasta com as demais capturas. O programa foi executado durante diferentes horários ao longo de dois meses, acumulando um total de 300 amostras.
+Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $\frac{1}{30}$ para $\alpha$ e $\beta$, e de $\frac{1}{100}$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
-O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo de 96 passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido (podendo ser conferidas nas Figuras \ref{fig:param_az} e \ref{fig:param_el}).
+O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo de 96 passagens dos satélites por meio da Raiz do Erro Quadrático Médio (RMSE ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido (podendo ser conferidas nas Figuras \ref{fig:param_az} e \ref{fig:param_el}).
 Essas superfícies foram obtidas mapeando os resultados dos erros em uma região tridimensional, com $\alpha$ no eixo Y, $\beta$ no eixo X, e $\gamma$ no eixo Z. Os pontos com um menor erro RMS são representados com uma cor mais escura, enquanto os erros maiores possuem uma coloração mais clara.
 A partir dessas figuras, é possível perceber que o parâmetro $\gamma$ do filtro é muito sensível, com valores altos desse parâmetro gerando grandes erros.
 Os parâmetros $\alpha$ e $\beta$ (com $\gamma = 0$) são mais estáveis, com o erro médio aumentando quando esses valores se encontram acima de 1 para $\alpha$ e 0,5 para $\beta$.
@@ -143,13 +143,12 @@ Com os filtros configurados, todas as amostras de passagem são novamente calcul
 O programa seleciona o filtro com o menor erro e repete o processo novamente. Quando o algoritmo não encontra um parâmetro menor que o parâmetro inicial, ele divide o passo utilizado pela metade e reinicia o cálculo.
 Quando o algoritmo repete os mesmos parâmetros de filtro um determinado número de vezes (para o caso do projeto, 15 vezes), o programa é encerrado e os valores calculados são determinados como os valores ótimos para o filtro.
 
-Os valores obtidos continham 16 casas decimais, porém, nesse nível de precisão, erros de arredondamento em ponto flutuante acabam interferindo no resultado. Além disso, os parâmetros do filtro serão arredondados para baixo a fim de evitar instabilidades no sistema.
+Os valores obtidos continham 16 casas decimais, porém, nesse nível de precisão, erros de arredondamento em ponto flutuante acabam interferindo no resultado.
 Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}937$, $\beta = 0{,}298$, e $\gamma = 0,120$ para o azimute, e $\alpha = 1{,}071$, $\beta = 0{,}253$, e $\gamma = 0.122$ para a elevação.
 É importante ressaltar que o $\alpha$ para a elevação está selecionado como sendo maior que 1. Esse valor não é usual, já que indica uma estimação de predição que estima um valor maior que a da amplitude do erro. Porém, como o algoritmo convergiu a este valor, os parâmetros embarcados serão os indicados anteriormente.
 
-
 Com os testes exemplificados nas figuras \ref{subfig:passagem_baixa}, \ref{subfig:passagem_alta}, \ref{subfig:passagem_dupla} e \ref{subfig:passagem_zenite}, foi possível observar algumas características do filtro ao sistema.
-Os gráficos gerados indicam as movimentações de passagens diversas de satélites em função do tempo. O eixo das abscissas representa o período de tempo decorrido desde a recepção do primeiro dado, enquanto o eixo das ordenadas indica o ângulo em graus que os mecanismos de azimute e elevação se encontram.
+Os gráficos gerados indicam as movimentações de passagens diversas de satélites em função do tempo. O eixo das abscissas representa o período decorrido desde a recepção do primeiro dado, enquanto o eixo das ordenadas indica o ângulo em graus que os mecanismos de azimute e elevação se encontram.
 O ângulo de zero graus para o azimute possui como referência o Norte geográfico, enquanto para a elevação, o ângulo zero equivale a uma linha horizontal ao solo.
 Tanto em passagens de baixa elevação (abaixo de 60 graus, Figura \ref{subfig:passagem_baixa}) e alta (acima de 60 e abaixo de 80 graus, Figura \ref{subfig:passagem_alta}), o sistema demonstrou uma grande estabilidade, mantendo o erro RMS em décimos de graus.
 O filtro também foi testado para dois casos extremos, que seria o rastreio de satélites seguidos (Figura \ref{subfig:passagem_dupla}) e o rastreio próximo do zênite (elevação entre 80 e 90 graus, Figura \ref{subfig:passagem_zenite}).
@@ -160,7 +159,7 @@ Uma solução para esse fenômeno seria alterar os parâmetros do filtro, fazend
 Outra solução pode ser incluir no algoritmo uma forma de detectar a diferença entre a posição predita e a posição real, reiniciando os parâmetros de predição do filtro quando essa diferença ultrapassar determinado valor.
 
 \section{Eletrônica do Protótipo}\label{sec:eletronica_prototipo}
-Para o controle da eletrônica do mecanismo, foi programado o ESP32 de acordo com a arquitetura especificada no fluxograma da Figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (Figura \ref{fig:telas_desconectado}) e conectado (Figura \ref{fig:telas_conectado}).
+Para o controle da eletrônica do mecanismo, foi programado o ESP32 conforme a arquitetura especificada no fluxograma da Figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (Figura \ref{fig:telas_desconectado}) e conectado (Figura \ref{fig:telas_conectado}).
 A conexão, nesse caso, se refere a uma comunicação da placa do mecanismo com o servidor de controle dos rotores de antena do SatDump.
 Então, caso o ESP32 demonstre estar em uma tela do tipo "sem conexão", isso indica que o sistema conseguiu se conectar ao Wi-Fi e abrir uma porta com um IP local, mas o SatDump não iniciou uma conexão com o aparelho.
 Caso a placa esteja em seu modo "conectado", significa que ela está recebendo as informações do software de rastreio.
@@ -303,4 +302,32 @@ No geral, o simulador demonstrou ser uma boa ferramenta para transicionar de um 
         \caption{Casos de passagem que geraram instabilidade no filtro}
         \legend{Fonte: Autor (2026)}
         \label{fig:passagens_instaveis}
+\end{figure*}
+
+\begin{figure*}[h!]
+        \subfloat[Passagem de baixa elevação cenários de teste]{%
+            \includegraphics[width=.90\linewidth]{figs/passagem_baixa_teste.png}%
+            \label{subfig:passagem_baixa_teste}%
+        }\\
+        \subfloat[Passagem com grande variação no azimute e na elevação]{%
+            \includegraphics[width=.90\linewidth]{figs/passagem_media_teste.png}%
+            \label{subfig:passagem_alta_teste}%
+        }
+        \caption{Comportamento do filtro quando exposto a rastreios reais de satélite}
+        \legend{Fonte: Autor (2026)}
+        \label{fig:passagens_diversas_teste}
+\end{figure*}
+
+\begin{figure*}[h!]
+        \subfloat[Passagem com rastreio de dois satélites seguidos]{%
+            \includegraphics[width=.90\linewidth]{figs/passagem_3_dupla.png}%
+            \label{subfig:passagem_media_teste}%
+        }\\
+        \subfloat[Passagem próxima ao zênite]{%
+            \includegraphics[width=.90\linewidth]{figs/passagem_4_zenite.png}%
+            \label{subfig:passagem_zenite_teste}%
+        }
+        \caption{Casos de passagem que geraram instabilidade no filtro}
+        \legend{Fonte: Autor (2026)}
+        \label{fig:passagens_diversas_teste_2}
 \end{figure*}
