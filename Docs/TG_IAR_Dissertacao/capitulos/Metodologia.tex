@@ -18,7 +18,7 @@ Na Figura \ref{fig:satdump}, é possível observar a interface do Software. O so
 Na região esquerda, detalhada na Figura \ref{fig:satdump_track_ui}, existe uma roda polar no topo, que indica algumas informações sobre o satélite rastreado. O texto acima da roda indica o satélite que está sendo rastreado (no caso, o CAPELLA-18), além de suas informações de azimute e elevação.
 Abaixo do texto, está a roda polar de fato. A roda polar é uma representação bidimensional de 360° de toda a abóbada celeste visível a partir da localização da estação em solo. O centro do círculo, onde há a intersecção dos eixos, representa o Zênite (elevação de $90^{\circ}$), enquanto os círculos concêntricos indicam as elevações intermediárias de $0^{\circ}$, $30^{\circ}$ e $60^{\circ}$ (do mais externo para o mais interno).
 A cruz interna representa a direção cardeal, ou seja, em qual direção do horizonte a antena deve apontar. A seção superior da cruz indica $0/360^{\circ}$, representando o Norte, e o ângulo de azimute é crescente no sentido horário. Seguindo, a linha direita indica $90^{\circ}$ (Leste), a linha inferior indica $180^{\circ}$ (Sul), e a linha esquerda indica $270^{\circ}$ (Oeste).
-A linha amarela representa todo o arco que o satélite faz durante essa passagem. O ponto vermelho indica a posição real do satélite. O ícone de mira azul indica a posição que foi passada ao rotor da antena, enquanto o círculo azul representa a posição que o rotor acusa estar.
+A linha amarela representa todo o arco que o satélite faz durante essa passagem. O ponto vermelho indica a posição real do satélite. O ícone de mira azul indica a posição passada ao rotor da antena, enquanto o círculo azul representa a posição que o rotor acusa estar.
 Mais abaixo há um texto com a informação de tempo estimado até ocorrer a LOS (Loss of signal, ou perda de sinal) do satélite quando este se encontrar abaixo do horizonte.
 Na seção de nome "Rotator Configuration" (configuração de rotor), esta área está destinada à conexão do programa com o rotor. Os números de azimute e elevação da linha superior é a posição teórica onde o satélite está, calculada com base nas informações de órbita e a posição da estação de solo.
 A linha inferior indica a posição real de apontamento da antena indicada pelo rotor. Abaixo disso, há a configuração do servidor de controle dos rotores, na qual estão configurados o endereço de IP e a porta para a comunicação. Além disso, existem as opções de "Engage" (engajar), que inicia a conexão com servidor, e "Track" (rastrear), que envia posições atualizadas ao mecanismo de apontamento.
@@ -31,7 +31,7 @@ A linha inferior indica a posição real de apontamento da antena indicada pelo 
 \end{figure}
 
 A região direita é dedicada ao processamento e à representação visual do sinal de radiofrequência (RF) recebido pelo aplicativo. Este painel fornece diagnóstico em tempo real da qualidade do enlace de comunicação e é composto por dois elementos gráficos fundamentais alinhados no domínio da frequência: o Analisador de Espectro e o Exibidor em Cachoeira (Waterfall).
-O gráfico superior exibe a densidade de potência do sinal capturado em função da frequência, calculada por meio da Transformada Rápida de Fourier (FFT). Seu eixo vertical representa a amplitude (em \text{dB}, decibel) do sinal recebido para cada frequência, enquanto o eixo horizontal indica a frequência em $\text{MHz}$.
+O gráfico superior exibe a densidade de potência do sinal capturado em função da frequência, calculada por meio da Transformada Rápida de Fourier (FFT, \textit{fast Fourier transform}). Seu eixo vertical representa a amplitude (em \text{dB}, decibel) do sinal recebido para cada frequência, enquanto o eixo horizontal indica a frequência em $\text{MHz}$.
 O gráfico inferior é conhecido como visualizador em cachoeira representa a variação observada no gráfico acima em função do tempo (eixo y). Esse visualizador é atualizado com as informações mais novas sendo inseridas em cima e as mais antigas "deslizando" para regiões mais abaixo. Esse gráfico é mapeado por cores, nos quais cores próximas ao azul indicam uma intensidade baixa, enquanto cores próximas ao vermelho indicam uma maior intensidade de sinal recebida.
 Em geral, essa interface é utilizada para garantir a estabilidade da transmissão durante a passagem, além de permitir observar variações na largura do sinal ou desvios na frequência central da linha ao longo do rastreio.
 
@@ -48,7 +48,7 @@ mecanismo de elevação atua somente em 90 graus. Desta maneira, o ângulo de vi
 é dado por uma meia-esfera superior. Essa geometria é considerada suficiente para a detecção e o rastreio de qualquer satélite necessário pela estação de solo.
 
 Os motores de passo utilizados no trabalho são de classe NEMA (National Electrical Manufacturers Association, Associação Nacional de Fabricantes de Equipamentos Elétricos), que padroniza as dimensões e as características de motores em geral. O modelo selecionado é o motor de passo 17HS4401, da classe NEMA 17 (vistos na Figura \ref{fig:motores_drivers}).
-Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{kgf}\cdot\text{cm}$, e corrente por fase de $1,5A$.
+Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{ kgf}\cdot\text{cm}$, e corrente por fase de $1,5A$.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{figs/motores_drivers.jpeg}
@@ -57,16 +57,16 @@ Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{kgf}\cdo
     \label{fig:motores_drivers}
 \end{figure}
 
-Para o acionamento dos motores, serão utilizados drivers dedicados DRV8825, configurados para conseguirem atingir a resolução de $1/32$ passo, permitindo elevar a resolução angular teórica de acionamento dos motores para $0{,}05625^\circ$ por micropasso.
+Para o acionamento dos motores, serão utilizados drivers dedicados DRV8825 \cite{ti_drv8825_datasheet}, configurados para conseguirem atingir a resolução de $1/32$ passo, permitindo elevar a resolução angular teórica de acionamento dos motores para $0{,}05625^\circ$ por micro passo.
 A calibração da posição inicial (homing) dos eixos de azimute e elevação é realizada por meio de sensores ópticos, que serão desenvolvidos a partir de LDRs e LEDs. O controlador executa um algoritmo de varredura para verificar quando o LDR receberá a maior intensidade luminosa. Esse valor máximo indicará o zero do azimute e da elevação.
 O acoplamento entre o eixo dos motores e a estrutura da antena foi feito utilizando um sistema de redução por correias de padrão GT2 de relação 2:1, fazendo com que a resolução real na estrutura seja metade da resolução angular desenvolvida pelo motor.
 
 \section{Sistema de Comunicação}\label{sec:sistema_comunicacao}
-Para o recebimento do sinal de satélite, foi utilizando um rádio definido por software (Software Defined Radio, ou SDR), de modelo RTL-SDR V4. Esse dispositivo é capaz de ser programado via software para sintonizar com diversas frequências sem modificação de hardware, tornando-o extremamente versátil para receber comunicação de diversos satélites.
+Para o recebimento do sinal de satélite, foi utilizando um rádio definido por software (Software Defined Radio, ou SDR), de modelo RTL-SDR V4 \cite{rtlsdr_v4_datasheet}. Esse dispositivo é capaz de ser programado via software para sintonizar com diversas frequências sem modificação de hardware, tornando-o extremamente versátil para receber comunicação de diversos satélites.
 O modelo em questão é capaz de operar em frequências de \SI{500}{\kilo\hertz} a \SI{1766}{\mega\hertz}. Além disso, há um circuito Bias-Tee interno ativável por software, que é capaz de fornecer uma tensão contínua de 4,5 V no conector SMA para alimentação de pré-amplificadores localizados na linha de transmissão utilizando o mesmo cabo coaxial por onde o sinal é recebido.
 
 Devido à extrema atenuação sofrida pelos sinais emitidos pelos satélites ao se propagarem através da atmosfera até a antena de recepção, foi utilizado um módulo pré-amplificador e filtro Nooelec SAWBird+ GOES.
-O módulo é composto por dois estágios de amplificação de baixo ruído (LNA) em cascata com um filtro de Onda Acústica de Superfície (SAW) intercalado. Esses componentes são responsáveis por tratar, filtrar e amplificar os sinais recebidos pela antena.
+O módulo é composto por dois estágios de amplificação de baixo ruído (LNA, \textit{Low Noise Amplifier}) em cascata com um filtro de Onda Acústica de Superfície (SAW) intercalado. Esses componentes são responsáveis por tratar, filtrar e amplificar os sinais recebidos pela antena.
 O conjunto apresenta frequência central em aproximadamente \SI{1694,1}{\mega\hertz} \cite{nooelec_sawbird_goes}, com banda passante ajustada para \SI{70}{\mega\hertz} e ganho típico de 35 dB, reduzindo interferências de sinais fora da faixa de interesse e compensando as perdas de transmissão.
 A seleção desse filtro ocorreu por suas características de banda, permitindo a recepção de sinais dos satélites GOES, com frequência central de \SI{1694,1}{\mega\hertz} e largura de banda de \SI{1210}{\kilo\hertz} \cite{wmo_oscar_goes_3rd_gen}, até satélites LEO, como os da série Meteor M3 (frequência central de \SI{1700}{\mega\hertz} e banda de \SI{3000}{\kilo\hertz}) \cite{wmo_oscar_meteor_m3} e EUMETSAT (frequência central de \SI{1707}{\mega\hertz} e banda de \SI{4500}{\kilo\hertz}) \cite{wmo_oscar_eps}.
 
@@ -92,8 +92,8 @@ Todo o sistema foi montado dentro do cabo da antena, com um cabo extensor USB de
 
 A antena utilizada foi apresentada inicialmente no projeto de \cite{tonito2024}. Esta é uma Antena Helicone projetada especificamente para a recepção de sinais de alta resolução de satélites meteorológicos na faixa de 1,7 GHz, desenvolvida para a captura de imagens enviadas no modo HRPT (High Resolution Picture Transmission).
 Este modelo combina a simplicidade construtiva com características eletromagnéticas de alto ganho e alta diretividade, sendo ideal tanto para uso  montado no sistema de rastreio automatizado desenvolvido nesse trabalho.
-A antena helicone é uma variação da antena helicoidal no modo axial combinada com um plano Terra (ground plane) levemente cônico.
-Como as peças desenvolvidas por \cite{tonito2024} foram feitas para serem manufaturadas com o auxílio de uma impressora 3D, vide Figura \ref{fig:pecas_antena}, é possível iterar rapidamente no design das peças, permitindo a fabricação rápida de novos componentes caso um venha a quebrar.
+A antena helicone é uma variação da antena helicoidal no modo axial combinada com um plano Terra (ground plane) levemente cônico \cite{kraus2002antennas}.
+Como as peças desenvolvidas por \cite{tonito2024} foram feitas para serem manufaturadas com o auxílio de uma impressora 3D, conforme Figura \ref{fig:pecas_antena}, é possível iterar rapidamente no design das peças, permitindo a fabricação rápida de novos componentes caso um quebre.
 Além disso, como as peças serão fabricadas em plástico, é esperado que elas tenham um peso menor que o equivalente em metal.
 
 A seleção de uma antena de geometria helicoidal foi feita para garantir uma melhor recepção do sinal, já que satélites que transmitem em HRPT operam majoritariamente com Polarização Circular (normalmente RHCP — Right-Hand Circular Polarization).
@@ -107,13 +107,13 @@ Nesse regime, o feixe de radiação principal fica concentrado na direção do e
 Com o diâmetro da hélice do projeto fixado em torno de $56\text{ mm}$, a circunferência $C = \pi \cdot d = \pi \cdot 56\text{ mm} \approx 175,9\text{ mm}$, o que corresponde ao regime do modo axial da antena.
 A antena produzida possui $7\frac{3}{4}$ voltas, sendo suficiente para caracterizar uma antena helicoidal em operação axial \cite{djordjevic2006optimization}, com seu comprimento total sendo de $16,7\text{ cm}$.
 
-Embora o dimensionamento analítico clássico para antenas helicoidais em modo axial sugira um espaçamento entre espiras de $S = 0,25\lambda$ ($44,1\text{ mm}$ na frequência de operação), a topologia da antena helicone utilizada neste trabalho não é dimensionada de acordo com as características de uma helicoidal teórica.
+Embora o dimensionamento analítico clássico para antenas helicoidais em modo axial sugira um espaçamento entre espiras de $S = 0,25\lambda$ ($44,1\text{ mm}$ na frequência de operação), a topologia da antena helicone utilizada neste trabalho não é dimensionada conforme as características de uma helicoidal teórica.
 Segundo Djordjević \citeyear{djordjevic2006optimization}, o passo angular experimental de antenas helicoidais operando em modo axial tende a possuir um passo angular compreendido em uma faixa entre $3^{\circ}$ e $16^{\circ}$.
 No caso da antena utilizada, o passo em milímetros entre as espiras é de $\rho=25,41\text{ mm}$. Sendo assim, é possível obter o passo angular $\epsilon=\arctan(\frac{\rho}{C})$ \cite{djordjevic2006optimization} de $\approx 8,22\text{ mm}$.
 
 Para verificar a faixa de operação da antena, será utilizado um Analisador de Redes Vetorial (\textit{Vector Network Analyzer} ou VNA), utilizado para caracterizar circuitos de alta frequência.
 Esse equipamento funciona enviando um sinal gerado em diversas frequências e analisa o sinal retornado (ou transmitido) em magnitude e fase. A partir do sinal retornado, o VNA consegue calcular a impedância característica daquele equipamento visto pela linha de transmissão para cada frequência determinada.
-VNAs normalmente possuem entre duas e quatro portas capazes de transmitir sinais gerados. A nomenclatura para denotar o fluxo do sinal entre as portas é dada por $S_{xy}$, onde $x$ indica a porta que gerou o sinal, e $y$ indica a porta onde o sinal foi recebido.
+VNAs possuem normalmente entre duas e quatro portas capazes de transmitir sinais gerados. A nomenclatura para denotar o fluxo do sinal entre as portas é dada por $S_{xy}$, onde $x$ indica a porta que gerou o sinal, e $y$ indica a porta onde o sinal foi recebido.
 
 Para a caracterização de uma antena, o sinal de interesse é conhecido como $S_{11}$, ou seja, o sinal que retorna pela porta 1 a partir do sinal enviado da porta 1 \cite{fusco2006}.
 Essa configuração permite verificar a potência que está sendo refletida na carga, sendo que na frequência de ressonância da antena, esta transmite a potência recebida e faz a potência retornada ao VNA ser menor.
@@ -137,8 +137,8 @@ A região de campo próximo (\textit{near-field}) é definida pela Equação \re
     R_{Fr} \geq 0,62\sqrt{\frac{D^3}{\lambda}} \label{eq:region_Fresnel} \\
     R_{ff} > 2\frac{D^2}{\lambda} \label{eq:far_field}
 \end{align}
-Em seguida, há a disância da antena onde se encontra a região de Fresnel (Equação \ref{eq:region_Fresnel}), onde a distribuição angular do campo ainda varia com a distância.
-Por último, há a região do campo distante (\textit{far-field} ou região de Fraunhofer), em que o campo angular da antena independe da distância da antena (definido pela Equação \ref{eq:far_field}).
+Em seguida, há a distância da antena onde se encontra a região de Fresnel (Equação \ref{eq:region_Fresnel}), onde a distribuição angular do campo ainda varia com a distância.
+Por último, há a região do campo distante (\textit{far-field}, ou região de Fraunhofer), em que o campo angular da antena independe da distância da antena (definido pela Equação \ref{eq:far_field}).
 Para a antena helicoidal, a região de campo próximo é de $R_{nf} \leq 10,26\text{ cm}$, e a região de campo distante é de $R_{ff} > 32,38\text{ cm}$.
 
 \begin{figure}[htbp]
@@ -159,7 +159,7 @@ Um gerador de RF configurado para \SI{1,7}{\giga\hertz} é conectado à antena t
 A antena receptora é ligada a um analisador de espectro (que calcula a potência recebida para cada frequência) e, para cada novo ângulo, é feita a medida da potência na frequência do gerador.
 Por fim, o sinal é normalizado para retirar perdas no enlace de transmissão, nos cabos, e nos conectores. O resultado é uma série de potências e ângulos que relacionam a distribuição angular do sinal da antena.
 
-A partir do padrão de radiação da antena, é possível determinar algumas regiões da geometria que são importantes para a transmissão e recepção de sinal.
+A partir do padrão de radiação da antena, é possível determinar algumas regiões da geometria importantes para a transmissão e recepção de sinal.
 A primeira é o que é chamado de lóbulo, existindo o lóbulo principal e os secundários. Essas seções são definidas como porções do padrão de radiação limitadas por regiões de relativamente baixa intensidade de radiação \cite{balanis2016}.
 \begin{figure}[htbp]
     \centering
@@ -168,10 +168,10 @@ A primeira é o que é chamado de lóbulo, existindo o lóbulo principal e os se
     \legend{Fonte: COMSOL}
     \label{fig:helical_rad_pttrn}
 \end{figure}
-O lóbulo principal é definido por conter a região com maior concentração de energia e maior ganho. Os demais lóbulos são definidos como secundários por não possuirem um grande ganho igual ao principal, mas ainda estar compreendido por uma região de baixa radiação.
-A Figura \ref{fig:helical_rad_pttrn} é o exêmplo de uma antena helicoidal com plano terra, similar à antena utilizada no projeto. É esperado que o diagrama de radiação se assemelhe ao observado na figura, apesar de ser apenas em duas dimensões.
+O lóbulo principal é definido por conter a região com maior concentração de energia e maior ganho. Os demais lóbulos são definidos como secundários por não possuírem um grande ganho igual ao principal, mas ainda estar compreendido por uma região de baixa radiação.
+A Figura \ref{fig:helical_rad_pttrn} é o exemplo de uma antena helicoidal com plano terra, similar à antena utilizada no projeto. É esperado que o diagrama de radiação se assemelhe ao observado na figura, apesar de ser apenas em duas dimensões.
 
-Uma outra região de interesse é nomeada como o feixe de meia potência, que é a região onde o lóbulo principal consegue irradiar apenas metade da potência máxima normalizada. Na escala logarítmica, essa região equivale ao valor de $-3\text{ dB}$.
+Outra região de interesse é nomeada como o feixe de meia potência, sendo a região onde o lóbulo principal consegue irradiar apenas metade da potência máxima normalizada. Na escala logarítmica, essa região equivale ao valor de $-3\text{ dB}$.
 O feixe de meia potência determina a posição angular na qual a antena pode ser utilizada com o apontamento direcionado ao seu ganho ótimo \cite{balanis2016}. Para o trabalho em questão, é necessário manter o satélite rastreado dentro da região do feixe da antena para manter uma boa recepção de sinal.
 
 \section{Sistema Embarcado}\label{sec:sistema_embarcado}
@@ -187,7 +187,7 @@ Além disso, para manter uma interface gráfica disponível para fácil entendim
 
 A arquitetura do sistema foi desenvolvida aproveitando a estrutura dual-core do ESP32, permitindo o processamento paralelo de tarefas por meio do FreeRTOS (Real-Time Operating System), cujo manual é disponibilizado pela empresa Espressif \citeyear{espressif2026}.
 Esse sistema operacional em tempo real e de código aberto permite a divisão do programa em tarefas independentes, alocadas em cada um dos núcleos do microcontrolador.
-A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado (exemplificado no diagrama da Figura \ref{fig:divisao_tarefas_esp}).
+A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas, o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado (exemplificado no diagrama da Figura \ref{fig:divisao_tarefas_esp}).
 Dessa forma, essa arquitetura garante que um processador esteja exclusivamente destinado ao controle das malhas do motor, evitando que interferências ou latências de comunicação afetem a estabilidade e a precisão do rotor.
 
 \begin{figure}[htbp]
@@ -199,8 +199,28 @@ Dessa forma, essa arquitetura garante que um processador esteja exclusivamente d
 \end{figure}
 
 \section{Implementação do Filtro Preditor}\label{sec:implementacao_filtro}
+Antes de continuar com a modelagem do filtro, é necessário discutir um pouco mais sobre a seleção deste para o sistema.
+Os dados do SatDump utilizam o modelo conhecido como \textit{Simplified General Perturbations 4}(SGP4, perturbações gerais simplificadas 4), que utiliza uma série de parâmetros de órbita a partir do TLE (\textit{Two-Line Element}, elementos em duas linhas) \cite{vallado2006revisiting}.
+Esses elementos fornecem informações de órbita como momento angular específico, inclinação, excentricidade, ascensão reta, argumento do perigeu, e anomalia verdadeira \cite{curtis2005}.
+A partir desses valores definidos, é possível determinar a posição de um satélite em uma órbita para qualquer momento no tempo (seja este passado ou futuro).
+Esses elementos não são fixos, pois a precisão é perdida com o tempo, principalmente para órbitas sujeitas a arrasto atmosférico (que afeta parte das órbitas LEO).
+Isso significa que o sistema deve atualizar periodicamente os elementos TLE para que o rastreio seja feito com a melhor precisão possível, além de existirem órbitas que os elementos de órbita se tornam obsoletos rapidamente (como uma propulsão para correção de órbita), fazendo com que o rastreio da antena a essa órbita resulte em nenhum sinal capturado.
+
+Para um sistema embarcado, a comunicação com uma API (Application Programming Interface, interface de programação de aplicações) para receber os novos parâmetros de órbita a cada passagem pode exigir memória e tempo de processamento preciosos para o rastreio de um satélite.
+Outro ponto sobre a questão deste trabalho de não seguir com a utilização do sistema SGP4 é que já existem diversos softwares desenvolvidos para efetuar os cálculos dos parâmetros de órbita e enviar aos rotores de antenas apenas os dados de azimute e elevação.
+Para o sistema embarcado no rotor, isso retira a necessidade de possuir alguns equipamentos e necessidades que os demais eletrônicos são mais capacitados para isso. Então, por exemplo, o sistema embarcado não precisa mais necessitar de um sistema de GPS, já que os elementos de azimute e elevação foram calculados a partir de um celular com GPS em sua placa ou um computador com suas coordenadas calculadas a partir do Google Maps.
+O sistema também não necessita de uma conexão de internet robusta, pois este pode gerar seu próprio ponto de acesso Wi-Fi e os elementos que enviarão o conjunto de dados pode utilizar de conexões de internet móvel ou via satélite, permitindo que o mecanismo de rastreio seja utilizado em regiões remotas com maior facilidade.
+
+Como a posição exata do satélite é calculada de forma exata por outros eletrônicos utilizando a modelagem SGP4, a função do sistema embarcado no mecanismo de rastreio se resume a interpolar e prever a posição do satélite a partir dos dados de azimute e elevação recebidos.
+Quaisquer mecanismos de interpolação de pontos, como linear e cúbica possuirão um atraso em relação à entrada, pois esses dependem dos valores já definidos para estipular a linha de conexão entre os pontos, fazendo os métodos não serem capazes de prever a posição seguinte do satélite.
+Para os algoritmos preditivos, além do filtro $\alpha-\beta-\gamma$, serão utilizados dois outros sistemas para comparação: o primeiro é a forma utilizada atualmente pelos sistemas de apontamento amadores, sendo este a manutenção da posição anterior até receber um novo valor; e a segunda forma seria utilizar uma extrapolação de velocidade constante considerando a diferença das duas posições anteriormente recebidas.
+O filtro $\alpha-\beta-\gamma$ foi escolhido devido a suas características de estimação da velocidade e da aceleração do alvo, que podem permitir uma boa estimação da posição subsequente do satélite.
+O filtro também foi escolhido pensando em um passo futuro deste projeto, que seria a capacidade de estimar a posição de satélites a partir do sinal recebido pelo sistema.
+Entretanto, para o projeto atual, será de interesse apenas a capacidade do filtro em prever a posição dos próximos valores de azimute e elevação para a órbita do satélite.
+Na seção de resultados, os diferentes métodos serão comparados para verificar qual possui o melhor desempenho.
+
 Para determinar os parâmetros do filtro preditor embarcado no processador, foram feitos alguns testes a partir de um servidor \textit{dummy} (simulado) em um computador. Esse servidor era encarregado de receber todos os comandos enviados pelo software e catalogar as posições esperadas em diversos rastreios.
-As capturas serão realizadas através de diversos dias, garantindo uma grande variação nas órbitas obtidas.
+As capturas serão realizadas por diversos dias, garantindo uma grande variação nas órbitas obtidas.
 A partir desses dados, foi desenvolvido um algoritmo capaz de utilizar os valores dentro do limite de estabilidade discutido na seção \ref{sec:estimation} para encontrar o filtro cujos parâmetros geram o menor Erro Quadrático Médio (EQM ou MSE, na sigla em inglês).
 Esse algoritmo altera os parâmetros alfa, beta e gama de acordo com um certo passo determinado e expõe todos os filtros aos mesmos dados, garantindo que a entrada não tenha um viés e os filtros estejam expostos às mesmas condições.
 Com o Erro Quadrático Médio calculado para cada parâmetro, é possível estipular valores para o $\alpha$, $\beta$ e $\gamma$ que obtenha o melhor resultado preditivo de forma generalizada.
@@ -210,6 +230,6 @@ Deste modo, esses parâmetros calibrados serão embarcados na arquitetura do sis
 \section{Controle de Velocidade e posição do Motor de Passo}\label{sec:controle_motor_passo}
 A posição da estrutura é determinada de forma incremental a partir da posição inicial do motor, da relação de transmissão do sistema e da contagem dos pulsos emitidos pelo driver.
 Embora o driver DRV8825 suporte frequências de pulso elevadas (de até aproximadamente 250 kHz), a resposta dinâmica dos motores de passo NEMA é mais restrita, limitando sua operação contínua a frequências na faixa de 1000 Hz.
-Portanto, o controlador deve gerar sinal em uma frequência compatível com o motor, aproveitando a capacidade de micropasso (microstepping) do driver para aumentar a resolução e suavizar o deslocamento.
+Portanto, o controlador deve gerar sinal em uma frequência compatível com o motor, aproveitando a capacidade de micro passo (micro stepping) do driver para aumentar a resolução e suavizar o deslocamento.
 A partir dos valores de posição, velocidade e aceleração estimados pelo filtro $\alpha-\beta-\gamma$, o sistema calcula posições intermediárias preditas e determina as tensões necessárias em cada bobina do motor para realizar tal ação.
 Essa interpolação reduz trancos na estrutura e garante um alinhamento mais estável e contínuo com o satélite.

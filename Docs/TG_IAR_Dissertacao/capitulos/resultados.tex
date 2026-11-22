@@ -71,10 +71,10 @@ Pela discussão feita no Capítulo \ref{sec:antena}, essa característica indica
     \label{fig:antena_s1p}
 \end{figure}
 
-Os resultados obtidos demonstam que boa parte do sinal se encontra abaixo da linha de $-15\text{ dB}$, com o ponto de mínimo de $-17,316\text{ dB}$ e largura de banda abaixo de $-14,316\text{ dB}$.
+Os resultados obtidos demonstram que boa parte do sinal se encontra abaixo da linha de $-15\text{ dB}$, com o ponto de mínimo de $-17,316\text{ dB}$ e largura de banda abaixo de $-14,316\text{ dB}$.
 A perda de retorno pode ser calculada como sendo $RL = 14,316\text{ dB}$ e a relação de onda estacionária é de $ROE = 1,476$ para toda a largura de banda da antena de $514\text{ MHz}$.
 É importante ressaltar que a região de operação da antena (de $1,7\text{ GHz}$) ficou um pouco fora da faixa esperada, podendo ter a sua faixa melhorada com ajustes mais finos à antena.
-Há uma região abaixo de $1,4\text{ GHz}$ e outra acima de $1,9\text{ GHz}$ que possuem uma perda de retorno maior que a da região de interesse, porém mairoes ajustes à antena não foram possíveis durante o teste.
+Há uma região abaixo de $1,4\text{ GHz}$ e outra acima de $1,9\text{ GHz}$ que possuem uma perda de retorno maior que a da região de interesse, porém maiores ajustes à antena não foram possíveis durante o teste.
 O equipamento da faculdade estava em manutenção e foi utilizado um VNA pessoal de outro professor que estava com uma agenda curta.
 Houve apenas o tempo de uma hora para os ajustes e não foi possível obter um resultado mais satisfatório com o tempo disponível.
 Em trabalhos futuros, é necessário revisitar o teste para o parâmetro $S_{11}$ para obter um melhor resultado na confecção da antena.
@@ -93,6 +93,7 @@ O feixe de meia potência para a antena é de $40,04^{\circ}$, o que é mais do 
 
 Uma região peculiar do diagrama de radiação é a radiação observada próxima de $40^{\circ}$ e $320^{\circ}$, pois não há uma resolução grande o suficiente para determinar se é um lóbulo secundário ou ainda faz parte do lóbulo principal.
 Essa região difere um pouco do restante dos lóbulos secundários (abaixo de $315^{\circ}$ e acima de $50^{\circ}$) e não há como definir claramente o que gerou esse comportamento observado nos dois lados da antena.
+Como essa região não faz parte do feixe de meia potência, será considerado que essa anomalia não afetará o funcionamento da antena.
 
 Outra região de interesse é a dos lóbulos secundários próximos a $90^{\circ}$ e $270^{\circ}$, pois parece haver uma interferência do plano terra cônico da helicone, ou uma difração com a borda deste mesmo plano.
 As regiões após esses ângulos já estão completamente cobertas pelo plano terra, fazendo com que a medição seja muito baixa.
@@ -108,9 +109,9 @@ As constelações utilizadas foram a Meteor (satélites meteorológicos), OneWeb
 
 Após a seleção dos satélites de interesse, foi feito um programa utilizando a linguagem de programação Python capaz de simular a conexão entre o SatDump e o rotor, recebendo e enviando dados para o programa.
 Esse script recebia os parâmetros e os salvava em um arquivo de extensão ".txt" para uma pasta com as demais capturas. O programa foi executado durante diferentes horários ao longo de dois meses, acumulando um total de 330 amostras.
-Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $frac{1}{30}$ avos para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
+Em seguida, aplicou-se um método computacional de varredura sistemática (\textit{grid search}) para a otimização dos coeficientes, variando-se os parâmetros em incrementos de $frac{1}{30}$ para $\alpha$ e $\beta$, e de $0,01$ para $\gamma$, respeitando os limites de estabilidade definidos pelo Critério de Jury (Seção~\ref{sec:estimation}).
 
-O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo das passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido (podendo ser conferidas nas Figuras \ref{fig:param_az} e \ref{fig:param_el}).
+O desempenho do filtro para cada combinação de parâmetros foi avaliado ao longo de 96 passagens dos satélites por meio do Erro Quadrático Médio (EQM, ou RMS em inglês). A partir desses resultados, geraram-se superfícies tridimensionais correlacionando os coeficientes ao menor erro obtido (podendo ser conferidas nas Figuras \ref{fig:param_az} e \ref{fig:param_el}).
 Essas superfícies foram obtidas mapeando os resultados dos erros em uma região tridimensional, com $\alpha$ no eixo Y, $\beta$ no eixo X, e $\gamma$ no eixo Z. Os pontos com um menor erro RMS são representados com uma cor mais escura, enquanto os erros maiores possuem uma coloração mais clara.
 A partir dessas figuras, é possível perceber que o parâmetro $\gamma$ do filtro é muito sensível, com valores altos desse parâmetro gerando grandes erros.
 Os parâmetros $\alpha$ e $\beta$ (com $\gamma = 0$) são mais estáveis, com o erro médio aumentando quando esses valores se encontram acima de 1 para $\alpha$ e 0,5 para $\beta$.
