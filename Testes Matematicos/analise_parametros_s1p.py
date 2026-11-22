@@ -26,13 +26,15 @@ I = np.array(I)**2
 mag_2 = (R+I)**(1/2)
 mag_log = 10*np.log(mag_2)
 freq_filter = ((freq>=GRAPH_LIMITS[0]) & (freq<=GRAPH_LIMITS[1]))
-mag_log = mag_log-max(mag_log)
+mag_log = mag_log
 
 import matplotlib.pyplot as plt
 
 plt.plot(freq,mag_log)
+print("Largura de banda:",min(mag_log[freq_filter])+3)
 plt.axhline(min(mag_log[freq_filter])+3,linestyle='--',color='r')
-plt.xlim(GRAPH_LIMITS)
+# plt.xlim(GRAPH_LIMITS)
+plt.ylim(-25,0)
 plt.title("Diagrama de Perda de Retorno")
 plt.xlabel("Frequência (GHz)")
 plt.ylabel("Perda de retorno (dB)")

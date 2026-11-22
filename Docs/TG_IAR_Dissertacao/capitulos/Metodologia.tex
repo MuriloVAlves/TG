@@ -138,7 +138,7 @@ A região de campo próximo (\textit{near-field}) é definida pela Equação \re
     R_{ff} > 2\frac{D^2}{\lambda} \label{eq:far_field}
 \end{align}
 Em seguida, há a disância da antena onde se encontra a região de Fresnel (Equação \ref{eq:region_Fresnel}), onde a distribuição angular do campo ainda varia com a distância.
-Por último, há a região do campo distante (\textit{far-field} ou região de Fraunhofer), em que o campo angular da antena independe da distância da antena.
+Por último, há a região do campo distante (\textit{far-field} ou região de Fraunhofer), em que o campo angular da antena independe da distância da antena (definido pela Equação \ref{eq:far_field}).
 Para a antena helicoidal, a região de campo próximo é de $R_{nf} \leq 10,26\text{ cm}$, e a região de campo distante é de $R_{ff} > 32,38\text{ cm}$.
 
 \begin{figure}[htbp]
@@ -152,7 +152,7 @@ Para a antena helicoidal, a região de campo próximo é de $R_{nf} \leq 10,26\t
 O diagrama do padrão de radiação deve ser levantado a partir de uma distância maior que o campo distante da antena de interesse a partir de outra antena operando na mesma frequência.
 Esse diagrama pode ser feito de forma experimental com a antena de interesse e outra antena direcional. Para o experimento realizado com a antena do trabalho, foi utilizada uma antena Yagi projetada em uma placa de circuito impresso (como visto na Figura \ref{fig:setup_antena}).
 Foi considerado que a antena helicone possui um padrão simétrico em relação à sua direção axial, como corroborado por outras bibliografias como Balanis \citeyear{balanis2016} e Vallado \citeyear{vallado2013}.
-Portanto, razoável considerar que o sinal levantado no plano polar da antena é uma boa representação do sistema para a aplicação desejada.
+Portanto, razoável considerar que o sinal levantado no plano vertical da antena é uma boa representação do sistema para a aplicação desejada.
 
 Para o experimento, a antena de teste é utilizada como transmissora ligada ao gerador e a Yagi faz o papel de receptora, embora essa ordem possa ser alterada sem comprometimentos ao teste.
 Um gerador de RF configurado para \SI{1,7}{\giga\hertz} é conectado à antena transmissora e sua potência é mantida constante durante o teste. Então, a antena auxiliar é deslocada ao redor da antena em passos angulares pequenos (a cada $5^{\circ}$) para obter uma boa resolução do padrão de radiação da antena.
@@ -173,7 +173,6 @@ A Figura \ref{fig:helical_rad_pttrn} é o exêmplo de uma antena helicoidal com 
 
 Uma outra região de interesse é nomeada como o feixe de meia potência, que é a região onde o lóbulo principal consegue irradiar apenas metade da potência máxima normalizada. Na escala logarítmica, essa região equivale ao valor de $-3\text{ dB}$.
 O feixe de meia potência determina a posição angular na qual a antena pode ser utilizada com o apontamento direcionado ao seu ganho ótimo \cite{balanis2016}. Para o trabalho em questão, é necessário manter o satélite rastreado dentro da região do feixe da antena para manter uma boa recepção de sinal.
-
 
 \section{Sistema Embarcado}\label{sec:sistema_embarcado}
 Com o intuito de manter o servidor de controle do rotor embarcado no pedestal, foi utilizado um microcontrolador de modelo de desenvolvimento ESP32 WROOM-32, observado no lado esquerdo da Figura \ref{fig:embarcados_pecas}, e com seu manual técnico disponível na referência \cite{espressif2026esp32tech}.

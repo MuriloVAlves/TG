@@ -56,9 +56,49 @@ O casamento de impedância é importante para permitir a máxima transferência 
 \section{Caracterização da Antena e do Filtro}\label{sec:carac_antena}
 
 Após a montagem da antena feita na Seção \ref{sec:estrutura}, é de grande importância realizar a caracterização da antena para garantir que ela está funcionando corretamente.
-Para isso, foram utilizados dois equipamentos para a determinação: um Anali
-Essa antena é movida ao redor da helicone a uma distância fixa utilizando uma corda para manter a distância constante e um transferidor para marcar o ângulo da medição. Então, é realizado 
+Para isso, foram utilizados dois equipamentos para a determinação: um analisador de espectro, um gerador de frequência, e um analisador de redes vetorial (VNA).
+Com o analisador e o gerador, foi possível caracterizar o Filtro SAW, com o experimento descrito no Apêndice \ref{cap:apendice_filtro_saw}. O resultado é um filtro de ganho $37,5 \text{ dB}$ e largura de banda $71 \text{ MHz}$ em torno de $1688,5 \text{ MHz}$
 
+Iniciou-se a caracterização da antena a partir da sua perda de retorno (parâmetro $S_{11}$). A escolha de iniciar o teste pela perda de retorno foi intencional para possibilitar a calibração da antena para a faixa inserida.
+A antena foi conectada ao VNA calibrado e foi verificada a perda de retorno da antena. Inicialmente, a perda de retorno para a frequência de $1,7\text{ GHz}$ se encontrava por volta de $-11 \text{ dB}$ e a maior atenuação se encontrava por volta de $1,9\text{ GHz}$.
+Pela discussão feita no Capítulo \ref{sec:antena}, essa característica indicava que a espira estava com uma circunferência muito pequena. Após o ajuste na antena helicoidal, foi possível obter o parâmetro observado na Figura \ref{fig:antena_s1p}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/s1p_antenna.png}
+    \caption{Parâmetros $S_{11}$ da antena levantados pelo VNA na faixa de $1,5 \text{ GHz}$ a $1,8 \text{ GHz}$.}
+    \legend{Fonte: Autor (2026)}
+    \label{fig:antena_s1p}
+\end{figure}
+
+Os resultados obtidos demonstam que boa parte do sinal se encontra abaixo da linha de $-15\text{ dB}$, com o ponto de mínimo de $-17,316\text{ dB}$ e largura de banda abaixo de $-14,316\text{ dB}$.
+A perda de retorno pode ser calculada como sendo $RL = 14,316\text{ dB}$ e a relação de onda estacionária é de $ROE = 1,476$ para toda a largura de banda da antena de $514\text{ MHz}$.
+É importante ressaltar que a região de operação da antena (de $1,7\text{ GHz}$) ficou um pouco fora da faixa esperada, podendo ter a sua faixa melhorada com ajustes mais finos à antena.
+Há uma região abaixo de $1,4\text{ GHz}$ e outra acima de $1,9\text{ GHz}$ que possuem uma perda de retorno maior que a da região de interesse, porém mairoes ajustes à antena não foram possíveis durante o teste.
+O equipamento da faculdade estava em manutenção e foi utilizado um VNA pessoal de outro professor que estava com uma agenda curta.
+Houve apenas o tempo de uma hora para os ajustes e não foi possível obter um resultado mais satisfatório com o tempo disponível.
+Em trabalhos futuros, é necessário revisitar o teste para o parâmetro $S_{11}$ para obter um melhor resultado na confecção da antena.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/diag_rad_antena.png}
+    \caption{Diagrama de radiação da antena normalizado a partir dos dados da Tabela \ref{tab:dados_diag_rad}.}
+    \legend{Fonte: Autor (2026)}
+    \label{fig:diag_rad_antena}
+\end{figure}
+
+Para o experimento do padrão de radiação, o experimento foi realizado de acordo com o Apêndice \ref{cap:apendice_teste_diagrama radiação}.
+Ao normalizar os dados da Tabela \ref{tab:dados_diag_rad} em relação aos seus valores para $0^{\circ}$, é possível obter o diagrama de radiação para a antena, como visto na Figura \ref{fig:diag_rad_antena}.
+O feixe de meia potência para a antena é de $40,04^{\circ}$, o que é mais do que suficiente para a necessidade do trabalho atual.
+
+Uma região peculiar do diagrama de radiação é a radiação observada próxima de $40^{\circ}$ e $320^{\circ}$, pois não há uma resolução grande o suficiente para determinar se é um lóbulo secundário ou ainda faz parte do lóbulo principal.
+Essa região difere um pouco do restante dos lóbulos secundários (abaixo de $315^{\circ}$ e acima de $50^{\circ}$) e não há como definir claramente o que gerou esse comportamento observado nos dois lados da antena.
+
+Outra região de interesse é a dos lóbulos secundários próximos a $90^{\circ}$ e $270^{\circ}$, pois parece haver uma interferência do plano terra cônico da helicone, ou uma difração com a borda deste mesmo plano.
+As regiões após esses ângulos já estão completamente cobertas pelo plano terra, fazendo com que a medição seja muito baixa.
+Isso mostra que o plano terra cônico funciona em limitar a recepção de sinal vindo da região traseira da antena.
+
+Assim, é possível observar que a caracterização da antena ocorreu de forma satisfatória. Entretanto, é necessário refazer os testes com ajustes mais refinados para garantir que a antena helicone opere em seu ponto ótimo.
 
 \section{Levantamento dos Parâmetros do Filtro $\alpha$-$\beta$-$\gamma$}
 
