@@ -4,12 +4,12 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import random
 
-ALPHA_AZ = 0.937
-BETA_AZ = 0.298
-GAMMA_AZ = 0.12
-ALPHA_EL = 1.017
-BETA_EL = 0.253
-GAMMA_EL = 0.122
+ALPHA_AZ = 0.949
+BETA_AZ = 0.267
+GAMMA_AZ = 0.001
+ALPHA_EL = 0.951
+BETA_EL = 0.170
+GAMMA_EL = 0.003
 
 ERROR_TEST = False
 REMOVE_PERCENT = 1
@@ -145,8 +145,8 @@ if __name__ == "__main__":
             else:
                 filter_arr.append(True)
         filter_arr = np.array(filter_arr)
-        t_az,az_filter, rmse_az, pred_t_az, pred_val_az = alfa_beta_gamma_filter_fast(az_data,real_tst,ALPHA_EL,BETA_EL,GAMMA_EL,filter_arr)
-        t_el,el_filter, rmse_el, pred_t_el, pred_val_el = alfa_beta_gamma_filter_fast(el_data,real_tst,ALPHA_AZ,BETA_AZ,GAMMA_AZ,filter_arr)
+        t_az,az_filter, rmse_az, pred_t_az, pred_val_az = alfa_beta_gamma_filter_fast(el_data,real_tst,ALPHA_AZ,BETA_AZ,GAMMA_AZ,filter_arr)
+        t_el,el_filter, rmse_el, pred_t_el, pred_val_el = alfa_beta_gamma_filter_fast(az_data,real_tst,ALPHA_EL,BETA_EL,GAMMA_EL,filter_arr)
         fig, ax = plt.subplots(figsize=(8, 6))
         ax.plot(real_tst[:-2],az_data[:-2],'-',color="tab:blue",linewidth=2)
         ax.plot(real_tst[:-2],el_data[:-2],'-',color="tab:orange",linewidth=2)

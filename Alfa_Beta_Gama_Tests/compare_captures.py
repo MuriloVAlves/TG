@@ -5,12 +5,12 @@ import matplotlib.pyplot as plt
 import random
 from collections import deque
 
-ALPHA_AZ = 0.937
-BETA_AZ = 0.298
-GAMMA_AZ = 0.12
-ALPHA_EL = 1.017
-BETA_EL = 0.253
-GAMMA_EL = 0.122
+ALPHA_AZ = 0.949
+BETA_AZ = 0.267
+GAMMA_AZ = 0.001
+ALPHA_EL = 0.951
+BETA_EL = 0.170
+GAMMA_EL = 0.003
 
 ERROR_TEST = False
 REMOVE_PERCENT = 1
@@ -328,8 +328,8 @@ if __name__ == "__main__":
         filter_arr[-1] = True
 
         # 1. Filtro Alfa-Beta-Gama (mantendo chamada exatamente como no original)
-        t_az_abg, az_abg, rmse_az_abg, _, _ = alfa_beta_gamma_filter_fast(az_data, real_tst, ALPHA_EL, BETA_EL, GAMMA_EL, filter_arr)
-        t_el_abg, el_abg, rmse_el_abg, _, _ = alfa_beta_gamma_filter_fast(el_data, real_tst, ALPHA_AZ, BETA_AZ, GAMMA_AZ, filter_arr)
+        t_az_abg, az_abg, rmse_az_abg, _, _ = alfa_beta_gamma_filter_fast(az_data, real_tst, ALPHA_AZ, BETA_AZ, GAMMA_AZ, filter_arr)
+        t_el_abg, el_abg, rmse_el_abg, _, _ = alfa_beta_gamma_filter_fast(el_data, real_tst, ALPHA_EL, BETA_EL, GAMMA_EL, filter_arr)
 
         # 2. Extrapolação de Velocidade Constante
         t_az_cv, az_cv, rmse_az_cv = const_vel_extrapolation(az_data, real_tst, filter_arr)

@@ -178,8 +178,8 @@ class filter():
         self.first_run = True
 
 # Ganhos do filtro
-az_filter = filter(0.937, 0.298, 0.12)
-el_filter = filter(1.0, 0.253, 0.122)
+az_filter = filter(0.949, 0.267, 0.001)
+el_filter = filter(0.951, 0.170, 0.003)
 az_val = 0
 el_val = 0
 server_connected = False

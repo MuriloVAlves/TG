@@ -144,8 +144,38 @@ O programa seleciona o filtro com o menor erro e repete o processo novamente. Qu
 Quando o algoritmo repete os mesmos parâmetros de filtro um determinado número de vezes (para o caso do projeto, 15 vezes), o programa é encerrado e os valores calculados são determinados como os valores ótimos para o filtro.
 
 Os valores obtidos continham 16 casas decimais, porém, nesse nível de precisão, erros de arredondamento em ponto flutuante acabam interferindo no resultado.
-Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}937$, $\beta = 0{,}298$, e $\gamma = 0,120$ para o azimute, e $\alpha = 1{,}071$, $\beta = 0{,}253$, e $\gamma = 0.122$ para a elevação.
-É importante ressaltar que o $\alpha$ para a elevação está selecionado como sendo maior que 1. Esse valor não é usual, já que indica uma estimação de predição que estima um valor maior que a da amplitude do erro. Porém, como o algoritmo convergiu a este valor, os parâmetros embarcados serão os indicados anteriormente.
+Dessa forma, arredondando para três algarismos após a vírgula, foram obtidos $\alpha = 0{,}949$, $\beta = 0{,}267$, e $\gamma = 0,001$ para o azimute, e $\alpha = 0{,}951$, $\beta = 0{,}170$, e $\gamma = 0.003$ para a elevação.
+É importante ressaltar os parâmetros $\alpha$ são menores que 1, estando todos estáveis em função do tempo. Para um passo de amostragem constante $\Delta t = T$, o filtro $\alpha$-$\beta$-$\gamma$ discreto no domínio-$z$ possui equação característica dada pela Equação \ref{eq:abg_polos}.
+Expandindo a equação e separando novamente em potências de $z$, tem-se a Equação \ref{eq:expansao_pot_z}.
+\begin{align}
+    P(z) = (z - 1)^3 + \alpha(z - 1)^2 z + \beta(z - 1)z + \gamma z^2 = 0 \label{eq:abg_polos} \\
+    (1 + \alpha + \beta + \gamma)z^3 - (3 + 2\alpha + \beta)z^2 + (3 + \alpha)z - 1 = 0 \label{eq:expansao_pot_z}
+\end{align}
+
+Considerando $\alpha = 0{,}949$, $\beta = 0{,}267$ e $\gamma = 0{,}001$, é possível calcular os coeficientes multiplicando $z$ dados pelas Equações \ref{eq:coefs_az_1}, \ref{eq:coefs_az_2}, e \ref{eq:coefs_az_3}, resultando na equação característica denotada na Equação \ref{eq:eq_caracteristica_az}.
+\begin{align}
+    1 + \alpha + \beta + \gamma &= 1 + 0{,}949 + 0{,}267 + 0{,}001 = 2{,}217 \label{eq:coefs_az_1}\\
+    3 + 2\alpha + \beta &= 3 + 2(0{,}949) + 0{,}267 = 5{,}165 \label{eq:coefs_az_2}\\
+    3 + \alpha &= 3 + 0{,}949 = 3{,}949 \label{eq:coefs_az_3} \\
+    2{,}217z^3 - 5{,}165z^2 + 3{,}949z - 1 = 0 \label{eq:eq_caracteristica_az} \\
+    z_{1,\text{az}} &\approx 0{,}946353 \label{eq:polo_real_az}\\
+    z_{2,3,\text{az}} &\approx 0{,}691815 \pm j\,0{,}366472 \label{eq:polos_imag_az}
+\end{align}
+
+Agora, considerando $\alpha = 0{,}951$, $\beta = 0{,}170$ e $\gamma = 0{,}003$, calcula-se da mesma maneira os coeficientes (representados nas Equações \ref{eq:coefs_el_1}, \ref{eq:coefs_el_2}, e \ref{eq:coefs_el_3}), com equação característica dada pela Equação \ref{eq:eq_caracteristica_el}.
+\begin{align}
+    1 + \alpha + \beta + \gamma &= 1 + 0{,}951 + 0{,}170 + 0{,}003 = 2{,}124 \label{eq:coefs_el_1}\\
+    3 + 2\alpha + \beta &= 3 + 2(0{,}951) + 0{,}170 = 5{,}072 \label{eq:coefs_el_2}\\
+    3 + \alpha &= 3 + 0{,}951 = 3{,}951 \label{eq:coefs_el_3} \\
+    2{,}124z^3 - 5{,}072z^2 + 3{,}951z - 1 = 0 \label{eq:eq_caracteristica_el} \\
+    z_{1,\text{el}} &\approx 0{,}965814 \label{eq:polo_real_el}\\
+    z_{2,3,\text{el}} &\approx 0{,}711099 \pm j\,0{,}264587 \label{eq:polos_imag_el}
+\end{align}
+
+Calculando os polos através do Octave, foi possível calcular o filtro do azimute como possuindo um polo real (conforme Equação \ref{eq:polo_real_az}) e dois polos complexos conjugados (Equação \ref{eq:polos_imag_az}).
+O mesmo é observado na elevação, também com um polo real (Equação \ref{eq:polo_real_el}) e dois polos complexos conjugados (Equação \ref{eq:polos_imag_el}).
+Isso garante que ambos filtros sejam assintoticamente estáveis, com todos os polos dentro do círculo unitário de $z$.
+Os módulos dos polos complexos também são menores que os módulos dos polos reais, demonstrando que o transitório dos filtros é marcado por grandes influências dos polos reais lentos, porém possuindo ainda um regime oscilatório que se dissipa rapidamente.
 
 Com os testes exemplificados nas figuras \ref{subfig:passagem_baixa}, \ref{subfig:passagem_alta}, \ref{subfig:passagem_dupla} e \ref{subfig:passagem_zenite}, foi possível observar algumas características do filtro ao sistema.
 Os gráficos gerados indicam as movimentações de passagens diversas de satélites em função do tempo. O eixo das abscissas representa o período decorrido desde a recepção do primeiro dado, enquanto o eixo das ordenadas indica o ângulo em graus que os mecanismos de azimute e elevação se encontram.
@@ -157,6 +187,29 @@ Para o caso do rastreio de satélites seguidos é possível perceber que, na tra
 O mesmo fenômeno é observado para uma passagem próxima de zênite, na qual o azimute sofre uma variação brusca, fazendo ocorrer uma oscilação quando há uma diminuição na taxa de crescimento do ângulo.
 Uma solução para esse fenômeno seria alterar os parâmetros do filtro, fazendo com que esse tenha uma banda passante menor, aumentando o amortecimento do sistema para altas frequências.
 Outra solução pode ser incluir no algoritmo uma forma de detectar a diferença entre a posição predita e a posição real, reiniciando os parâmetros de predição do filtro quando essa diferença ultrapassar determinado valor.
+
+Para comparar a eficiência do filtro calibrado em relação aos demais modelos, foram feitos outros filtros comuns para verificar os seus desempenhos.
+Os dois primeiros filtros foram interpoladores, sendo um linear e um cúbico.
+O problema desses interpoladores surge na questão de que é necessário esperar uma amostra para iniciar a movimentação dos motores.
+Isso faz com que exista sempre um atraso constante entre a posição real e a posição estimada. Para o erro RMS, essa diferença se acumula durante o tempo, gerando um sinal grande.
+Além disso, como os dois interpoladores possuem a mesma defasagem (de um segundo) e não possuem erro em relação à posição da amostra (já que esses sabem a posição anterior do satélite), eles possuem o mesmo valor para a raiz do erro quadrático médio bem próximo entre si.
+Outro ponto a se observar é que como esses sistemas enviam uma 
+
+\begin{table}[h!]
+\centering
+\caption{Comparação consolidada do erro RMS médio para Azimute (AZ) e Elevação (EL).}
+\label{tab:rms_consolidado}
+\begin{tabular}{@{}l S[table-format=2.4] S[table-format=2.4]@{}}
+\toprule
+\textbf{Método} & {\textbf{RMS Médio AZ [$^\circ$]}} & {\textbf{RMS Médio EL [$^\circ$]}} \\
+\midrule
+Filtro $\alpha$-$\beta$-$\gamma$ & 1,1666 & 0,1155 \\
+Velocidade Constante & 1,9012 & 0,1453 \\
+Interpolação Linear & 80,0272 & 29,6272 \\
+Interpolação Cúbica & 65,4552 & 18,6549 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Eletrônica do Protótipo}\label{sec:eletronica_prototipo}
 Para o controle da eletrônica do mecanismo, foi programado o ESP32 conforme a arquitetura especificada no fluxograma da Figura \ref{fig:divisao_tarefas_esp}. O resultado foi uma seleção de telas divididas em dois estados: sem conexão (Figura \ref{fig:telas_desconectado}) e conectado (Figura \ref{fig:telas_conectado}).
@@ -238,7 +291,7 @@ A posição predita pelo filtro é enviada ao simulador, que representa a posiç
 
 A fim de verificar o funcionamento do filtro, foi desenvolvido um gráfico que mostra o funcionamento do sistema em tempo real. Esse gráfico possui uma linha indicando a posição do satélite e a posição predita pelo filtro, e pode ser visto na Figura \ref{fig:simul_abg}.
 A linha vermelha indica a posição real do satélite enviada pelo SatDump, enquanto a linha azul indica a posição das juntas do mecanismo simulado. Para a finalidade de otimização do desenho do gráfico, foram mantidos somente os últimos 300 pontos dos dois desenhos.
-Como o filtro gera uma grande quantidade de pontos intermediários, a linha azul possui uma maior densidade de pontos e um comprimento menor. O tempo que compõe o eixo X é a quantidade de segundos desde o início da captura. 
+Como o filtro gera um excesso de pontos intermediários, a linha azul possui uma maior densidade de pontos e um comprimento menor. O tempo que compõe o eixo X é a quantidade de segundos desde o início da captura. 
 No gráfico, é possível perceber a correção dos parâmetros do filtro marcadas pelos "dentes de serra" na curva azul, mostrando que o sistema está estimando a trajetória do satélite em tempo real e corrigindo as estimativas de posição, velocidade e aceleração.
 As últimas amostras do filtro demonstram que o sistema conseguiu estabelecer o rastreio corretamente, necessitando de poucas correções para se manter na trajetória correta.
 
@@ -259,11 +312,11 @@ O primeiro e mais crítico é o que, na rotina de retorno à posição inicial, 
 No sistema físico, esse comportamento poderá causar um grande estresse no sistema, causando dano estrutural ao protótipo.
 O retorno à posição inicial ocorre sempre que o sistema para de receber informação por um período maior que 30 segundos (6:55 do segundo vídeo no Apêndice \ref{cap:apendice_umbra}) ou no final de um rastreio (10:56 do segundo vídeo no Apêndice \ref{cap:apendice_umbra}), permitindo o sistema desenrolar os cabos e se preparar para uma nova captura.
 Uma solução que poderá ser implementada ao sistema final é possuir uma velocidade máxima dos motores para se movimentar entre alvos.
-Isso garantirá que o sistema não virá a sofrer danos estruturais durante sua operação.
+Isso garantirá que o sistema não sofrerá danos estruturais durante sua operação.
 
 Uma segunda questão que acabou auxiliando o sistema simulado é que, como visto nas figuras \ref{fig:passagens_diversas} e \ref{subfig:passagem_zenite}, o filtro possui grandes sobressinais quando o sistema muda seu alvo abruptamente.
 Entretanto, como visto principalmente no vídeo de troca de alvos do Apêndice \ref{cap:apendice_umbra}, a inércia do sistema impede o desalinhamento da antena, fazendo com que o sobressinal não seja realmente aplicado ao modelo.
-Apesar desse efeito, a oscilação ainda se mantém, fazendo com que o sistema divirja da posição desejada (como pode ser visto aos 1:55, 5:18, e 5:52 minutos do vídeo). Após um determinado período de tempo, o sistema retorna a se estabilizar e seguir a posição do satélite.
+Apesar desse efeito, a oscilação ainda se mantém, fazendo com que o sistema divirja da posição desejada (como pode ser visto aos 1:55, 5:18, e 5:52 minutos do vídeo). Após um determinado tempo, o sistema retorna a se estabilizar e seguir a posição do satélite.
 Esse problema parece ser causado pela característica do sistema de tentar manter a predição anterior. Então, até todos os fatores se corrigirem para a nova trajetória, ocorre uma oscilação claramente visível na posição da antena.
 A solução para esse caso pode ser uma forma do sistema perceber que há uma grande diferença de trajetórias e reiniciar os coeficientes do filtro para que esse nunca se torne oscilante.
 
@@ -305,29 +358,29 @@ No geral, o simulador demonstrou ser uma boa ferramenta para transicionar de um 
 \end{figure*}
 
 \begin{figure*}[h!]
-        \subfloat[Passagem de baixa elevação cenários de teste]{%
+        \subfloat[Passagem de baixa elevação nos cenários de teste]{%
             \includegraphics[width=.90\linewidth]{figs/passagem_baixa_teste.png}%
             \label{subfig:passagem_baixa_teste}%
         }\\
-        \subfloat[Passagem com grande variação no azimute e na elevação]{%
-            \includegraphics[width=.90\linewidth]{figs/passagem_media_teste.png}%
+        \subfloat[Passagem com grande variação no azimute e na elevação para grupo de teste]{%
+            \includegraphics[width=.90\linewidth]{figs/passagem_alta_teste.png}%
             \label{subfig:passagem_alta_teste}%
         }
-        \caption{Comportamento do filtro quando exposto a rastreios reais de satélite}
+        \caption{Comportamento dos filtros quando expostos a amostras do grupo de teste}
         \legend{Fonte: Autor (2026)}
         \label{fig:passagens_diversas_teste}
 \end{figure*}
 
 \begin{figure*}[h!]
-        \subfloat[Passagem com rastreio de dois satélites seguidos]{%
-            \includegraphics[width=.90\linewidth]{figs/passagem_3_dupla.png}%
-            \label{subfig:passagem_media_teste}%
+        \subfloat[Passagem com rastreio de três satélites seguidos em grupo de teste]{%
+            \includegraphics[width=.90\linewidth]{figs/passagens_multiplas_teste.png}%
+            \label{subfig:passagem_tripla_teste}%
         }\\
-        \subfloat[Passagem próxima ao zênite]{%
-            \includegraphics[width=.90\linewidth]{figs/passagem_4_zenite.png}%
+        \subfloat[Passagem próxima ao zênite em grupo de teste]{%
+            \includegraphics[width=.90\linewidth]{figs/passagem_zenite_teste.png}%
             \label{subfig:passagem_zenite_teste}%
         }
-        \caption{Casos de passagem que geraram instabilidade no filtro}
+        \caption{Casos de passagem que geraram instabilidade nos filtros preditivos}
         \legend{Fonte: Autor (2026)}
-        \label{fig:passagens_diversas_teste_2}
+        \label{fig:passagens_instaveis_teste}
 \end{figure*}
