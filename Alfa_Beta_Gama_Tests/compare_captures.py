@@ -302,6 +302,14 @@ if __name__ == "__main__":
     vel_cte_sum_el = 0
     lin_sum_el = 0
     cub_sum_el = 0
+    abg_max_az = 0
+    vel_cte_max_az = 0
+    lin_max_az = 0
+    cub_max_az = 0
+    abg_max_el = 0
+    vel_cte_max_el = 0
+    lin_max_el = 0
+    cub_max_el = 0
     for filename, timestamp, az_data, el_data in read_capture():
         real_tst = np.cumsum(timestamp)
 
@@ -397,6 +405,16 @@ if __name__ == "__main__":
         lin_sum_el += rmse_el_lin
         cub_sum_az += rmse_az_cub
         cub_sum_el += rmse_el_cub
+        abg_max_az = max(abg_max_az,rmse_az_abg)
+        vel_cte_max_az = max(vel_cte_max_az,rmse_az_cv)
+        if rmse_az_lin < 1000:
+            lin_max_az = max(lin_max_az,rmse_az_lin)
+            cub_max_az = max(cub_max_az,rmse_az_cub)
+        abg_max_el = max(abg_max_el,rmse_el_abg)
+        vel_cte_max_el = max(vel_cte_max_el,rmse_el_cv)
+        if rmse_el_lin < 1000:
+            lin_max_el = max(lin_max_el,rmse_el_lin)
+            cub_max_el = max(cub_max_el,rmse_el_cub)
     print(f"Total de {capture} capturas...")
     print("Cálculo RMS Médio AZ:")
     print(f"ABG: {abg_sum_az/(capture):.4f}")
@@ -408,3 +426,11 @@ if __name__ == "__main__":
     print(f"VEL CTE: {vel_cte_sum_el/(capture):.4f}")
     print(f"LIN: {lin_sum_el/(capture):.4f}")
     print(f"CUBICO: {cub_sum_el/(capture):.4f}")
+    print(abg_max_az ,
+            vel_cte_max_az ,
+            lin_max_az ,
+            cub_max_az ,
+            abg_max_el ,
+            vel_cte_max_el ,
+            lin_max_el ,
+            cub_max_el)

@@ -1,30 +1,45 @@
 \chapter{Conclusão e Trabalhos Futuros}\label{cap:Conclusão}
 
-O presente trabalho apresentou o projeto, a modelagem, a implementação e a simulação de um protótipo automatizado de pedestal bi-axial ortogonal (em azimute e elevação), integrado a uma antena helicoidal para o rastreio automático de satélites em órbita terrestre baixa (LEO).
+O presente trabalho apresentou o projeto, a modelagem, e a simulação de um protótipo automatizado de pedestal bi-axial ortogonal (em azimute e elevação), integrado a uma antena helicoidal para o rastreio automático de satélites em órbita terrestre baixa (LEO).
 
-No tópico da modelagem cinemática e estrutural (Subseções \ref{sec:ground_tracking} e \ref{sec:modelagem_pedestal}), a cinemática direta do mecanismo foi completamente formulada e os parâmetros D-H foram levantados. A modelagem do protótipo garante que este opera cobrindo a cobertura angular completa do horizonte local ($360^\circ$ em azimute e $90^\circ$ em elevação).
-A estrutura mecânica da antena foi projetada utilizando peças impressas em 3D, resultando em uma antena leve quando comparada com a carga suportada pelo motor, adequado para o controle pelos motores de passo NEMA 17.
+A modelagem do protótipo garante que este opera cobrindo a cobertura angular completa do horizonte local ($360^\circ$ em azimute e $90^\circ$ em elevação).
+A estrutura mecânica da antena foi projetada utilizando peças impressas em 3D, resultando em uma antena leve.
 As peças utilizadas foram compradas comercialmente e as peças que compõem o pedestal foram feitas a partir de componentes encontrados em lojas de materiais de construção para garantir a fácil produção por usuários comuns.
 
-O filtro preditivo $\alpha-\beta-\gamma$ calibrado com 300 passagens reais demonstrou que o método de varredura sistemática obteve uma boa seleção de parâmetros para novas passagens.
-O filtro demonstrou um baixo erro quadrático médio em relação ao valor real e o valor predito.
+O filtro preditivo $\alpha-\beta-\gamma$ calibrado com 300 passagens reais e testado em um grupo de 75 outras passagens demonstrou que o método de varredura sistemática obteve uma boa seleção de parâmetros para novas passagens.
+O filtro demonstrou um baixo erro quadrático médio em relação a outros modelos de filtragem convencionais, possuindo o menor erro RMS médio e máximo.
 
 A arquitetura de hardware e sistema embarcado se baseou no microcontrolador de dois núcleos ESP32 utilizando o sistema operacional em tempo real FreeRTOS.
 A carga de processamento foi dividida entre o núcleo 0, que ficou encarregado com a comunicação TCP e pela interface LCD, e o núcleo 1, que faz o processamento em tempo real do filtro preditor e do controle dos motores.
 
-Em relação ao subsistema de radiofrequência, foi possível desenvolver uma antena helicoidal e com polarização circular à direita.
-O filtro SAW e o SDR utilizados são de baixo custo e podem ser encontrados nos meios de radioamadorismo e em laboratórios universitários.
-Apesar disso, o sistema não pôde ser testado pelo protótipo não ser finalizado a tempo.
+Em relação ao subsistema de radiofrequência, foi possível desenvolver uma antena helicoidal e com polarização circular à direita com uma perda de retorno abaixo de $-15 \text{ dB}$ na banda de interesse do projeto.
+O filtro SAW e o SDR utilizados são de baixo custo e podem ser encontrados nos meios de radioamadorismo e em laboratórios universitários e possuem a capacidade de operar em frequências na região de $1,7 \text{ GHz}$.
+Todos os componentes da cadeia de recepção do sinal foram testados e estão compatíveis entre si, aumentando a esperança do sistema realizar uma captura bem sucedida dos satélites de estudo.
+Apesar disso, o sistema não pôde ser testado com a captura de um sinal real de satélites pelo protótipo não ser finalizado a tempo, não sendo possível afirmar com certeza que as capturas serão realizadas com sucesso.
 
 O uso do simulador demonstrou ser um passo útil para a depuração do sistema.
-A partir dele, foi possível verificar o funcionamento do filtro $\alpha-\beta-\gamma$ durante um rastreio real, além de testar o sistema embarcado para casos de uso real que demonstraram alguns problemas na implementação do código que deverão ser tratados futuramente.
-O processo da simulação demonstrou ser uma ferramenta poderosa para a rápida iteração de algoritmos capazes de diminuir os erros catastróficos aplicados ao protótipo.
+A partir dele, foi possível verificar o funcionamento do filtro $\alpha-\beta-\gamma$ durante um rastreio real, além de testar o sistema embarcado para casos simulados.
+Esses testes simulados demonstraram alguns problemas na implementação do código que deverão ser tratados futuramente.
+O processo da simulação demonstrou ser uma ótima ferramenta para a rápida iteração de algoritmos capazes de diminuir os erros catastróficos aplicados ao protótipo.
 
-Em geral, os objetivos foram alcançados, comprovando que é possível construir um sistema de alinhamento e rastreio orbital de baixo custo, estruturalmente leve, computacionalmente eficiente e de fácil replicação para uso acadêmico e de radioamadorismo.
+Alguns pontos negativos do trabalho se concentraram principalmente na parte da implementação da estrutura final.
+Não foi feito um estudo do centro de massa da antena, nem da capacidade de torque dos motores NEMA 17.
+A seleção deles ocorreu principalmente por ser o material disponível nos laboratórios da faculdade.
+Dependendo da exigência do projeto, serão necessários motores mais potentes ou até mesmo uma mudança de \textit{design} do rotor.
+Há também uma falha notável em relação às técnicas utilizadas para garantir que os motores do mecanismo estejam em sua posição correta.
+Existem problemas conhecidos nos motores de passo que não foram levados em consideração no trabalho atual.
+O primeiro está relacionado à perda de passo e à diferença entre o micro passo real e o teórico.
+O trabalho atual pressupõe que essa característica não irá afetar o trabalho na totalidade, considerando que qualquer erro de apontamento mínimo que ocorrer não sairá do feixe de meia potência da antena.
+Outro problema está em relação à implementação do mecanismo de \textit{homing} da antena. O mecanismo exemplificado sugere o uso de LDRs e LEDs, porém não há muitos detalhes sobre estrutura, posicionamento e demais detalhes construtivos.
+Assim, o trabalho não satisfaz em aprofundar no desenvolvimento mecânico do sistema, o que poderia ser melhorado em trabalhos futuros.
+
+Em geral, os resultados obtidos foram satisfatórios quando comparados com a premissa de construir um sistema de alinhamento e rastreio orbital de baixo custo, estruturalmente leve, computacionalmente eficiente e de fácil replicação para uso acadêmico e de radioamadorismo.
+Entretanto, o fato de que não foi possível finalizar o projeto em sua montagem prática pode esconder problemas que não foram pensados durante a concepção do projeto, fazendo o trabalho atual estar longe de ser considerado finalizado.
+Sendo assim, o trabalho serve como uma base para novos projetos futuros, mas todos os resultados devem ser levados com cautela, pois não houve testes suficientes para garantir que a implementação prática será bem sucedida.
 
 \section*{Trabalhos Futuros}
 
-O trabalho atual desenvolveu e validou pontos importantes para a implementação de partes do mecanismo do protótipo, porem, alguns pontos acabaram se mantendo em aberto.
+O trabalho atual desenvolveu e validou pontos importantes para a implementação de partes do mecanismo do protótipo, porém, alguns pontos acabaram se mantendo em aberto.
 Os trabalhos futuros de curto prazo serão voltados à completude do protótipo, finalizando os testes físicos e disponibilizando o projeto ao público geral.
 O protótipo deverá ser capaz de realizar uma captura da transmissão de um satélite de forma completamente autônoma, com o software SatDump decodificando o sinal em tempo real.
 

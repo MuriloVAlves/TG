@@ -40,10 +40,15 @@ O sistema de controle deve ser estável e responsivo para acompanhar a trajetór
 Além disso, será utilizado um filtro $\alpha-\beta-\gamma$ para permitir um rastreio suave durante toda a passagem do satélite.
 
 \subsection{Características Mecânicas}
-O mecanismo deverá possuir duas características principais: alta velocidade, em suas respostas e precisão abaixo de um décimo de grau.
+O mecanismo deverá possuir duas características principais: alta velocidade e alta precisão.
 O primeiro fator está relacionado com a resposta do sistema à tarefa.
 Uma passagem de satélites de órbita baixa é marcada por momentos de aceleração e desaceleração.
+Segundo Looney \cite{looney1965coverage}, uma velocidade angular de $3^{\circ}\text{/s}$ seria suficiente para efetuar um bom rastreio de satélites em órbita baixa.
+Então, o sistema projetado nesse trabalho tentará chegar a essa especificação.
+
 O protótipo deverá ser capaz de efetuar o apontamento da antena em todas as direções de uma semiesfera e ser sensível o suficiente para ter a precisão de apontamento necessária para a comunicação.
+O erro angular permitido depende do feixe de meia potência para o trabalho.
+A predição feita pelo sistema de rastreio deverá possuir a raiz do erro quadrático médio abaixo de dois graus, por esse ser o feixe de meia potência típico de parabólicas \cite{balanis2016}.
 
 \subsection{Interface com Sistemas Externos}
 Diversos aplicativos, programas e bancos de dados, disponíveis na internet, fornecem informações sobre órbitas e mudanças de posição
@@ -53,6 +58,6 @@ receber e enviar parâmetros para realizar a comunicação com aplicativos e pro
 
 \subsection{Criação de um Modelo Simulado}
 Como forma de verificar o funcionamento do sistema, será utilizado um modelo do pedestal desenvolvido em um simulador para garantir que o sistema irá funcionar corretamente.
-Esse simulador servirá para garantir que o sistema irá operar de acordo com o esperado em sua operação convencional, mantendo o apontamento da antena em direção durante todos os momentos de uma passagem de satélite real, sem entrar em instabilidades ou perder o rastreio.
+Esse simulador servirá para garantir que o sistema irá operar conforme o esperado em sua operação convencional, mantendo o apontamento da antena em direção ao alvo durante todos os momentos de uma passagem de satélite real, sem entrar em instabilidades ou perder o rastreio.
 Este modelo virtual servirá como uma plataforma de testes, capaz de simular os algoritmos de rastreio e troca de alvos para garantir que o \textit{software} embarcado irá funcionar corretamente.
 Deste modo, será possível garantir uma iteração rápida para simular, depurar e corrigir problemas encontrados no protótipo físico antes do teste no mundo real.

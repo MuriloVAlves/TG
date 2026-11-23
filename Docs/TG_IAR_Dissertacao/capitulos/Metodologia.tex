@@ -59,10 +59,10 @@ Ele possui ângulo de passo de $1.8^{\circ}\pm5\%$, torque de $4,2\text{ kgf}\cd
 
 Para o acionamento dos motores, serão utilizados drivers dedicados DRV8825 \cite{ti_drv8825_datasheet}, configurados para conseguirem atingir a resolução de $1/32$ passo, permitindo elevar a resolução angular teórica de acionamento dos motores para $0{,}05625^\circ$ por micro passo.
 A calibração da posição inicial (homing) dos eixos de azimute e elevação é realizada por meio de sensores ópticos, que serão desenvolvidos a partir de LDRs e LEDs. O controlador executa um algoritmo de varredura para verificar quando o LDR receberá a maior intensidade luminosa. Esse valor máximo indicará o zero do azimute e da elevação.
-O acoplamento entre o eixo dos motores e a estrutura da antena foi feito utilizando um sistema de redução por correias de padrão GT2 de relação 2:1, fazendo com que a resolução real na estrutura seja metade da resolução angular desenvolvida pelo motor.
+O acoplamento entre o eixo dos motores e a estrutura da antena foi feito utilizando um sistema de redução por correias de padrão GT2 de relação 2:1, fazendo com que a resolução real na estrutura seja metade da resolução angular desenvolvida pelo motor (de  $0{,}028125^\circ$).
 
 \section{Sistema de Comunicação}\label{sec:sistema_comunicacao}
-Para o recebimento do sinal de satélite, foi utilizando um rádio definido por software (Software Defined Radio, ou SDR), de modelo RTL-SDR V4 \cite{rtlsdr_v4_datasheet}. Esse dispositivo é capaz de ser programado via software para sintonizar com diversas frequências sem modificação de hardware, tornando-o extremamente versátil para receber comunicação de diversos satélites.
+Para o recebimento do sinal de satélite, foi utilizado um rádio definido por software (Software Defined Radio, ou SDR), de modelo RTL-SDR V4 \cite{rtlsdr_v4_datasheet}. Esse dispositivo é capaz de ser programado via software para sintonizar com diversas frequências sem modificação de hardware, tornando-o extremamente versátil para receber comunicação de diversos satélites.
 O modelo em questão é capaz de operar em frequências de \SI{500}{\kilo\hertz} a \SI{1766}{\mega\hertz}. Além disso, há um circuito Bias-Tee interno ativável por software, que é capaz de fornecer uma tensão contínua de 4,5 V no conector SMA para alimentação de pré-amplificadores localizados na linha de transmissão utilizando o mesmo cabo coaxial por onde o sinal é recebido.
 
 Devido à extrema atenuação sofrida pelos sinais emitidos pelos satélites ao se propagarem através da atmosfera até a antena de recepção, foi utilizado um módulo pré-amplificador e filtro Nooelec SAWBird+ GOES.
@@ -137,6 +137,7 @@ A região de campo próximo (\textit{near-field}) é definida pela Equação \re
     R_{Fr} \geq 0,62\sqrt{\frac{D^3}{\lambda}} \label{eq:region_Fresnel} \\
     R_{ff} > 2\frac{D^2}{\lambda} \label{eq:far_field}
 \end{align}
+
 Em seguida, há a distância da antena onde se encontra a região de Fresnel (Equação \ref{eq:region_Fresnel}), onde a distribuição angular do campo ainda varia com a distância.
 Por último, há a região do campo distante (\textit{far-field}, ou região de Fraunhofer), em que o campo angular da antena independe da distância da antena (definido pela Equação \ref{eq:far_field}).
 Para a antena helicoidal, a região de campo próximo é de $R_{nf} \leq 10,26\text{ cm}$, e a região de campo distante é de $R_{ff} > 32,38\text{ cm}$.
@@ -187,7 +188,7 @@ Além disso, para manter uma interface gráfica disponível para fácil entendim
 
 A arquitetura do sistema foi desenvolvida aproveitando a estrutura dual-core do ESP32, permitindo o processamento paralelo de tarefas por meio do FreeRTOS (Real-Time Operating System), cujo manual é disponibilizado pela empresa Espressif \citeyear{espressif2026}.
 Esse sistema operacional em tempo real e de código aberto permite a divisão do programa em tarefas independentes, alocadas em cada um dos núcleos do microcontrolador.
-A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, sendo essas, o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado (exemplificado no diagrama da Figura \ref{fig:divisao_tarefas_esp}).
+A carga de trabalho do projeto está dividida da seguinte maneira: o núcleo 0 (vindo da contagem a partir da base 0) é responsável por toda a interface de comunicação, como o controle do servidor TCP e a interface com o LCD, enquanto o núcleo 1 é responsável pelo controle do motor e do filtro $\alpha-\beta-\gamma$ embarcado (exemplificado no diagrama da Figura \ref{fig:divisao_tarefas_esp}).
 Dessa forma, essa arquitetura garante que um processador esteja exclusivamente destinado ao controle das malhas do motor, evitando que interferências ou latências de comunicação afetem a estabilidade e a precisão do rotor.
 
 \begin{figure}[htbp]
@@ -208,7 +209,7 @@ Isso significa que o sistema deve atualizar periodicamente os elementos TLE para
 
 Para um sistema embarcado, a comunicação com uma API (Application Programming Interface, interface de programação de aplicações) para receber os novos parâmetros de órbita a cada passagem pode exigir memória e tempo de processamento preciosos para o rastreio de um satélite.
 Outro ponto sobre a questão deste trabalho de não seguir com a utilização do sistema SGP4 é que já existem diversos softwares desenvolvidos para efetuar os cálculos dos parâmetros de órbita e enviar aos rotores de antenas apenas os dados de azimute e elevação, tornando obsoleto o cálculo dos parâmetros novamente.
-Para o sistema embarcado no rotor, isso retira a necessidade de possuir alguns equipamentos e necessidades que os demais eletrônicos são mais capacitados para isso. Então, por exemplo, o sistema embarcado não precisa mais necessitar de um sistema de GPS, já que os elementos de azimute e elevação foram calculados a partir de um celular com GPS em sua placa ou um computador com suas coordenadas calculadas a partir do Google Maps.
+Para o sistema embarcado no rotor, isso retira a necessidade de possuir alguns equipamentos e necessidades que os demais eletrônicos são mais capacitados para isso. Então, por exemplo, o sistema embarcado não precisa de um sistema de GPS, já que os elementos de azimute e elevação foram calculados a partir de um celular com GPS em sua placa ou um computador com suas coordenadas calculadas a partir do Google Maps.
 O sistema também não necessita de uma conexão de internet robusta, pois este pode gerar seu próprio ponto de acesso Wi-Fi e os elementos que enviarão o conjunto de dados pode utilizar de conexões de internet móvel ou via satélite, permitindo que o mecanismo de rastreio seja utilizado em regiões remotas com maior facilidade.
 Ainda existe a complicação de que seria necessário desenvolver um aplicativo para enviar os parâmetros de órbita diretamente para o sistema de rotor, além do horário local e coordenadas para recuperar a predição.
 Para o uso correto do mecanismo, o aplicativo deveria ser capaz de funcionar em diversas plataformas para abranger diversas utilizações.
@@ -234,5 +235,5 @@ Deste modo, esses parâmetros calibrados serão embarcados na arquitetura do sis
 A posição da estrutura é determinada de forma incremental a partir da posição inicial do motor, da relação de transmissão do sistema e da contagem dos pulsos emitidos pelo driver.
 Embora o driver DRV8825 suporte frequências de pulso elevadas (de até aproximadamente 250 kHz), a resposta dinâmica dos motores de passo NEMA é mais restrita, limitando sua operação contínua a frequências na faixa de 1000 Hz.
 Portanto, o controlador deve gerar sinal em uma frequência compatível com o motor, aproveitando a capacidade de micro passo (micro stepping) do driver para aumentar a resolução e suavizar o deslocamento.
-A partir dos valores de posição, velocidade e aceleração estimados pelo filtro $\alpha-\beta-\gamma$, o sistema calcula posições intermediárias preditas e determina as tensões necessárias em cada bobina do motor para realizar tal ação.
+A partir dos valores de posição, velocidade e aceleração estimados pelo filtro $\alpha-\beta-\gamma$, o sistema calcula posições intermediárias preditas e recebe as informações de STEP (passo) e DIR (direção) do ESP32, controlando as correntes em cada bobina do motor para realizar o posicionamento do motor de forma correta.
 Essa interpolação reduz trancos na estrutura e garante um alinhamento mais estável e contínuo com o satélite.

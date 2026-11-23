@@ -1,50 +1,66 @@
 \chapter{Referencial Teórico}\label{cap:teo}
 Nessa seção, serão estudadas formas de interpretar e modelar o sistema.
-Para isso, primeiramente será estudado como o sistema deverá interpretar os valores de azimute e elevação, levando em conta sua posição no globo e a posição do satélite que será rastreado.
+Para isso, será primeiramente estudado como o sistema deverá interpretar os valores de azimute e elevação, levando em conta sua posição no globo e a posição do satélite que será rastreado.
 Em seguida, o pedestal será analisado utilizando parâmetros de Denavit-Hartenberg para modelar a movimentação dos componentes da antena em relação à sua base.
 Por fim, serão investigados filtros de estimação e predição para permitir o melhor rastreio dos satélites.
 
 \section{Referencial e Rastreio de Satélites}\label{sec:ground_tracking}
-Para modelar o sistema, é necessário descrever o referencial e entender como a estação de solo e o satélite se localizam no espaço.
-Segundo Soler e Eisemann \citeyear{soler1994}, utilizando um modelo esférico aproximado da Terra, conforme a Figura \ref{fig:modelagem_ang_visada}, e sabendo a localização de latitude $\phi_S$ e longitude $\lambda_S$ da antena na estação, é possível estipular a direção em azimute e elevação para o apontamento da antena.
-O raio da Terra para o modelo esférico será considerado de $R=6371 km$ e a distância do satélite em relação ao centro do modelo será considerada como $r = R+h$, com $h$ sendo a altitude de sua órbita.
-Pode-se obter a longitude $\lambda_S$ na qual o vetor $\vec{r}$ intercepta a superfície da Terra, sendo possível traçar um triângulo reto esférico e utilizar a lei dos cossenos para triângulos esféricos \eqref{eq:lei_cossenos_esferica} e obter a relação $\cos\gamma=\cos\phi_S\cos(\lambda_S-\lambda)$ \cite{soler1994}. A distância entre o satélite e a estação de solo é dada pela equação \eqref{eq:d_sat_solo} \cite{soler1994}.
-\begin{align}
-\cos(AB) = \cos(CA)\cos(CB)\label{eq:lei_cossenos_esferica} \\
-d = r[1+(R/r)^2-2(R/r)\cos\gamma]^{1/2} \label{eq:d_sat_solo}
-\end{align}
+Para modelar o sistema de apontamento, é necessário definir os sistemas de referência envolvidos e modelar como a posição de um satélite de órbita baixa (\textit{Low Earth Orbit}, ou LEO) é convertida em ângulos de azimute e elevação para a estação de solo. Satélites LEO podem apresentar trajetórias inclinadas e deslocamento angular rápido em relação ao observador \cite{vallado2013}.
+Na prática, a determinação da trajetória orbital é realizada por softwares de rastreio (como o \textit{SatDump}) a partir de elementos orbitais de duas linhas (\textit{Two-Line Element} -- TLE) processados pelo modelo de propagação SGP4 (\textit{Simplified General Perturbations 4}) \cite{vallado2006revisiting}.
+O propagador fornece o vetor posição do satélite $\vec{r}_{\text{ECI}}$ no referencial inercial geocêntrico (\textit{Earth-Centered Inertial}, ou ECI), ou seja, com sua posição em relação ao centro da Terra.
+Para relacionar essa posição com a antena fixada na superfície terrestre, realiza-se a rotação para o referencial fixo à Terra (\textit{Earth-Centered, Earth-Fixed}, ou ECEF) considerando o tempo sideral de Greenwich ($\theta_{\text{GMST}}$), obtendo-se $\vec{r}_{\text{ECEF}} = [X_{\text{sat}}, Y_{\text{sat}}, Z_{\text{sat}}]^T$ \cite{vallado2013}.
+
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.7\textwidth]{figs/Interpretacao_geodesica.png}
-    \caption{Modelagem matemática do ângulo de visada}
-    \legend{Fonte: \cite{soler1994}.}
-    \label{fig:modelagem_ang_visada}
+    \includegraphics[width=0.7\textwidth]{figs/Interpretacao_ECI_ECF.png}
+    \caption{Ilustração dos vetores de transformação de ECI para ECF.}
+    \legend{Fonte: \cite{vallado2013}.}
+    \label{fig:ecf_to_enu}
 \end{figure}
-A partir da equação \eqref{eq:d_sat_solo}, é possível calcular a elevação $\nu_S$ e o azimute $\beta_S$ do satélite em relação à estação de solo a partir das equações \eqref{eq:nu_s} e \eqref{eq:beta_s}.
+
+Conhecidas as coordenadas geodésicas da estação de solo, sendo estas, latitude $\phi_S$, longitude $\lambda_S$ e altitude $h_S$, determina-se seu vetor posição $\vec{r}_{S,\text{ECEF}} = [X_S, Y_S, Z_S]^T$ sobre o elipsoide de referência (como o WGS-84) \cite{vallado2013}.
+O vetor linha de visada (\textit{Line-of-Sight}) entre a estação e o satélite no referencial ECEF é dado pela subtração vetorial $\Delta\vec{r}_{\text{ECEF}} = \vec{r}_{\text{ECEF}} - \vec{r}_{S,\text{ECEF}}$.
+Em seguida, esse vetor é projetado no sistema topocêntrico local ENU (\textit{East-North-Up}), centrado na antena e tangente ao horizonte local, por meio da matriz de rotação \eqref{eq:ecef_to_enu} \cite{vallado2013}.
+Com as componentes locais $(r_E, r_N, r_U)$ expressas nas direções Leste, Norte e Zênite, respectivamente, os ângulos de azimute ($Az$) e elevação ($El$) necessários para o alinhamento da antena são obtidos pelas relações trigonométricas \eqref{eq:az_enu} e \eqref{eq:el_enu} \cite{vallado2013}:
+
+\begin{equation}
+\begin{bmatrix} r_E \\ r_N \\ r_U \end{bmatrix}
+=
+\begin{bmatrix}
+-\sin\lambda_S & \cos\lambda_S & 0 \\
+-\sin\phi_S\cos\lambda_S & -\sin\phi_S\sin\lambda_S & \cos\phi_S \\
+\cos\phi_S\cos\lambda_S & \cos\phi_S\sin\lambda_S & \sin\phi_S
+\end{bmatrix}
+\begin{bmatrix}
+X_{\text{sat}} - X_S \\
+Y_{\text{sat}} - Y_S \\
+Z_{\text{sat}} - Z_S
+\end{bmatrix}
+\label{eq:ecef_to_enu}
+\end{equation}
+
 \begin{align}
-\nu_S = \arccos[(r/d)sin\gamma]\label{eq:nu_s} \\
-\beta_S = \arccos(\cot\gamma\tan\phi_S)\label{eq:beta_s}
+Az &= \operatorname{atan2}(r_E, r_N) \label{eq:az_enu} \\
+El &= \arcsin\left(\frac{r_U}{\sqrt{r_E^2 + r_N^2 + r_U^2}}\right) \label{eq:el_enu}
 \end{align}
 
-Essa modelagem foi feita considerando uma Terra esférica. Todavia, a Terra possui uma forma aproximada de um elipsoide de revolução. Embora o modelo esférico ofereça uma aproximação inicial simples, ele introduz erros no cálculo do ângulo de elevação (ou distância zenital).
-O formato faz com que o modelo esférico tenha algumas discrepâncias com as posições reais. No entanto, como o escopo do trabalho não é o modelo da Terra, mas sim o sistema de controle de apontamento da antena, bastará dizer que há a dedução para o modelo elíptico na literatura de \cite{soler1994} caso necessária a consulta.
-Além disso, é esperado que os aplicativos de rastreio de satélites com os quais o equipamento irá se comunicar sejam baseados nos modelos mais completos, enviando a posição de azimute e elevação correta para o alinhamento com o satélite.
+Como o escopo deste trabalho concentra-se no sistema de controle e acionamento eletromecânico do pedestal, toda a etapa de propagação SGP4 e conversão de referenciais é delegada ao software de rastreio externo, o qual transmite continuamente as referências angulares de azimute e elevação para a malha de controle da antena.
+Pode-se descrever o mecanismo de apontamento da antena do pedestal a partir de dois movimentos independentes ortogonais, sendo um de azimute e um de elevação. O espaço de trabalho necessário para o acompanhamento contínuo de passagens de satélites corresponde ao hemisfério superior delimitado pelo horizonte local do plano tangente à estação de solo encontrado a $0^\circ$ de elevação (Figura \ref{fig:horizonte_local}).
+Para cobrir integralmente essa semiesfera, o mecanismo deve ser capaz de efetuar uma rotação completa de $0$ até $2\pi$ ($0^\circ$ até $360^\circ$) em azimute (referenciado pelo ângulo $\theta$ na Figura \ref{fig:horizonte_local}) e uma articulação de $0$ até $\frac{\pi}{2}$ ($0^\circ$ até $90^\circ$) na elevação (referenciado pelo ângulo $\phi$ na Figura \ref{fig:horizonte_local}).
+Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtado, já que em baixas elevações há a obstrução de relevo, estruturas ou atmosfera espessa, o mecanismo desenvolvido nesse trabalho garantirá a varredura de toda região angular teórica.
 
-Pode-se descrever o mecanismo de apontamento da antena do pedestal a partir de dois movimentos independentes ortogonais, sendo um de azimute e um de elevação.
-O espaço de trabalho necessário para o acompanhamento contínuo de passagens de satélites corresponde ao hemisfério superior delimitado pelo horizonte local do plano tangente à estação de solo encontrado a 0$^\circ$ de elevação.
-Para cobrir integralmente essa semiesfera, o mecanismo deve ser capaz de efetuar uma rotação completa de $0$ até $2\pi$ (0$^\circ$ até 360$^\circ$) em azimute (referenciado pelo ângulo $\theta$) e uma articulação de $0$ até $\frac{\pi}{2}$ (0$^\circ$ até 90$^\circ$) na elevação (referenciado pelo ângulo $\phi$), como é possível ver na Figura \ref{fig:horizonte_local}.
-Embora existam diversos mecanismos que tenham seu ângulo de elevação encurtado, já que em baixas elevações há a obstrução de relevo, estruturas ou atmosfera, o mecanismo desenvolvido nesse trabalho garantirá a varredura de toda região angular teórica.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{figs/horizonte_local.png}
-    \caption{Ilustração de horizonte local visto pela estação de solo}
+    \caption{Ilustração de horizonte local visto pela estação de solo.}
     \legend{Fonte: \cite{Spiridonov2020}.}
     \label{fig:horizonte_local}
 \end{figure}
+
 É importante salientar que a partir das próximas modelagens as variáveis $\theta$ e $\phi$ serão também utilizadas ao se referir ao azimute e à elevação do mecanismo da antena.
 
 \section{Estimação e Rastreio de Satélites}\label{sec:estimation}
-Segundo a explicação de Ford \citeyear{Ford2008}, cada satélite possui um número de catalogação utilizada para registrar informações básicas sobre a espaçonave. Embora algumas identificações, como nome e código de catalogação, são inalteradas durante sua vida útil, informações de órbita devem ser atualizadas constantemente por serem dinâmicas.
+Segundo a explicação de Ford \citeyear{Ford2008}, cada satélite possui um número de catalogação utilizado para registrar informações básicas sobre a espaçonave. Embora algumas identificações, como nome e código de catalogação, permanecem inalteradas durante sua vida útil, informações de órbita devem ser atualizadas constantemente por serem dinâmicas.
 
 Agências como a North American Aerospace Defense Command (NORAD) e a National Aeronautics and Space Administration (NASA) utilizam radares e outras formas de medição para determinar a posição e órbita exata de satélites, mantendo um rastreio completo do céu.
 Entre as métricas obtidas das observações estão os conhecidos elementos keplerianos. Esses elementos são informações como inclinação, excentricidade, decaimento de órbita, e perigeu \cite{soler1994}.
@@ -58,7 +74,7 @@ Outro fator que limita o uso do método tradicional de envio de dados é o de qu
 Utilizando sistemas que estimem a posição do satélite, é possível fazer com que o rotor continue o rastreio por determinado período antes de começar a divergir da posição real, fazendo com que o sistema seja menos suscetível a erros de comunicação.
 
 Um último ponto que justifica a utilização de algoritmos estimadores de trajetória é para passagens de satélites próximas ao zênite (elevações próximas de $90^\circ$), que atingem grandes velocidades angulares.
-Como os softwares continuam a enviar a posição dos satélites periodicamente, nos casos de passagem próxima de zênite, há uma grande diferença de apontamento entre a última posição enviada e a posição real do satélite.
+Como os softwares continuam a enviar a posição dos satélites periodicamente, nos casos de passagem próxima do zênite, há uma grande diferença de apontamento entre a última posição enviada e a posição real do satélite.
 Isso faz com que uma condição que deveria permitir a melhor recepção possível, pela falta de obstruções e com menos atmosfera para atenuação, pode ser afetada pelo desapontamento da antena ao alvo.
 Com o uso de um filtro preditor, é possível obter a velocidade do satélite durante a passagem e permitir um apontamento mais preciso, garantindo uma melhor recepção de sinal.
 
@@ -134,7 +150,7 @@ Sendo assim, um  sistema de ordem $n$ como visto na equação \eqref{eq:denomina
 \label{tab:criterio_Jury}
 \end{table}
 
-Os coeficientes das linhas seguintes no critério de estabilidade de Jury é calculado utilizando as equações \eqref{eq:coef_bk}, \eqref{eq:coef_ck} e as demais até resultar em três coeficientes no final da Tabela \ref{tab:criterio_Jury}.
+Os coeficientes das linhas seguintes no critério de estabilidade de Jury são calculados utilizando as equações \eqref{eq:coef_bk}, \eqref{eq:coef_ck} e as demais até resultar em três coeficientes no final da Tabela \ref{tab:criterio_Jury}.
 \begin{align}
 b_k = \begin{vmatrix}
 a_0 & a_{n-k} \\
@@ -158,10 +174,10 @@ enquanto as equações \eqref{eq:satisfazer_Jury_ini} a \eqref{eq:satisfazer_Jur
     \left|c_0\right| > \left|c_{n-2}\right| ... \left|m_0\right| > \left|m_2\right| \label{eq:satisfazer_Jury_fim}
 \end{align}
 
-Utilizando variáveis genéricas para o denominador em \eqref{eq:g(z)_alpha_beta_gamma} e usando o critério de estabilidade de Jury, é possível obter as equações \eqref{eq:alpha_lim}, \eqref{eq:beta_lim} e \eqref{eq:gamma_lim} para que os coeficientes do filtro $\alpha-\beta-\gamma$ estejam dentro da região de estabilidade.
+Utilizando variáveis genéricas para o denominador em \eqref{eq:g(z)_alpha_beta_gamma_pols} e usando o critério de estabilidade de Jury, é possível obter as equações \eqref{eq:alpha_lim}, \eqref{eq:beta_lim} e \eqref{eq:gamma_lim} para que os coeficientes do filtro $\alpha-\beta-\gamma$ estejam dentro da região de estabilidade.
 \begin{align}
 0<\alpha<2,                             \label{eq:alpha_lim} \\
 0<\beta<4-2\alpha,                      \label{eq:beta_lim}  \\
-0<\gamma<\frac{4\alpha\beta}{2-\alpha}. \label{eq:gamma_lim}
+0<\gamma<\frac{16\alpha\beta}{2-\alpha}. \label{eq:gamma_lim}
 \end{align}
-Durante o desenvolvido do projeto, esses valores de limite irão ser utilizados para garantir a estabilidade e convergência do filtro.
+Durante o desenvolvimento do projeto, esses valores de limite irão ser utilizados para garantir a estabilidade e convergência do filtro.
