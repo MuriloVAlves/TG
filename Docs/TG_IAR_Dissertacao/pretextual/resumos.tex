@@ -7,14 +7,10 @@
 \begin{resumo}
   O rastreio contínuo de satélites em órbita baixa (LEO) exige sistemas de apontamento precisos e de baixo tempo de resposta para mitigar perdas de enlace decorrentes da alta velocidade relativa e da diretividade das antenas.
   Este trabalho apresenta o desenvolvimento, modelagem cinemática, e a implementação de um sistema de pedestal bi-axial (azimute e elevação) automatizado para o rastreio de satélites e recepção de dados meteorológicos de alta resolução (HRPT) na faixa de 1,7 GHz.
-  
-  A cinemática direta do mecanismo foi formulada via parâmetros de Denavit-Hartenberg (D-H). 
   Para garantir a estabilidade e suavidade da trajetória em tempo real com baixo custo computacional, implementou-se um filtro preditivo $\alpha-\beta-\gamma$ embarcado, cujos parâmetros de suavização foram otimizados via varredura sistemática e validados pelo critério de estabilidade de Jury.
-  
   A arquitetura de hardware e controle foi estruturada em um microcontrolador dual-core ESP32 sob o sistema operacional FreeRTOS, segregando as tarefas de comunicação TCP/interface LCD e a malha de controle do filtro com acionamento dos motores de passo NEMA 17 via drivers DRV8825.
   A recepção e filtragem do sinal de radiofrequência foram realizadas por meio de uma antena helicone customizada, aliada a um módulo LNA/filtro SAW e um dispositivo SDR.
-  Por fim, o algoritmo de rastreio foi testado com o auxílio do software de simulação MuJoCo, criando um modelo digital do protótipo para efetuar experimentos de funcionamento em condições reais de rastreio e troca de alvo.
-  
+  Por fim, o algoritmo de rastreio foi testado com o auxílio do software de simulação MuJoCo, criando um modelo digital do protótipo para efetuar experimentos de funcionamento em condições reais de rastreio e troca de alvo
   O protótipo não foi finalizado a tempo, com o firmware só testado utilizando a tela LCD. A cadeia de RF também não foi testada com uma captura real do sinal HRPT.
   Entretanto, foi possível testar o algoritmo de rastreio e comunicação utilizando o simulador MuJoCo integrado ao SatDump, que enviava trajetórias reais para o sistema simulado.
 
@@ -27,14 +23,10 @@
  \begin{otherlanguage*}{english}
   Continuous tracking of low Earth orbit (LEO) satellites requires precise pointing systems with low response times to mitigate link losses resulting from high relative velocity and antenna directivity.
   This work presents the development, kinematic modeling, and implementation of an automated dual-axis (azimuth and elevation) pedestal system for satellite tracking and the reception of high-resolution meteorological data (HRPT) in the 1.7~GHz band.
-
-  The forward kinematics of the mechanism was formulated via Denavit-Hartenberg (D-H) parameters.
   To ensure real-time trajectory stability and smoothness with low computational cost, an embedded $\alpha-\beta-\gamma$ predictive filter was implemented, whose smoothing parameters were optimized via systematic sweep and validated by Jury's stability criterion.
-
   The hardware and control architecture was structured around a dual-core ESP32 microcontroller running the FreeRTOS operating system, segregating the TCP communication/LCD interface tasks from the filter control loop and the actuation of NEMA 17 stepper motors via DRV8825 drivers.
   Radiofrequency signal reception and filtering were performed using a custom helical antenna, combined with an LNA/SAW filter module and an SDR device.
   Finally, the tracking algorithm was tested using the MuJoCo simulation software, creating a digital model of the prototype to perform operational experiments under real tracking and target-switching conditions.
-
   The prototype was not completed in time, with the firmware only tested using the LCD screen. The RF chain was also not tested with an actual HRPT signal capture.
   However, it was possible to test the tracking and communication algorithm using the MuJoCo simulator integrated with SatDump, which fed real trajectories into the simulated system.
 
